@@ -171,7 +171,7 @@
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="badge badge-pill badge-primary">3</span>
-                <i class="fa fa-bell-o"></i>
+                <i class="far fa-bell-o"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a href="./pages/content/notification.html" class="dropdown-item">
@@ -197,12 +197,9 @@
             </li>
           </ul>
         </nav>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Get started</li>
-          </ol>
-        </nav>
         <div class="container-fluid">
+          @yield('layout')
+          <!--
           <h1>Introduction</h1>
           <p>Admin 4B is an open source admin template built on top of
             <a href="https://getbootstrap.com/">Bootstrap 4</a>. The source code can be found on the
@@ -284,7 +281,7 @@
           <h2>"What's next?"</h2>
           <p>
             <a href="./pages/layout/sidebar.html">Configure the sidebar navigation</a>
-          </p>
+          </p>-->
         </div>
       </div>
     </div>
