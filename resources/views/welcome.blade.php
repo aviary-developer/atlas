@@ -9,6 +9,7 @@
   <link rel="icon" href="./favicon.ico">
   {!!Html::style('css/admin4b.css')!!}
   {!!Html::style('css/all.css')!!}
+  {!!Html::style('css/datatables.min.css')!!}
 </head>
 
 <body>
@@ -157,11 +158,7 @@
           <button type="button" class="btn btn-sidebar" data-toggle="sidebar">
             <i class="fa fa-bars"></i>
           </button>
-          <div class="navbar-brand">Admin 4B &middot;
-            <a href="https://github.com/marxjmoura/admin4b" class="text-dark" data-toggle="tooltip" data-placement="right"
-              title="Fork me on GitHub">
-              <i class="fab fa-github"></i>
-            </a>
+          <div class="navbar-brand">Atlas
           </div>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -194,7 +191,7 @@
           </ul>
         </nav>
         <div class="container-fluid">
-          @yield('layout')
+                @yield('layout')
           <!--
           <h1>Introduction</h1>
           <p>Admin 4B is an open source admin template built on top of
@@ -284,6 +281,8 @@
   </div>
   <script src= {{asset("js/app.js")}}></script>
   <script src= {{asset("js/admin4b.min.js")}}></script>
+  <script src= {{asset("js/pnotify.custom.min.js")}}></script>
+  <script src= {{asset("js/datatables.min.js")}}></script>
   {{--  <script src="./assets/js/admin4b.docs.js"></script>  --}}
 </body>
 

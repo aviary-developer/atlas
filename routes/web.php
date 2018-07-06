@@ -19,3 +19,6 @@ Route::get('/', function () {
   Route::match(['get','post'],'/desactivateUsuario/{id}','UserController@desactivate');
   Route::match(['get','post'],'/activateUsuario/{id}','UserController@activate');
   Route::match(['get','post'],'/destroyUsuario/{id}','UserController@destroy');
+
+//Rutas de años lectivos
+Route::resource('grados','LectivoController');
