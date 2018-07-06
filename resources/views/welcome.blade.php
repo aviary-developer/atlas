@@ -7,10 +7,6 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Admin 4B · Get started</title>
   <link rel="icon" href="./favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
-  {!!Html::style('css/app.css')!!}
   {!!Html::style('css/admin4b.css')!!}
   {!!Html::style('css/all.css')!!}
 </head>
@@ -164,14 +160,14 @@
           <div class="navbar-brand">Admin 4B &middot;
             <a href="https://github.com/marxjmoura/admin4b" class="text-dark" data-toggle="tooltip" data-placement="right"
               title="Fork me on GitHub">
-              <i class="fa fa-github"></i>
+              <i class="fab fa-github"></i>
             </a>
           </div>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="badge badge-pill badge-primary">3</span>
-                <i class="far fa-bell-o"></i>
+                <i class="far fa-bell"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a href="./pages/content/notification.html" class="dropdown-item">
