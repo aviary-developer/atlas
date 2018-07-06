@@ -62,9 +62,9 @@
               </div>
             </div>
                 <div class="row">
-                  <div class="col-3 col-md-3 col-lg-3">
+                  <div class="col-2 col-md-2 col-lg-2">
                     <div class="form-group">
-                      <label>Fecha de nacimiento</label>
+                      <label>Fecha nacimiento</label>
                       @php
                         $hoy = Carbon\Carbon::now();
                         $hoy = $hoy->subYears(12);
@@ -75,7 +75,7 @@
                       {!! Form::date('fechaNacimiento',$hoy,['max'=>$hoy->format('Y-m-d'),'class'=>'form-control']) !!}
                     </div>
                   </div>
-                  <div class="col-3 col-md-3 col-lg-3">
+                  <div class="col-2 col-md-2 col-lg-2">
                     <div class="form-group">
                       <label>Sexo</label>
                       <select class="form-control">
@@ -84,45 +84,60 @@
                       </select>
                     </div>
                   </div>
+                  <div class="col-2 col-md-2 col-lg-2">
+                    <div class="form-group">
+                      <label>DUI</label>
+                      <input type="text" class="form-control" placeholder="00000000-0">
+                    </div>
+                  </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label>Correo</label>
+                    <input type="text" class="form-control" placeholder="ejemplo@correo.com">
+                  </div>
                 </div>
+              </div>
             <div class="row">
-              <div class="col-12 col-md-6 col-lg-6">
+              <div class="col-12 col-md-4 col-lg-4">
                 <div class="form-group">
-                  <label>Email</label>
+                  <label>Teléfono</label>
                   <input type="text" class="form-control">
                 </div>
               </div>
-              <div class="col-12 col-md-6 col-lg-6">
+              <div class="col-2 col-md-2 col-lg-2">
                 <div class="form-group">
-                  <label>Phone number</label>
+                  <label></label>
+                  <button type="button" class="btn btn-primary ml-auto">Agregar teléfono</button>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group">
+                  <label>Dirección</label>
                   <input type="text" class="form-control">
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-12 col-lg-6">
-                <div class="row">
-                  <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group">
-                      <label>Zip code</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group">
-                      <label>State</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="form-group">
-                  <label>Home address</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+              <table class="table" id='tablaTelefono'>
+                <thead>
+                  <th>Teléfono</th>
+                  <th style="width : 80px">Acción</th>
+                </thead>
+                <tbody>
+                      <tr>
+                        <td>
+                          <input type="hidden" id="" value="" name="tel_id[]">
+                          <input type="hidden" value="" name="tel_tel[]">
+                          <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
             <div class="d-none d-md-block">
               <hr>
               <div class="d-flex mb-3">
