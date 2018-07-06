@@ -1,251 +1,330 @@
-<div class="x_content" onmouseover="precarga()">
-  <div class="form_wizard wizard_horizontal" id="wizard">
-    {{-- Encabezado del wizard --}}
-    <ul class="wizard_steps">
-      <li>
-        <a href="#step-1">
-          <span class="step_no">
-            <i class="fa fa-list-alt"></i>
-          </span>
-          <span class="step_descr">
-            Paso 1 <br>
-            <small>Datos personales</small>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#step-2">
-          <span class="step_no">
-            <i class="fa fa-user"></i>
-          </span>
-          <span class="step_descr">
-            Paso 2 <br>
-            <small>Datos de usuario</small>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#step-3">
-          <span class="step_no">
-            <i class="fa fa-user-md"></i>
-          </span>
-          <span class="step_descr">
-            Paso 3 <br>
-            <small>Datos de especialidad</small>
-          </span>
-        </a>
-      </li>
-    </ul>
-    {{-- Contenido del wizard --}}
-    <div id="step-1" onmouseover="verAlerta1()">
-      @include('Usuarios.Formularios.pasos.paso1')
-    </div>
-    <div id="step-2">
-      @include('Usuarios.Formularios.pasos.paso2')
-    </div>
-    <div id="step-3" onmouseover="verAlerta2()">
-      @include('Usuarios.Formularios.pasos.paso3')
+@extends('welcome')
+@section('layout')
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">Usuarios</li>
+    </ol>
+  </nav>
+  <div class="container-fluid">
+    <div class="nav-tabs-responsive">
+      <ul class="nav nav-tabs-progress nav-tabs-3 mb-3">
+        <li class="nav-item">
+          <a href="#personal" class="nav-link active" data-toggle="tab">
+            <span class="font-lg">1.</span> Datos personales
+            <small class="d-block text-secondary">
+              Información personal del usuario
+            </small>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#account" class="nav-link" data-toggle="tab">
+            <span class="font-lg">2.</span> Datos de usuario
+            <small class="d-block text-secondary">
+              Información para uso del sistema
+            </small>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#confirmation" class="nav-link" data-toggle="tab">
+            <span class="font-lg">3.</span> Confirmación de datos
+            <small class="d-block text-secondary">
+              Resumen de los datos registrados previo a guardarlos
+            </small>
+          </a>
+        </li>
+      </ul>
+      {!!Form::open(['class' =>'tab-content','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
+        <div id="personal" class="tab-pane show active">
+          <div class="mb-3">
+            <a href="#account-collapse" data-toggle="collapse">
+              <span class="font-lg">1.</span> Datos personales
+              <small class="d-block text-secondary">
+                Información personal del usuario
+              </small>
+            </a>
+          </div>
+          <div id="personal-collapse" class="collapse" data-parent="#formUsuario">
+            <div class="text-secondary mb-3">
+              <small>Paso 1 de 3</small>
+            </div>
+            <div class="row">
+              <div class="col-12 col-lg-6">
+                <div class="form-group">
+                  <label>Nombre</label>
+                    {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre del nuevo usuario']) !!}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group">
+                  <label>Apellido</label>
+                    {!! Form::text('apellido',null,['class'=>'form-control','placeholder'=>'Apellido del nuevo usuario']) !!}
+                </div>
+              </div>
+            </div>
+                <div class="row">
+                  <div class="col-2 col-md-2 col-lg-2">
+                    <div class="form-group">
+                      <label>Fecha nacimiento</label>
+                      @php
+                        $hoy = Carbon\Carbon::now();
+                        $hoy = $hoy->subYears(12);
+                        /*if($create){
+                          $fecha = $fecha->subYears(12);
+                        }*/
+                      @endphp
+                      {!! Form::date('fechaNacimiento',$hoy,['max'=>$hoy->format('Y-m-d'),'class'=>'form-control']) !!}
+                    </div>
+                  </div>
+                  <div class="col-2 col-md-2 col-lg-2">
+                    <div class="form-group">
+                      <label>Sexo</label>
+                      <select class="form-control">
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-2 col-md-2 col-lg-2">
+                    <div class="form-group">
+                      <label>DUI</label>
+                      <input type="text" class="form-control" placeholder="00000000-0">
+                    </div>
+                  </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label>Correo</label>
+                    <input type="text" class="form-control" placeholder="ejemplo@correo.com">
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-2 col-md-2 col-lg-2">
+                <div class="form-group">
+                  <label></label>
+                  <button type="button" class="btn btn-primary ml-auto">Agregar teléfono</button>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+              <table class="table" id='tablaTelefono'>
+                <thead>
+                  <th>Teléfono</th>
+                  <th style="width : 80px">Acción</th>
+                </thead>
+                <tbody>
+                      <tr>
+                        <td>
+                          <input type="hidden" id="" value="" name="tel_id[]">
+                          <input type="hidden" value="" name="tel_tel[]">
+                          <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+            <div class="d-none d-md-block">
+              <hr>
+              <div class="d-flex mb-3">
+                <button type="button" class="btn btn-success ml-auto" data-form-step="#payment">
+                   Datos de usuario &nbsp;
+                  <i class="fa fa-angle-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="account" class="tab-pane">
+          <div class="mb-3">
+            <a href="#account-collapse" data-toggle="collapse">
+              <span class="font-lg">2.</span> Personal information
+              <small class="d-block text-secondary">
+                Lorem ipsum dolor sit amet, venenatis adipiscing
+              </small>
+            </a>
+          </div>
+          <div id="account-collapse" class="collapse show" data-parent="#formUsuario">
+            <div class="text-secondary mb-3">
+              <small>Paso 2 de 3</small>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label>E-mail</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control">
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label>Confirm password</label>
+                  <input type="password" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="d-none d-md-block">
+              <hr>
+              <div class="d-flex mb-3">
+                <button type="button" class="btn btn-outline-success" data-form-step="#account">
+                  <i class="fa fa-angle-left"></i>
+                  &nbsp; Datos personales
+                </button>
+                <button type="button" class="btn btn-success ml-auto" data-form-step="#personal">
+                  Confirmación de información &nbsp;
+                  <i class="fa fa-angle-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="confirmation" class="tab-pane">
+          <div class="mb-3">
+            <a href="#confirmation-collapse" data-toggle="collapse">
+              <span class="font-lg">4.</span> Confirm your details
+              <small class="d-block text-secondary">
+                Lorem ipsum dolor sit amet, venenatis adipiscing
+              </small>
+            </a>
+          </div>
+          <div id="confirmation-collapse" class="collapse" data-parent="#formUsuario">
+            <div class="text-secondary mb-3">
+              <small>Paso 3 de 3</small>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Username</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">john_doe</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Email ID</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">john_doe@email.com</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Full name</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">John Doe</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Gender</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">Male</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Date of birth</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">January 10, 1980</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Phone number</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">John Doe</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Address</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">111 W.App Ave. Suite 123, Sunway, CA</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">ZIP Code</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">94086</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Country</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">USA</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Card number</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">**** 2086</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-3 col-lg-2">
+                    <label class="text-secondary">Card type</label>
+                  </div>
+                  <div class="col-12 col-md-9 col-lg-10">
+                    <div class="mb-2">VISA</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="d-block d-md-flex">
+              <button type="button" class="btn btn-outline-success d-none d-md-inline mb-3" data-form-step="#payment">
+                <i class="fa fa-angle-left"></i>
+                &nbsp; Payment information
+              </button>
+              <div class="d-block d-md-inline ml-auto mb-3">
+                <button type="submit" class="btn btn-success btn-block">
+                  Complete order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {!!Form::close()!!}
     </div>
   </div>
-  <input type="hidden" name="precio" id="precio">
-  <input type="hidden" name="retencion" id="retencion">
-  <input type="hidden" id="token" name="token" value="<?php echo csrf_token(); ?>">
-</div>
-<script type="text/javascript">
-  var cuenta1 = 0;
-  var cuenta2 = 0;
-  var cuenta3 = 0;
-
-  function precarga(){
-    if(cuenta3==0){
-      tipo_usuario();
-    }
-    cuenta3++;
-  }
-
-  function tipo_usuario(){
-    var valorUsuario = $("#tipoUsuario").val();
-
-    if(valorUsuario == 'Farmacia'){
-      document.getElementById('juntaVigilancia').style.display = 'block';
-      document.getElementById('firma').style.display = 'none';
-      document.getElementById('sello').style.display = 'none';
-      document.getElementById('list2').style.display = 'none';
-      document.getElementById('list3').style.display = 'none';
-      document.getElementById('grupoEspecialidad').style.display = 'none';
-      document.getElementById('tablaEspecialidad').style.display = 'none';
-      document.getElementById('texto').style.display = 'none';
-      //Divisor
-      $('#divisor').addClass('col-md-6');
-      $('#divisor').addClass('col-sm-6');
-      $('#divisor').addClass('col-xs-12');
-      //Remover
-      $("#div_solo").removeClass();
-      $("#div_grupo").removeClass();
-      $("#div_junta").removeClass();
-      $("#div_sello").removeClass();
-      $("#div_firma").removeClass();
-    }else if(!(valorUsuario == 'Recepción' || valorUsuario == 'Enfermería' || valorUsuario == 'Laboaratorio' || valorUsuario == 'Ultrasonografía' || valorUsuario == 'Rayos X')){
-      document.getElementById('juntaVigilancia').style.display = 'block';
-      document.getElementById('firma').style.display = 'block';
-      document.getElementById('sello').style.display = 'block';
-      document.getElementById('list2').style.display = 'block';
-      document.getElementById('list3').style.display = 'block';
-      document.getElementById('grupoEspecialidad').style.display = 'block';
-      document.getElementById('tablaEspecialidad').style.display = 'table';
-      document.getElementById('texto').style.display = 'none';
-      //Divisor
-      $('#divisor').addClass('col-md-6');
-      $('#divisor').addClass('col-sm-6');
-      $('#divisor').addClass('col-xs-12');
-      //Remover
-      $("#div_solo").removeClass();
-      $("#div_grupo").removeClass();
-      $("#div_junta").removeClass();
-      $("#div_sello").removeClass();
-      $("#div_firma").removeClass();
-    }else if(!(valorUsuario == 'Recepción' || valorUsuario == 'Enfermería' )){
-      document.getElementById('juntaVigilancia').style.display = 'block';
-      document.getElementById('firma').style.display = 'block';
-      document.getElementById('sello').style.display = 'block';
-      document.getElementById('list2').style.display = 'block';
-      document.getElementById('list3').style.display = 'block';
-      document.getElementById('grupoEspecialidad').style.display = 'none';
-      document.getElementById('tablaEspecialidad').style.display = 'none';
-      document.getElementById('texto').style.display = 'none';
-
-      $('#divisor').removeClass();
-      //Solo
-      $('#div_solo').addClass('col-md-12');
-      $('#div_solo').addClass('col-sm-12');
-      $('#div_solo').addClass('col-xs-12');
-      //Junta
-      $('#div_junta').addClass('col-md-6');
-      $('#div_junta').addClass('col-sm-6');
-      $('#div_junta').addClass('col-xs-12');
-      //Grupo
-      $('#div_junta').addClass('col-md-12');
-      $('#div_junta').addClass('col-sm-12');
-      $('#div_junta').addClass('col-xs-12');
-      //Sello
-      $('#div_sello').addClass('col-md-6');
-      $('#div_sello').addClass('col-sm-6');
-      $('#div_sello').addClass('col-xs-12');
-      //Firma
-      $('#div_firma').addClass('col-md-6');
-      $('#div_firma').addClass('col-sm-6');
-      $('#div_firma').addClass('col-xs-12');
-    }else{
-      document.getElementById('juntaVigilancia').style.display = 'none';
-      document.getElementById('firma').style.display = 'none';
-      document.getElementById('sello').style.display = 'none';
-      document.getElementById('list2').style.display = 'none';
-      document.getElementById('list3').style.display = 'none';
-      document.getElementById('grupoEspecialidad').style.display = 'none';
-      document.getElementById('tablaEspecialidad').style.display = 'none';
-      document.getElementById('texto').style.display = 'block';
-      //Divisor
-      $('#divisor').addClass('col-md-6');
-      $('#divisor').addClass('col-sm-6');
-      $('#divisor').addClass('col-xs-12');
-      //Remover
-      $("#div_solo").removeClass();
-      $("#div_grupo").removeClass();
-      $("#div_junta").removeClass();
-      $("#div_sello").removeClass();
-      $("#div_firma").removeClass();
-    }
-  }
-
-  function archivo(evt){
-    var files = evt.target.files;
-
-    for(var i = 0, f; f = files[i]; i++){
-      if(!f.type.match('image.*')){
-        continue;
-      }
-
-      var reader = new FileReader();
-
-      reader.onload = (function(theFile){
-        return function(e){
-          document.getElementById('list').innerHTML = ['<img style="height: 200px" src = "', e.target.result,'"/>'].join('');
-        };
-      })(f);
-      reader.readAsDataURL(f);
-    }
-  }
-
-  function archivo2(evt){
-    var files = evt.target.files;
-
-    for(var i = 0, f; f = files[i]; i++){
-      if(!f.type.match('image.*')){
-        continue;
-      }
-
-      var reader = new FileReader();
-
-      reader.onload = (function(theFile){
-        return function(e){
-          document.getElementById('list2').innerHTML = ['<img style="height: 75px" src = "', e.target.result,'"/>'].join('');
-        };
-      })(f);
-      reader.readAsDataURL(f);
-    }
-  }
-
-  function archivo3(evt){
-    var files = evt.target.files;
-
-    for(var i = 0, f; f = files[i]; i++){
-      if(!f.type.match('image.*')){
-        continue;
-      }
-
-      var reader = new FileReader();
-
-      reader.onload = (function(theFile){
-        return function(e){
-          document.getElementById('list3').innerHTML = ['<img style="height: 75px" src = "', e.target.result,'"/>'].join('');
-        };
-      })(f);
-      reader.readAsDataURL(f);
-    }
-  }
-
-  function verAlerta2() {
-    if(cuenta2 == 0){
-      new PNotify({
-        title: 'Nota',
-        text: 'Solamente las especialidades agregadas a la tabla serán almacenadas,'+
-        ' y la primera será tomada como especialidad y las demás como subespecialidades.',
-        type: 'info',
-        nonblock:{
-          nonblock : false
-        },
-        styling: 'bootstrap3'
-      });
-      cuenta2++;
-    }
-  }
-
-  function verAlerta1() {
-    if(cuenta1 == 0){
-      new PNotify({
-        title: 'Nota',
-        text: 'Solamente los números de telefono agregados a la tabla serán almacenados,',
-        type: 'info',
-        nonblock:{
-          nonblock : false
-        },
-        styling: 'bootstrap3'
-      });
-      cuenta1++;
-    }
-  }
-
-  document.getElementById('foto').addEventListener('change', archivo, false);
-  document.getElementById('firma_file').addEventListener('change', archivo2, false);
-  document.getElementById('sello_file').addEventListener('change', archivo3, false);
-</script>
+@endsection

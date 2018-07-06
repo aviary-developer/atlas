@@ -1,330 +1,237 @@
 @extends('welcome')
 @section('layout')
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">Usuarios</li>
-    </ol>
-  </nav>
+  <?php
+  $estadoOpuesto=true;
+  ?>
+  <h1>Usuarios</h1>
   <div class="container-fluid">
-    <div class="nav-tabs-responsive">
-      <ul class="nav nav-tabs-progress nav-tabs-3 mb-3">
-        <li class="nav-item">
-          <a href="#personal" class="nav-link active" data-toggle="tab">
-            <span class="font-lg">1.</span> Datos personales
-            <small class="d-block text-secondary">
-              Información personal del usuario
-            </small>
+    <div class="row">
+      <div class="col-md-7 col-xs-12">
+        <div class="form-group">
+          <div class="btn-group">
+          <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
+          <a href={!! asset('/usuarios/')!!} class="btn btn-dark btn-sm"><i class="fa fa-user"></i> Mi Perfil</a>
+          <a href="" class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
+          <a href="" class="btn btn-dark btn-sm">
+            @if ($estadoOpuesto)
+              <i class="fa fa-check"></i> Activos
+              <span class="label label-success"></span>
+            @else
+              <i class="fa fa-trash"></i> Papelera
+              <span class="label label-warning"></span>
+            @endif
           </a>
-        </li>
-        <li class="nav-item">
-          <a href="#account" class="nav-link" data-toggle="tab">
-            <span class="font-lg">2.</span> Datos de usuario
-            <small class="d-block text-secondary">
-              Información para uso del sistema
-            </small>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#confirmation" class="nav-link" data-toggle="tab">
-            <span class="font-lg">3.</span> Confirmación de datos
-            <small class="d-block text-secondary">
-              Resumen de los datos registrados previo a guardarlos
-            </small>
-          </a>
-        </li>
-      </ul>
-      {!!Form::open(['class' =>'tab-content','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
-        <div id="personal" class="tab-pane show active">
-          <div class="mb-3">
-            <a href="#account-collapse" data-toggle="collapse">
-              <span class="font-lg">1.</span> Datos personales
-              <small class="d-block text-secondary">
-                Información personal del usuario
-              </small>
-            </a>
-          </div>
-          <div id="personal-collapse" class="collapse" data-parent="#formUsuario">
-            <div class="text-secondary mb-3">
-              <small>Paso 1 de 3</small>
-            </div>
-            <div class="row">
-              <div class="col-12 col-lg-6">
-                <div class="form-group">
-                  <label>Nombre</label>
-                    {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre del nuevo usuario']) !!}
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="form-group">
-                  <label>Apellido</label>
-                    {!! Form::text('apellido',null,['class'=>'form-control','placeholder'=>'Apellido del nuevo usuario']) !!}
-                </div>
-              </div>
-            </div>
-                <div class="row">
-                  <div class="col-2 col-md-2 col-lg-2">
-                    <div class="form-group">
-                      <label>Fecha nacimiento</label>
-                      @php
-                        $hoy = Carbon\Carbon::now();
-                        $hoy = $hoy->subYears(12);
-                        /*if($create){
-                          $fecha = $fecha->subYears(12);
-                        }*/
-                      @endphp
-                      {!! Form::date('fechaNacimiento',$hoy,['max'=>$hoy->format('Y-m-d'),'class'=>'form-control']) !!}
-                    </div>
-                  </div>
-                  <div class="col-2 col-md-2 col-lg-2">
-                    <div class="form-group">
-                      <label>Sexo</label>
-                      <select class="form-control">
-                        <option>Masculino</option>
-                        <option>Femenino</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-2 col-md-2 col-lg-2">
-                    <div class="form-group">
-                      <label>DUI</label>
-                      <input type="text" class="form-control" placeholder="00000000-0">
-                    </div>
-                  </div>
-                <div class="col-12 col-md-6 col-lg-6">
-                  <div class="form-group">
-                    <label>Correo</label>
-                    <input type="text" class="form-control" placeholder="ejemplo@correo.com">
-                  </div>
-                </div>
-              </div>
-            <div class="row">
-              <div class="col-12 col-md-4 col-lg-4">
-                <div class="form-group">
-                  <label>Teléfono</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
-              <div class="col-2 col-md-2 col-lg-2">
-                <div class="form-group">
-                  <label></label>
-                  <button type="button" class="btn btn-primary ml-auto">Agregar teléfono</button>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6">
-                <div class="form-group">
-                  <label>Dirección</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-6">
-              <table class="table" id='tablaTelefono'>
-                <thead>
-                  <th>Teléfono</th>
-                  <th style="width : 80px">Acción</th>
-                </thead>
-                <tbody>
-                      <tr>
-                        <td>
-                          <input type="hidden" id="" value="" name="tel_id[]">
-                          <input type="hidden" value="" name="tel_tel[]">
-                          <button type="button" name="button" class="btn btn-danger btn-xs" id="eliminar_telefono_antiguo">
-                            <i class="fas fa-trash"></i>
-                          </button>
-                        </td>
-                      </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-            <div class="d-none d-md-block">
-              <hr>
-              <div class="d-flex mb-3">
-                <button type="button" class="btn btn-success ml-auto" data-form-step="#payment">
-                   Datos de usuario &nbsp;
-                  <i class="fa fa-angle-right"></i>
-                </button>
-              </div>
-            </div>
-          </div>
+          <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
         </div>
-        <div id="account" class="tab-pane">
-          <div class="mb-3">
-            <a href="#account-collapse" data-toggle="collapse">
-              <span class="font-lg">2.</span> Personal information
-              <small class="d-block text-secondary">
-                Lorem ipsum dolor sit amet, venenatis adipiscing
-              </small>
-            </a>
-          </div>
-          <div id="account-collapse" class="collapse show" data-parent="#formUsuario">
-            <div class="text-secondary mb-3">
-              <small>Paso 2 de 3</small>
-            </div>
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-6">
-                <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-6">
-                <div class="form-group">
-                  <label>E-mail</label>
-                  <input type="text" class="form-control">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-6">
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control">
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-6">
-                <div class="form-group">
-                  <label>Confirm password</label>
-                  <input type="password" class="form-control">
-                </div>
-              </div>
-            </div>
-            <div class="d-none d-md-block">
-              <hr>
-              <div class="d-flex mb-3">
-                <button type="button" class="btn btn-outline-success" data-form-step="#account">
-                  <i class="fa fa-angle-left"></i>
-                  &nbsp; Datos personales
-                </button>
-                <button type="button" class="btn btn-success ml-auto" data-form-step="#personal">
-                  Confirmación de información &nbsp;
-                  <i class="fa fa-angle-right"></i>
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-        <div id="confirmation" class="tab-pane">
-          <div class="mb-3">
-            <a href="#confirmation-collapse" data-toggle="collapse">
-              <span class="font-lg">4.</span> Confirm your details
-              <small class="d-block text-secondary">
-                Lorem ipsum dolor sit amet, venenatis adipiscing
-              </small>
-            </a>
-          </div>
-          <div id="confirmation-collapse" class="collapse" data-parent="#formUsuario">
-            <div class="text-secondary mb-3">
-              <small>Paso 3 de 3</small>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Username</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">john_doe</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Email ID</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">john_doe@email.com</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Full name</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">John Doe</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Gender</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">Male</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Date of birth</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">January 10, 1980</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Phone number</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">John Doe</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Address</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">111 W.App Ave. Suite 123, Sunway, CA</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">ZIP Code</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">94086</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Country</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">USA</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Card number</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">**** 2086</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-3 col-lg-2">
-                    <label class="text-secondary">Card type</label>
-                  </div>
-                  <div class="col-12 col-md-9 col-lg-10">
-                    <div class="mb-2">VISA</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <div class="d-block d-md-flex">
-              <button type="button" class="btn btn-outline-success d-none d-md-inline mb-3" data-form-step="#payment">
-                <i class="fa fa-angle-left"></i>
-                &nbsp; Payment information
-              </button>
-              <div class="d-block d-md-inline ml-auto mb-3">
-                <button type="submit" class="btn btn-success btn-block">
-                  Complete order
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        {!!Form::close()!!}
+      </div>
     </div>
+    <div class="table-responsive">
+    <table class="table" id="tablaIndex">
+      <thead>
+      <th>#</th>
+      <th>Usuario</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>DUI</th>
+      <th>Opciones</th>
+      </thead>
+      <tbody>
+        <tr>
+      <td>1</td>
+      <td>HqzMer</td>
+      <td>Alejandro</td>
+      <td>Henríquez</td>
+      <td>04890578-1</td>
+      <td>OPCIONES</td>
+
+    </tr>
+    <tr>
+               <td>Tiger Nixon</td>
+               <td>System Architect</td>
+               <td>Edinburgh</td>
+               <td>61</td>
+               <td>2011/04/25</td>
+               <td>$320,800</td>
+           </tr>
+           <tr>
+               <td>Garrett Winters</td>
+               <td>Accountant</td>
+               <td>Tokyo</td>
+               <td>63</td>
+               <td>2011/07/25</td>
+               <td>$170,750</td>
+           </tr>
+           <tr>
+               <td>Ashton Cox</td>
+               <td>Junior Technical Author</td>
+               <td>San Francisco</td>
+               <td>66</td>
+               <td>2009/01/12</td>
+               <td>$86,000</td>
+           </tr>
+           <tr>
+               <td>Cedric Kelly</td>
+               <td>Senior Javascript Developer</td>
+               <td>Edinburgh</td>
+               <td>22</td>
+               <td>2012/03/29</td>
+               <td>$433,060</td>
+           </tr>
+           <tr>
+               <td>Airi Satou</td>
+               <td>Accountant</td>
+               <td>Tokyo</td>
+               <td>33</td>
+               <td>2008/11/28</td>
+               <td>$162,700</td>
+           </tr>
+           <tr>
+               <td>Brielle Williamson</td>
+               <td>Integration Specialist</td>
+               <td>New York</td>
+               <td>61</td>
+               <td>2012/12/02</td>
+               <td>$372,000</td>
+           </tr>
+           <tr>
+               <td>Herrod Chandler</td>
+               <td>Sales Assistant</td>
+               <td>San Francisco</td>
+               <td>59</td>
+               <td>2012/08/06</td>
+               <td>$137,500</td>
+           </tr>
+           <tr>
+               <td>Rhona Davidson</td>
+               <td>Integration Specialist</td>
+               <td>Tokyo</td>
+               <td>55</td>
+               <td>2010/10/14</td>
+               <td>$327,900</td>
+           </tr>
+           <tr>
+               <td>Colleen Hurst</td>
+               <td>Javascript Developer</td>
+               <td>San Francisco</td>
+               <td>39</td>
+               <td>2009/09/15</td>
+               <td>$205,500</td>
+           </tr>
+           <tr>
+               <td>Sonya Frost</td>
+               <td>Software Engineer</td>
+               <td>Edinburgh</td>
+               <td>23</td>
+               <td>2008/12/13</td>
+               <td>$103,600</td>
+           </tr>
+           <tr>
+               <td>Jena Gaines</td>
+               <td>Office Manager</td>
+               <td>London</td>
+               <td>30</td>
+               <td>2008/12/19</td>
+               <td>$90,560</td>
+           </tr>
+           <tr>
+               <td>Quinn Flynn</td>
+               <td>Support Lead</td>
+               <td>Edinburgh</td>
+               <td>22</td>
+               <td>2013/03/03</td>
+               <td>$342,000</td>
+           </tr>
+           <tr>
+               <td>Charde Marshall</td>
+               <td>Regional Director</td>
+               <td>San Francisco</td>
+               <td>36</td>
+               <td>2008/10/16</td>
+               <td>$470,600</td>
+           </tr>
+           <tr>
+               <td>Haley Kennedy</td>
+               <td>Senior Marketing Designer</td>
+               <td>London</td>
+               <td>43</td>
+               <td>2012/12/18</td>
+               <td>$313,500</td>
+           </tr>
+           <tr>
+               <td>Tatyana Fitzpatrick</td>
+               <td>Regional Director</td>
+               <td>London</td>
+               <td>19</td>
+               <td>2010/03/17</td>
+               <td>$385,750</td>
+           </tr>
+           <tr>
+               <td>Michael Silva</td>
+               <td>Marketing Designer</td>
+               <td>London</td>
+               <td>66</td>
+               <td>2012/11/27</td>
+               <td>$198,500</td>
+           </tr>
+           <tr>
+               <td>Paul Byrd</td>
+               <td>Chief Financial Officer (CFO)</td>
+               <td>New York</td>
+               <td>64</td>
+               <td>2010/06/09</td>
+               <td>$725,000</td>
+           </tr>
+           <tr>
+               <td>Gloria Little</td>
+               <td>Systems Administrator</td>
+               <td>New York</td>
+               <td>59</td>
+               <td>2009/04/10</td>
+               <td>$237,500</td>
+           </tr>
+           <tr>
+               <td>Bradley Greer</td>
+               <td>Software Engineer</td>
+               <td>London</td>
+               <td>41</td>
+               <td>2012/10/13</td>
+               <td>$132,000</td>
+           </tr>
+           <tr>
+               <td>Dai Rios</td>
+               <td>Personnel Lead</td>
+               <td>Edinburgh</td>
+               <td>35</td>
+               <td>2012/09/26</td>
+               <td>$217,500</td>
+           </tr>
+           <tr>
+               <td>Jenette Caldwell</td>
+               <td>Development Lead</td>
+               <td>New York</td>
+               <td>30</td>
+               <td>2011/09/03</td>
+               <td>$345,000</td>
+           </tr>
+           <tr>
+               <td>Yuri Berry</td>
+               <td>Chief Marketing Officer (CMO)</td>
+               <td>New York</td>
+               <td>40</td>
+               <td>2009/06/25</td>
+               <td>$675,000</td>
+           </tr>
+           <tr>
+               <td>Caesar Vance</td>
+               <td>Pre-Sales Support</td>
+               <td>New York</td>
+               <td>21</td>
+               <td>2011/12/12</td>
+               <td>$106,450</td>
+           </tr>
+         </tbody>
+  </table>
+  </div>
   </div>
 @endsection

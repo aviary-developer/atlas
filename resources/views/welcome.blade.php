@@ -283,6 +283,7 @@
   <script src= {{asset("js/admin4b.min.js")}}></script>
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.min.js")}}></script>
+  <script src= {{asset("js/generalidades.js")}}></script>
   {{--  <script src="./assets/js/admin4b.docs.js"></script>  --}}
 </body>
 
