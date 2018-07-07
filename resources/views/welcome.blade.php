@@ -201,6 +201,7 @@
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
   <script src= {{asset("js/grados.js")}}></script>
+  <script src= {{asset("js/generalidades.js")}}></script>
   {{--  <script src="./assets/js/admin4b.docs.js"></script>  --}}
 </body>
 
