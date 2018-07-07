@@ -191,90 +191,7 @@
           </ul>
         </nav>
         <div class="container-fluid">
-                @yield('layout')
-          <!--
-          <h1>Introduction</h1>
-          <p>Admin 4B is an open source admin template built on top of
-            <a href="https://getbootstrap.com/">Bootstrap 4</a>. The source code can be found on the
-            <a href="https://github.com/marxjmoura/admin4b">GitHub repo</a>.</p>
-          <h2>Quick start</h2>
-          <p>This template uses many bootstrap features, so you need to have some knowledge in this toolkit. Before you continue,
-            please, take a look at the
-            <a href="https://getbootstrap.com/">bootstrap documentation</a>.</p>
-          <p>For the template work properly you need to add Bootstrap dependencies:
-            <a href="https://jquery.com/">jQuery</a> and
-            <a href="https://popper.js.org/">Popper</a>. Also, add
-            <a href="http://fontawesome.io/">Font Awesome</a> and
-            <a href="http://simplelineicons.com/">Simple Line Icons</a> CSS files. Then
-            <a href="https://github.com/marxjmoura/admin4b#quick-start">download the latest release</a> of the template Admin 4B.</p>
-          <div class="callout callout-warning">
-            <h5>Bootstrap files</h5>
-            <p>You do
-              <strong>not</strong> need to reference bootstrap files because they are already included in
-              <code>admin4b.css</code> and
-              <code>admin4b.js</code>.</p>
-          </div>
-          <h3>CSS</h3>
-          <p>Copy-paste the stylesheet
-            <code>&lt;link&gt;</code> into your
-            <code>&lt;head&gt;</code> after the font stylesheets to load our CSS.</p>
-          <div class="source-code">
-            <a href="#css-setup" data-toggle="collapse">
-              <i class="fa fa-code"></i> Source code</a>
-            <div id="css-setup" class="sidebar-nav-group collapse">
-              <pre><code class="html">&lt;!-- link to Font Awesome CSS --&gt;
-&lt;!-- link to Simple Line Icons CSS --&gt;
-&lt;link rel="stylesheet" href="admin4b.min.css"&gt;
-</code></pre>
-            </div>
-          </div>
-          <h3>JS</h3>
-          <p>Place the following
-            <code>&lt;script&gt;</code> tags near the end of your pages, right before the closing
-            <code>&lt;body&gt;</code> tag. Bootstrap denpencies must come first and then our JavaScript plugins.</p>
-          <div class="source-code">
-            <a href="#js-setup" data-toggle="collapse">
-              <i class="fa fa-code"></i> Source code</a>
-            <div id="js-setup" class="sidebar-nav-group collapse">
-              <pre><code class="html">&lt;!-- script to jQuery --&gt;
-&lt;!-- script to Popper --&gt;
-&lt;script src="admin4b.min.js"&gt;&lt;/script&gt;
-</code></pre>
-            </div>
-          </div>
-          <h2>Initial setup</h2>
-          <p>An example code of the initial setup can be seen below.</p>
-          <div class="source-code">
-            <a href="#initial-setup" data-toggle="collapse">
-              <i class="fa fa-code"></i> Source code</a>
-            <div id="initial-setup" class="sidebar-nav-group collapse">
-              <pre><code class="html">&lt;!doctype html&gt;
-&lt;html lang="en"&gt;
-  &lt;head&gt;
-    &lt;meta charset="utf-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
-    &lt;!-- link to Font Awesome CSS --&gt;
-    &lt;!-- link to Simple Line Icons CSS --&gt;
-    &lt;link rel="stylesheet" href="admin4b.min.css"&gt;
-    &lt;title&gt;Admin 4B&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;!-- script to jQuery --&gt;
-    &lt;!-- script to Popper --&gt;
-    &lt;script src="admin4b.min.js"&gt;&lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-            </div>
-          </div>
-          <div class="callout callout-info">
-            <h5>JavaScript initialization</h5>
-            <p>All components (including bootstrap) are automatically initialized by the template.</p>
-          </div>
-          <h2>"What's next?"</h2>
-          <p>
-            <a href="./pages/layout/sidebar.html">Configure the sidebar navigation</a>
-          </p>-->
+            @yield('layout')
         </div>
       </div>
     </div>
@@ -282,7 +199,8 @@
   <script src= {{asset("js/app.js")}}></script>
   <script src= {{asset("js/admin4b.min.js")}}></script>
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
-  <script src= {{asset("js/datatables.min.js")}}></script>
+  <script src= {{asset("js/datatables.js")}}></script>
+  <script src= {{asset("js/grados.js")}}></script>
   {{--  <script src="./assets/js/admin4b.docs.js"></script>  --}}
 </body>
 
