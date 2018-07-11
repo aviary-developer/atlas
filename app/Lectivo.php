@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lectivo extends Model
 {
-    //
+    protected $fillable = ['anio'];
 }

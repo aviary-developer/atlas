@@ -1,43 +1,57 @@
 $(document).ready(function () {
     $("#new-lectivo").on("click", function (e) {
         e.preventDefault();
-        // var notice = new PNotify({
-        //     text: $('#form_notice').html(),
-        //     icon: false,
-        //     width: 'auto',
-        //     hide: false,
-        //     buttons: {
-        //         closer: false,
-        //         sticker: false
-        //     },
-        //     insert_brs: false
-        // });
-        // notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
-        //     notice.remove();
-        // }).submit(function () {
-        //     var username = $(this).find('input[name=username]').val();
-        //     if (!username) {
-        //         alert('Please provide a username.');
-        //         return false;
-        //     }
-        //     notice.update({
-        //         title: 'Welcome',
-        //         text: 'Successfully logged in as ' + username,
-        //         icon: true,
-        //         width: PNotify.prototype.options.width,
-        //         hide: true,
-        //         buttons: {
-        //             closer: true,
-        //             sticker: true
-        //         },
-        //         type: 'success'
-        //     });
-        //     return false;
-        // });
+        (new PNotify({
+            title: '<span class="badge badge-light">Nuevo</span> Año Lectivo',
+            text: 'Ingrese el nuevo año lectivo',
+            icon: false,
+            type: 'info',
+            hide: false,
+            confirm: {
+                buttons: [{
+                    text: "Guardar"
+                }, {
+                    text: "Cancelar"
+                }],
+                prompt: true
+            },
+            buttons: {
+                closer: false,
+                sticker: false
+            },
+            history: {
+                history: false
+            },
+            addclass: 'stack-modal',
+            stack: {
+                'dir1': 'down',
+                'dir2': 'right',
+                'modal': true
+            }
+        })).get().on('pnotify.confirm', function (e, notice, val) {
+            $.ajax({
+                type: 'post',
+                url: '/atlas/public/grados',
+                data: {
+                    anio: val,
+                },
+                success: function (r) {
+                    if (r == 1) {
+                        new PNotify({
+                            type: 'success',
+                            text: 'Guardado'
+                        })
+                    } else {
+                        new PNotify({
+                            type: 'error',
+                            text: 'Guardado'
+                        })
+                    }
+                }
+            });
+            console.log();
+        }).on('pnotify.cancel', function () {
 
-        new PNotify({
-            title: 'Regular Notice',
-            text: 'Check me out! I\'m a notice.'
         });
     });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lectivo;
 use Illuminate\Http\Request;
+use DB;
 
 class LectivoController extends Controller
 {
@@ -35,7 +36,15 @@ class LectivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try{
+            Lectivo::create($request->All());
+            DB::commit();
+            return 1;
+        }catch(Exception $e){
+            DB::rollback();
+            return -1;
+        }
     }
 
     /**
