@@ -10,17 +10,13 @@
   {!!Html::style('css/admin4b.css')!!}
   {!!Html::style('css/all.css')!!}
   {!!Html::style('css/datatables.min.css')!!}
+  {!!Html::style('css/pnotify.custom.min.css')!!}
 </head>
 
 <body>
   <div class="app">
     <div class="app-body">
       <div class="app-sidebar sidebar-slide-left">
-        <div class="text-right">
-          <button type="button" class="btn btn-sidebar" data-dismiss="sidebar">
-            <span class="x"></span>
-          </button>
-        </div>
         <div class="sidebar-header">
           <img src={{asset("img/john-doe.png")}} class="user-photo">
           <p class="username">John Doe
@@ -197,12 +193,13 @@
     </div>
   </div>
   <script src= {{asset("js/app.js")}}></script>
+  {{--  <script src= {{asset("js/jquery-3.3.1.js")}}></script>
+  <script src= {{asset("js/popper.js")}}></script>  --}}
   <script src= {{asset("js/admin4b.min.js")}}></script>
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
   <script src= {{asset("js/grados.js")}}></script>
   <script src= {{asset("js/generalidades.js")}}></script>
-  {{--  <script src="./assets/js/admin4b.docs.js"></script>  --}}
 </body>
 
 </html>

@@ -13,6 +13,7 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/template/js/admin4b.min.js', 'public/js')
+    .sass('resources/assets/sass/app.scss','public/css')
     .sass('resources/assets/template/scss/admin4b.scss', 'public/css');
 
 mix.styles([
