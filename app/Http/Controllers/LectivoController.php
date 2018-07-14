@@ -15,7 +15,15 @@ class LectivoController extends Controller
      */
     public function index()
     {
-        return view('Lectivos.index');
+        $lectivos = Lectivo::orderBy('anio','desc')->get();
+        $anio_activo = Lectivo::where('estado',false)->first();
+        if($anio_activo == null){
+            $anio_activo = $lectivos[0];
+        }
+        return view('Lectivos.index',compact(
+            'lectivos',
+            'anio_activo'
+        ));
     }
 
     /**
@@ -90,5 +98,29 @@ class LectivoController extends Controller
     public function destroy(lectivo $lectivo)
     {
         //
+    }
+
+    public function activar(Request $request){
+        $id = $request->id;
+        DB::beginTransaction();
+        try{
+            $lectivo = Lectivo::find($id);
+            if($lectivo->estado != true){
+                $lectivo->estado = false;
+            }else{
+                $activo = Lectivo::where('estado',false)->first();
+                if($activo != null){
+                    $activo->estado = true;
+                    $activo->save();
+                }
+                $lectivo->estado = false;
+            }
+            $lectivo->save();
+            DB::commit();
+            return 1;
+        }catch(Exception $e){
+            DB::rollback();
+            return -1;
+        }
     }
 }

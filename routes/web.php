@@ -22,3 +22,4 @@ Route::get('/', function () {
 
 //Rutas de años lectivos
 Route::resource('grados','LectivoController');
+Route::post('grados/activar','LectivoController@activar')->name('grados.activar');
