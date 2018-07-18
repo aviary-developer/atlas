@@ -1,28 +1,31 @@
 <div class="row">
   <div class="col-12 col-md-6 col-lg-6">
     <div class="form-group">
-      <label>Username</label>
-      <input type="text" class="form-control">
+      <label>Usuario</label>
+      {!! Form::text('name',null,['class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
     </div>
   </div>
-  <div class="col-12 col-md-6 col-lg-6">
+  <div class="col-12 col-md-3 col-lg-3">
     <div class="form-group">
-      <label>E-mail</label>
-      <input type="text" class="form-control">
+      <label>Tipo de usuario</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+        <span class="fa fa-user form-control" aria-hidden="true"></span>
+        </div>
+        <select class="form-control" name="tipoUsuario" id="tipoUsuario" onchange="tipo_usuario();">
+          @if($create)
+            <option value="Dirección">Dirección</option>
+            <option value="Subdirección">Subdirección</option>
+            <option value="Docente">Docente</option>
+          @endif
+        </select>
+      </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-12 col-md-6 col-lg-6">
+  <div class="col-12 col-md-3 col-lg-3">
     <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-control">
-    </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="form-group">
-      <label>Confirm password</label>
-      <input type="password" class="form-control">
+      <label>Contraseña</label>
+      {!! Form::text('password','ENA0000',['class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
     </div>
   </div>
 </div>

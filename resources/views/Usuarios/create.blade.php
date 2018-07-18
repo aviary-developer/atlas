@@ -2,6 +2,7 @@
 @section('layout')
   @php
     $create=true;
+    $fecha = Carbon\Carbon::now();
   @endphp
   <h1>Usuarios</h1>
   <nav aria-label="breadcrumb">

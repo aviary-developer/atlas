@@ -2,71 +2,127 @@
   <div class="col-12 col-lg-6">
     <div class="form-group">
       <label>Nombre</label>
-      {!!Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombres de usuario'])!!}
+      {!!Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombres de usuario', 'required'])!!}
     </div>
   </div>
   <div class="col-12 col-lg-6">
     <div class="form-group">
       <label>Apellido</label>
-      {!!Form::text('apellido',null,['class'=>'form-control','placeholder'=>'Apellidos de usuario'])!!}
-    </div>
-  </div>
-  <!--<div class="col-12 col-lg-6">
-    <div class="row">
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="form-group">
-          <label>Gender</label>
-          <select class="form-control">
-            <option></option>
-            <option>Female</option>
-            <option>Male</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="form-group">
-          <label>Date of birth</label>
-          <input type="text" class="form-control">
-        </div>
-      </div>
-    </div>
-  </div>-->
-</div>
-<div class="row">
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="form-group">
-      <label>Email</label>
-      <input type="text" class="form-control">
-    </div>
-  </div>
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="form-group">
-      <label>Phone number</label>
-      <input type="text" class="form-control">
+      {!!Form::text('apellido',null,['class'=>'form-control','placeholder'=>'Apellidos de usuario', 'required'])!!}
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-12 col-lg-6">
-    <div class="row">
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="form-group">
-          <label>Zip code</label>
-          <input type="text" class="form-control">
-        </div>
+  <div class="col-12 col-lg-3">
+    <div class="form-group">
+      <label>Fecha de nacimiento</label>
+      @php
+        $hoy = Carbon\Carbon::now();
+        $hoy = $hoy->subYears(12);
+        if($create){
+          $fecha = $fecha->subYears(12);
+        }
+      @endphp
+      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+    </div>
+  </div>
+  <div class="col-12 col-lg-3">
+    <div class="form-group">
+      <label>Sexo</label><br>
+      <div class="form-group">
+        <div id="radioBtn" class="btn-group">
+        <label class="radio radio-info">
+        <input type="radio" name="sexo" id="radioSexoM" checked> <span class="check-mark"></span>Masculino
+      </label> &nbsp
+      <label class="radio radio-danger">
+      <input type="radio" name="sexo" id="radioSexoF"> <span class="check-mark"></span>Femenino
+    </label>
       </div>
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="form-group">
-          <label>State</label>
-          <input type="text" class="form-control">
-        </div>
       </div>
     </div>
   </div>
+    <div class="col-12 col-lg-3">
+      <div class="form-group">
+        <label>DUI</label>
+        {!! Form::text('dui',null,['class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
+      </div>
+    </div>
+    <div class="col-12 col-lg-3">
+      <div class="form-group">
+        <label>Correo</label>
+      {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Dirección correo electrónico']) !!}
+      </div>
+    </div>
+</div>
+<div class="row">
   <div class="col-12 col-lg-6">
+    <label>Dirección</label>
+    {!! Form::textarea('direccion',null,['class'=>'form-control','placeholder'=>'Dirección del nuevo usuario','rows'=>'2', 'required']) !!}
+  </div>
+  <div class="col-12 col-lg-3">
     <div class="form-group">
-      <label>Home address</label>
-      <input type="text" class="form-control">
+      <label>Teléfono</label>
+      <div class="input-group">
+      {!! Form::text('telefono',null,['id'=>'telefonoUsuario','class'=>'form-control','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+        <div class="input-group-append">
+          <button type="button" name="button" class="btn btn-outline-primary" onclick="agregarTelefono();" data-toggle="tooltip" data-placement="top" title="Guardar teléfono">
+          <i class="fa fa-save"></i>
+          </button>
+        </button>
+    </div>
+    </div>
+</div>
+</div>
+  <div class="col-12 col-lg-3">
+    <div class="form-group">
+      <label></label>
+      <table class="table table-sm" id='tablaTelefonos'>
+        <thead>
+          <th>Teléfono</th>
+          <th style="width : 80px">Acción</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+<script>
+function agregarTelefono(){
+    var telefono=$('#telefonoUsuario').val();
+    if(telefono){
+      var tabla=$('#tablaTelefonos');
+      var html="<tr>"+
+      "<td>"+
+      "<input type='hidden' name='telefono[]' value = '"+telefono+"'/>"+
+      telefono+
+      "</td>"+
+      "<td>"+
+        "<button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarTelefono(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'>"+
+          "<i class='fa fa-trash'></i>"+
+        "</button>"+
+      "</td>"+
+      "</tr>";
+      tabla.append(html);
+    new PNotify({
+        type: 'success',
+        text: 'Agregado'
+    })
+    $('#telefonoUsuario').val("");
+  }else {
+    new PNotify({
+        type: 'error',
+        text: 'Ingrese número teléfono'
+    })
+  }
+  }
+
+function eliminarTelefono(telefono){
+    $(telefono).parent('td').parent('tr').remove();
+    new PNotify({
+        type: 'error',
+        text: 'Eliminado'
+    })
+  }
+  // });
+</script>
