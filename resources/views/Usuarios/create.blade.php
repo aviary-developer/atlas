@@ -30,7 +30,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="#resumen" class="nav-link" data-toggle="tab">
+        <a href="#resumen" class="nav-link" data-toggle="tab" onclick="vistaPrevia();">
           <span class="font-lg">3.</span> Resumen de datos
           <small class="d-block text-secondary">
             Vista previa de datos

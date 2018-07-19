@@ -2,13 +2,13 @@
   <div class="col-12 col-lg-6">
     <div class="form-group">
       <label>Nombre</label>
-      {!!Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombres de usuario', 'required'])!!}
+      {!!Form::text('nombre',null,['id'=>'nombre','class'=>'form-control','placeholder'=>'Nombres de usuario', 'required'])!!}
     </div>
   </div>
   <div class="col-12 col-lg-6">
     <div class="form-group">
       <label>Apellido</label>
-      {!!Form::text('apellido',null,['class'=>'form-control','placeholder'=>'Apellidos de usuario', 'required'])!!}
+      {!!Form::text('apellido',null,['id'=>'apellido','class'=>'form-control','placeholder'=>'Apellidos de usuario', 'required'])!!}
     </div>
   </div>
 </div>
@@ -23,7 +23,7 @@
           $fecha = $fecha->subYears(12);
         }
       @endphp
-      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'class'=>'form-control has-feedback-left']) !!}
+      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control has-feedback-left','required']) !!}
     </div>
   </div>
   <div class="col-12 col-lg-3">
@@ -32,10 +32,10 @@
       <div class="form-group">
         <div id="radioBtn" class="btn-group">
         <label class="radio radio-info">
-        <input type="radio" name="sexo" id="radioSexoM" checked> <span class="check-mark"></span>Masculino
+        <input type="radio" name="sexo" id="radioSexo" value="0" checked> <span class="check-mark"></span>Masculino
       </label> &nbsp
       <label class="radio radio-danger">
-      <input type="radio" name="sexo" id="radioSexoF"> <span class="check-mark"></span>Femenino
+      <input type="radio" name="sexo" id="radioSexo" value="1"> <span class="check-mark"></span>Femenino
     </label>
       </div>
       </div>
@@ -44,20 +44,20 @@
     <div class="col-12 col-lg-3">
       <div class="form-group">
         <label>DUI</label>
-        {!! Form::text('dui',null,['class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
+        {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
       </div>
     </div>
     <div class="col-12 col-lg-3">
       <div class="form-group">
         <label>Correo</label>
-      {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Dirección correo electrónico']) !!}
+      {!! Form::email('email',null,['id'=>'email','class'=>'form-control','placeholder'=>'Dirección correo electrónico', 'required']) !!}
       </div>
     </div>
 </div>
 <div class="row">
   <div class="col-12 col-lg-6">
     <label>Dirección</label>
-    {!! Form::textarea('direccion',null,['class'=>'form-control','placeholder'=>'Dirección del nuevo usuario','rows'=>'2', 'required']) !!}
+    {!! Form::textarea('direccion',null,['id'=>'direccion','class'=>'form-control','placeholder'=>'Dirección del nuevo usuario','rows'=>'2', 'required']) !!}
   </div>
   <div class="col-12 col-lg-3">
     <div class="form-group">
