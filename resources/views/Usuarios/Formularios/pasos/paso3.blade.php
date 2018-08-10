@@ -136,7 +136,7 @@ async function vistaPrevia(){
     $("#divCorreo").text(email);
     $("#divDireccion").text(direccion);
     await telefono.each(function(index, element){
-    tel=$(element).find("td").eq(0).html();
+    tel=$(element).find("td").eq(1).html();
  $("#divTelefono").append('<i class="icon-phone"></i> ');
  $("#divTelefono").append(tel);
  $("#divTelefono").append('<br>');

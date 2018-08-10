@@ -25,7 +25,11 @@
   <div class="col-12 col-md-3 col-lg-3">
     <div class="form-group">
       <label>Contraseña</label>
-      {!! Form::text('password','ENA0000',['id'=>'password','class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
+      @if($create)
+      {!! Form::text('password','ENA'.str_pad($nuevoId,4,"0",STR_PAD_LEFT),['id'=>'password','class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
+    @else
+      {!! Form::password('password',null,['id'=>'password','class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
+    @endif
     </div>
   </div>
 </div>

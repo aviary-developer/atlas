@@ -78,7 +78,7 @@
       <label></label>
       <table class="table table-sm" id='tablaTelefonos'>
         <thead>
-          <th>Teléfono</th>
+          <th colspan="2">Teléfono</th>
           <th style="width : 80px">Acción</th>
         </thead>
         <tbody>
@@ -92,17 +92,7 @@ function agregarTelefono(){
     var telefono=$('#telefonoUsuario').val();
     if(telefono){
       var tabla=$('#tablaTelefonos');
-      var html="<tr>"+
-      "<td>"+
-      "<input type='hidden' name='telefono[]' value = '"+telefono+"'/>"+
-      telefono+
-      "</td>"+
-      "<td>"+
-        "<button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarTelefono(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'>"+
-          "<i class='fa fa-trash'></i>"+
-        "</button>"+
-      "</td>"+
-      "</tr>";
+      var html="<tr><td><input type='hidden' name='telefono[]' value = '"+telefono+"'></input></td><td>"+telefono+"</td><td><button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarTelefono(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></button></td></tr>";
       tabla.append(html);
     new PNotify({
         type: 'success',

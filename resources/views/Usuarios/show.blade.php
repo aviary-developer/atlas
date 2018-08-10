@@ -3,7 +3,12 @@
   <?php
   $estadoOpuesto=true;
   ?>
-  <h1>Usuarios</h1>
+  <h2>
+        Usuario
+        <small>
+          {{ $usuario->nombre.' '.$usuario->apellido }}
+        </small>
+      </h2>
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-7 col-xs-12">
@@ -26,41 +31,5 @@
         </div>
       </div>
     </div>
-    <div class="table-responsive">
-    <table class="table" id="tablaIndex">
-      <thead>
-      <th>#</th>
-      <th>Usuario</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Rol usuario</th>
-      <th>DUI</th>
-      <th>Opciones</th>
-      </thead>
-      <tbody>
-        @if ($usuarios!=null)
-              @php
-              $correlativo = 1;
-              @endphp
-              @foreach ($usuarios as $usuario)
-           <tr>
-             <td>{{$correlativo}}</td>
-             <td>{{$usuario->name}}</td>
-             <td>{{$usuario->nombre}}</td>
-             <td>{{$usuario->apellido}}</td>
-             <td>{{$usuario->tipoUsuario}}</td>
-             <td>{{$usuario->dui}}</td>
-             <td>
-                @include('Usuarios.Formularios.desactivate')
-             </td>
-           </tr>
-           @php
-           $correlativo++;
-           @endphp
-         @endforeach
-       @endif
-         </tbody>
-  </table>
-  </div>
   </div>
 @endsection
