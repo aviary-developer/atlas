@@ -31,27 +31,29 @@
                 </div>
             </div>
             <div>
-                @foreach ($lectivos as $lectivo)
-                    <div class="col-12 m-1">
-                        <center>
-                            @if ($lectivo->id == $anio_activo->id)
-                                <button type="button" class="btn btn-sm btn-info col-10" onclick={{"selected_year(".$lectivo->anio.",".$lectivo->id.",".$lectivo->estado.",this)"}}>
-                                    {{$lectivo->anio}}
-                                    @if ($lectivo->estado == false)
-                                        <span class="badge badge-dark">A</span>
-                                    @endif
-                                </button>
-                            @else
-                                <button type="button" class="btn btn-sm btn-secundary col-10" onclick={{"selected_year(".$lectivo->anio.",".$lectivo->id.",".$lectivo->estado.",this)"}}>
-                                    {{$lectivo->anio}}
-                                    @if ($lectivo->estado == false)
-                                        <span class="badge badge-dark">A</span>
-                                    @endif
-                                </button>
-                            @endif
-                        </center>
-                    </div>
-                @endforeach
+                @if ($lectivos != null)
+                    @foreach ($lectivos as $lectivo)
+                        <div class="col-12 m-1">
+                            <center>
+                                @if ($lectivo->id == $anio_activo->id)
+                                    <button type="button" class="btn btn-sm btn-info col-10 btn-d" onclick={{"selected_year(".$lectivo->anio.",".$lectivo->id.",".$lectivo->estado.",this)"}}>
+                                        {{$lectivo->anio}}
+                                        @if ($lectivo->estado == false)
+                                            <span class="badge badge-dark">A</span>
+                                        @endif
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-sm btn-secundary col-10 btn-d" onclick={{"selected_year(".$lectivo->anio.",".$lectivo->id.",".$lectivo->estado.",this)"}}>
+                                        {{$lectivo->anio}}
+                                        @if ($lectivo->estado == false)
+                                            <span class="badge badge-dark">A</span>
+                                        @endif
+                                    </button>
+                                @endif
+                            </center>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
         <div id="tb2" class="tab-pane">

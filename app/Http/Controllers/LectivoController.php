@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lectivo;
+use App\Grado;
 use Illuminate\Http\Request;
 use DB;
 
@@ -17,8 +18,10 @@ class LectivoController extends Controller
     {
         $lectivos = Lectivo::orderBy('anio','desc')->get();
         $anio_activo = Lectivo::where('estado',false)->first();
-        if($anio_activo == null){
+        if($anio_activo == null && $lectivos->count() > 0){
             $anio_activo = $lectivos[0];
+        }else if($anio_activo == null){
+            $anio_activo = null;
         }
         return view('Lectivos.index',compact(
             'lectivos',
@@ -46,7 +49,16 @@ class LectivoController extends Controller
     {
         DB::beginTransaction();
         try{
-            Lectivo::create($request->All());
+            $lectivo = Lectivo::create($request->All());
+            /**Agregar los grados por cada año lectivo nuevo */
+            for($i = 0; $i < 12; $i++){
+                $grado = new Grado;
+                $grado->grado = Lectivo::nombre_grado($i);
+                $grado->seccion = "A";
+                $grado->f_lectivo = $lectivo->id;
+                $grado->save();
+            }
+
             DB::commit();
             return 1;
         }catch(Exception $e){
@@ -122,5 +134,11 @@ class LectivoController extends Controller
             DB::rollback();
             return -1;
         }
+    }
+
+    public function grado(Request $request){
+        $id = $request->id;
+        $lectivo = Lectivo::find($id);
+        return $lectivo->grados;
     }
 }

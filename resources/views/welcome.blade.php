@@ -126,10 +126,10 @@
           </li>
           <li class="sidebar-nav-group">
             <a href="#reference" class="sidebar-nav-link" data-toggle="collapse">
-              <i class="icon-notebook"></i> Reference</a>
+              <i class="icon-settings"></i> Configuración</a>
             <ul id="reference" class="collapse" data-parent="#sidebar-nav">
               <li>
-                <a href="./pages/reference/callout.html" class="sidebar-nav-link">Callout</a>
+                <a href="grados" class="sidebar-nav-link">Grados</a>
               </li>
               <li>
                 <a href="./pages/reference/code-highlight.html" class="sidebar-nav-link">Code highlight</a>

@@ -29,7 +29,9 @@ $(document).ready(function () {
                 'modal': true
             }
         })).get().on('pnotify.confirm', function (e, notice, val) {
-            if (Number.isInteger(val)) {
+            var valor = Number.parseInt(val);
+
+            if (Number.isInteger(valor)) {
                 $.ajax({
                     type: 'post',
                     url: '/atlas/public/grados',
@@ -37,11 +39,9 @@ $(document).ready(function () {
                         anio: val,
                     },
                     success: function (r) {
+                        console.log(r);
                         if (r == 1) {
-                            new PNotify({
-                                type: 'success',
-                                text: '¡Guardado!'
-                            });
+                            sessionStorage.setItem('msg', 'msg');
                             location.reload();
                         } else {
                             new PNotify({
@@ -139,8 +139,50 @@ function selected_year(year, id, estado, objeto) {
     } else {
         $("#sw-activo").prop('checked',false);
     }
-    $('.btn-info').each(function () {
+    $('.btn-d').each(function () {
         $(this).removeClass('btn-info').addClass('btn-secundary');
     });
     $(objeto).removeClass('btn-secundary').addClass('btn-info');
+    /**Impresion de grados */
+    $.ajax({
+        type: 'get',
+        url: '/atlas/public/grados/grados',
+        data: {
+            id: id,
+        },
+        success: function (r) {
+            var panel = $("#tablero-grado");
+            panel.empty();
+            console.log(r);
+            $(r).each(function (key, value) {
+                var html = '<div class="col-3 rounded text-center btn-light border">' +
+                    '<div class="flex-row pt-3">';
+
+                if (value.turno) {
+                    html += '<span class="text-warning far fa-sun" style="font-size: 300%" data-toggle="tooltip" title="Matutino"></span>';
+                } else {
+                    html += '<span class="text-info far fa-sun" style="font-size: 300%" data-toggle="tooltip" title="Vespertino"></span>';
+                }
+                html += '</div>' +
+                    '<div class="flex-row mt-2 border-bottom">' +
+                    '<span class="font-weight-bold">' +
+                    value.grado + ' ' + value.seccion +
+                    '</span>' +
+                    '</div>' +
+                    '<div class="flex-row">';
+                if (value.f_profesor != null) {
+                    html += '<span class="font-sm">Prof. Alejandro Antonio</span>';
+                } else {
+                    html += '<span class="badge badge-danger">Sin docente</span>';
+                }
+                html += '</div>' +
+                    '<div class="flex-row mb-2 btn-group">' +
+                    '<button type="button" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></button>' +
+                    '</div>' +
+                    ' </div>';
+
+                panel.append(html);
+            });
+        }
+    });
 }
