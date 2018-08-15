@@ -1,7 +1,7 @@
 @extends('welcome')
 @section('layout')
   @php
-    $create=true;
+    $create=false;
     $fecha = Carbon\Carbon::now();
   @endphp
   <h1>Usuarios</h1>
@@ -38,7 +38,7 @@
         </a>
       </li>
     </ul>
-    {!!Form::open(['class' =>'tab-content','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
+    {!!Form::model(['class' =>'tab-content','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
    @include('Usuarios.Formularios.form')
     {!!Form::close()!!}
 @endsection

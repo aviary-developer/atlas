@@ -38,7 +38,7 @@
     </div>
     <div id="resumen" class="tab-pane">
       <div class="mb-3">
-        <a href="#resumen-collapse" data-toggle="collapse">
+        <a href="#resumen-collapse" data-toggle="collapse" onclick="vistaPrevia();">
           <span class="font-lg">3.</span> Resumen de datos
           <small class="d-block text-secondary">
             Lorem ipsum dolor sit amet, venenatis adipiscing

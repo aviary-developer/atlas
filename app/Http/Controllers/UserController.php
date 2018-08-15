@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\TelefonoUsuario;
+use DB;
 
 class UserController extends Controller
 {
@@ -13,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('Usuarios.index');
+        $usuarios = User::where('estado',true)->get();
+        return view('Usuarios.index',compact('usuarios'));
     }
 
     /**
@@ -23,7 +27,15 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('Usuarios.create');
+        $usuarios=User::all();
+        $cantidadUsuarios=User::count();
+        if ($cantidadUsuarios>0) {
+        $id=(int)$usuarios->last()->id;
+      }else {
+        $id=0;
+      }
+        $nuevoId=$id+1;
+        return view('Usuarios.create',compact('nuevoId'));
     }
 
     /**
@@ -34,7 +46,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      DB::beginTransaction();
+        try{
+          $request['password']=bcrypt($request['password']);
+          $user = User::create($request->All());
+          $user->save();
+          if (isset($request->telefono)) {
+            foreach ($request->telefono as $k => $val) {
+              $telefono_usuario = new TelefonoUsuario;
+              $telefono_usuario->f_usuario = $user->id;
+              $telefono_usuario->telefono = $request->telefono[$k];
+              $telefono_usuario->save();
+            }
+          }
+          DB::commit();
+        }catch(Exception $e){
+          DB::rollback();
+          return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');
+        }
+        return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -45,7 +75,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      $usuario = User::find($id);
+      $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
+      return view('Usuarios.show',compact(
+        'usuario',
+        'telefonos'
+      ));
     }
 
     /**
@@ -56,7 +91,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+      $usuario = User::find($id);
+      $telefono_usuarios = TelefonoUsuario::where('f_usuario',$id)->get();
+      return view('Usuarios.edit',compact('usuario','telefono_usuarios'));
     }
 
     /**

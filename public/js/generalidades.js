@@ -15,3 +15,7 @@ $(document).ready(function() {
 
     $('#tablaIndex').DataTable();
 } );
+function convertirFormatoFecha(string) {
+       var info = string.split('-').reverse().join('/');
+       return info;
+  }
