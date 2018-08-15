@@ -31,12 +31,30 @@
       <label>Sexo</label><br>
       <div class="form-group">
         <div id="radioBtn" class="btn-group">
-        <label class="radio radio-info">
-        <input type="radio" name="sexo" id="radioSexo" value="0" checked> <span class="check-mark"></span>Masculino
-      </label> &nbsp
-      <label class="radio radio-danger">
-      <input type="radio" name="sexo" id="radioSexo" value="1"> <span class="check-mark"></span>Femenino
-    </label>
+          @if ($create)
+            <label class="radio radio-info">
+              <input type="radio" name="sexo" value="0" checked> <span class="check-mark"></span>Masculino
+            </label> &nbsp
+            <label class="radio radio-danger">
+              <input type="radio" name="sexo" value="1"> <span class="check-mark"></span>Femenino
+            </label>
+          @else
+            @if(!$usuario->sexo)
+              <label class="radio radio-info">
+                <input type="radio" name="sexo" value="0" checked> <span class="check-mark"></span>Masculino
+              </label> &nbsp
+              <label class="radio radio-danger">
+                <input type="radio" name="sexo" value="1"> <span class="check-mark"></span>Femenino
+              </label>
+            @else
+              <label class="radio radio-info">
+                <input type="radio" name="sexo" value="0"> <span class="check-mark"></span>Masculino
+              </label> &nbsp
+              <label class="radio radio-danger">
+                <input type="radio" name="sexo" value="1" checked> <span class="check-mark"></span>Femenino
+              </label>
+            @endif
+        @endif
       </div>
       </div>
     </div>
@@ -82,6 +100,21 @@
           <th style="width : 80px">Acción</th>
         </thead>
         <tbody>
+          @if (!$create)
+            @foreach ($telefonos_usuarios as $key => $telUser)
+              <tr>
+                <td>
+                  <input type="hidden" name="telefono[]" value = "{{$telUser->telefono}}"></input>
+                </td>
+                <td>{{$telUser->telefono}}</td>
+                <td>
+                  <button type = "button" name="button" class="btn btn-outline-danger btn-sm" onclick="eliminarTelefono(this);" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            @endforeach
+          @endif
         </tbody>
       </table>
     </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\TelefonoUsuario;
 use DB;
+use Hash;
 
 class UserController extends Controller
 {
@@ -92,8 +93,12 @@ class UserController extends Controller
     public function edit($id)
     {
       $usuario = User::find($id);
-      $telefono_usuarios = TelefonoUsuario::where('f_usuario',$id)->get();
-      return view('Usuarios.edit',compact('usuario','telefono_usuarios'));
+      $telefonos_usuarios = TelefonoUsuario::where('f_usuario',$id)->get();
+      $passwordDefault='ENA'.str_pad($usuario->id,4,"0",STR_PAD_LEFT);
+      if (Hash::check($passwordDefault, $usuario->password)) {
+        $password=1;
+      }
+      return view('Usuarios.edit',compact('usuario','telefonos_usuarios','password'));
     }
 
     /**
@@ -105,7 +110,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
