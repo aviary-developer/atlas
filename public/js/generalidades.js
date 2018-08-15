@@ -18,4 +18,6 @@ $(document).ready(function() {
 function convertirFormatoFecha(string) {
        var info = string.split('-').reverse().join('/');
        return info;
-  }
+}
+
+$("[data-tooltip = 'tooltip']").tooltip();

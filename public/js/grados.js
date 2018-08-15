@@ -128,6 +128,59 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".btn_editar_grado").on('click', function (e) {
+        e.preventDefault();
+        var notice = new PNotify({
+            title: '<span class="badge badge-primary">Editar</span> Grado',
+            text: $('#form_editar_grado').html(),
+            icon: false,
+            width: 'auto',
+            hide: false,
+            type: 'info',
+            confirm: {
+                buttons: [{
+                    text: "Aceptar"
+                }, {
+                    text: "Cancelar"
+                }],
+                confirm: true
+            },
+            buttons: {
+                closer: false,
+                sticker: false
+            },
+            addclass: 'stack-modal',
+            stack: {
+                'dir1': 'down',
+                'dir2': 'right',
+                'modal': true
+            },
+            insert_brs: false
+        });
+        notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+            notice.remove();
+        }).submit(function () {
+            var username = $(this).find('input[name=username]').val();
+            if (!username) {
+                alert('Please provide a username.');
+                return false;
+            }
+            notice.update({
+                title: 'Welcome',
+                text: 'Successfully logged in as ' + username,
+                icon: true,
+                width: PNotify.prototype.options.width,
+                hide: true,
+                buttons: {
+                    closer: true,
+                    sticker: true
+                },
+                type: 'success'
+            });
+            return false;
+        });
+    });
 });
 
 function selected_year(year, id, estado, objeto) {
@@ -146,7 +199,7 @@ function selected_year(year, id, estado, objeto) {
     /**Impresion de grados */
     $.ajax({
         type: 'get',
-        url: '/atlas/public/grados/grados',
+        url: '/atlas/public/grado/lista_grados',
         data: {
             id: id,
         },

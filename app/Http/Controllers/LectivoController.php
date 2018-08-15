@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lectivo;
 use App\Grado;
+use App\User;
 use Illuminate\Http\Request;
 use DB;
 
@@ -23,9 +24,13 @@ class LectivoController extends Controller
         }else if($anio_activo == null){
             $anio_activo = null;
         }
+
+        $docentes = User::where('estado',true)->orderBy('apellido')->get();
+
         return view('Lectivos.index',compact(
             'lectivos',
-            'anio_activo'
+            'anio_activo',
+            'docentes'
         ));
     }
 
@@ -138,7 +143,7 @@ class LectivoController extends Controller
 
     public function grado(Request $request){
         $id = $request->id;
-        $lectivo = Lectivo::find($id);
-        return $lectivo->grados;
+        $grados = Grado::where('f_lectivo',$id)->get();
+        return $grados;
     }
 }

@@ -49,7 +49,7 @@
                             @endif
                         </div>
                         <div class="flex-row mb-2 btn-group">
-                            <button type="button" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></button>
+                            <button type="button" class="btn btn-sm btn-primary btn_editar_grado" data-tooltip="tooltip" title="Editar"><i class="fas fa-edit"></i></button>
                             <button type="button" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></button>
                         </div>
                     </div>
@@ -63,4 +63,6 @@
     </div>
 </div>
 <input type="hidden" id="y-id" value={{($anio_activo != null)?$anio_activo->anio:null}}>
+
+@include('Lectivos.partes.editar_grado')
 @endsection
