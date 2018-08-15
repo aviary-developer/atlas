@@ -2,7 +2,7 @@
 @section('layout')
   @php
     $create=false;
-    $fecha = Carbon\Carbon::now();
+    $fecha = $usuario->fechaNacimiento;
   @endphp
   <h1>Usuarios</h1>
   <nav aria-label="breadcrumb">
@@ -38,7 +38,7 @@
         </a>
       </li>
     </ul>
-    {!!Form::model(['class' =>'tab-content','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
+    {!!Form::model($usuario,['class' =>'tab-content','route' =>['usuarios.update',$usuario->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
    @include('Usuarios.Formularios.form')
     {!!Form::close()!!}
 @endsection
