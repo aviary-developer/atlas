@@ -50,7 +50,7 @@
                       <td>{{$usuario->tipoUsuario}}</td>
                     </tr>
                     <tr>
-                      <th>Fecha de creación de solicitud</th>
+                      <th>Fecha de creación</th>
                       <td>{{ $usuario->created_at->formatLocalized('%d de %B de %Y a las %H:%M:%S') }}</td>
                     </tr>
                     <tr>

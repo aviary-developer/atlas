@@ -115,7 +115,7 @@ class UserController extends Controller
       try{
       $usuario = User::find($id);
       $usuario->fill($request->all());
-      if($request->passwordEdit){
+      if($request->nuevaContra){
         $usuario->password=bcrypt($request->passwordEdit);
       }
       if (isset($request->telefono)) {
@@ -144,6 +144,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $usuario = User::findOrFail($id);
+      $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
+      foreach($telefonos as $telefono){
+      $telefono->delete();
+    }
+    $usuario->estado=false;
+    $usuario->save();
+    return redirect('/usuarios')->with('mensaje', '¡Eliminado!');
     }
 }
