@@ -27,10 +27,4 @@
         </select>
       </div>
     </div>
-    <div class="flex-row">
-        <center>
-            <button type="button" class="btn btn-sm btn-primary">Guardar</button>
-            <button type="button" class="btn btn-sm btn-secundary">Cancelar</button>
-        </center>
-    </div>
 </fomr>

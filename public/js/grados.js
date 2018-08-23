@@ -129,11 +129,11 @@ $(document).ready(function () {
         });
     });
 
-    $(".btn_editar_grado").on('click', function (e) {
+    $("#nuevo_grado").click(async function (e) {
         e.preventDefault();
         var notice = new PNotify({
-            title: '<span class="badge badge-primary">Editar</span> Grado',
-            text: $('#form_editar_grado').html(),
+            title: '<span class="badge badge-light">Nuevo</span> Grado',
+            text: $('#form_nuevo_grado').html(),
             icon: false,
             width: 'auto',
             hide: false,
@@ -158,27 +158,44 @@ $(document).ready(function () {
             },
             insert_brs: false
         });
-        notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
-            notice.remove();
-        }).submit(function () {
-            var username = $(this).find('input[name=username]').val();
-            if (!username) {
-                alert('Please provide a username.');
-                return false;
+        var grado_numero = notice.get().find('select:eq(0)');
+        var anio = $("#y-id");
+        seccion_ajax(grado_numero, anio);
+
+        await notice.get().on('pnotify.confirm', function () {
+            var turno = $(this).find('input:eq(0)').is(':checked');
+            var docente = $(this).find("#docente").val();
+            var seccion = $(this).find('h1').text();
+            if (turno) {
+                turno = 1;
+            } else {
+                turno = 0;
             }
-            notice.update({
-                title: 'Welcome',
-                text: 'Successfully logged in as ' + username,
-                icon: true,
-                width: PNotify.prototype.options.width,
-                hide: true,
-                buttons: {
-                    closer: true,
-                    sticker: true
+
+            $.ajax({
+                type: 'post',
+                url: '/atlas/public/grado/nuevo',
+                data: {
+                    lectivo: anio.val(),
+                    turno: turno,
+                    docente: docente,
+                    grado: grado_numero.val(),
+                    seccion: seccion,
                 },
-                type: 'success'
+                success: function (r) {
+                    console.log(r);
+                    if (r == 1) {
+                        sessionStorage.setItem('msg', 'msg');
+                        location.reload(true);
+                    } else {
+                        new PNotify({
+                            type: 'error',
+                            title: '¡Error!',
+                            text: 'Algo salio mal'
+                        });
+                    }
+                }
             });
-            return false;
         });
     });
 });
@@ -204,38 +221,124 @@ function selected_year(year, id, estado, objeto) {
             id: id,
         },
         success: function (r) {
-            var panel = $("#tablero-grado");
+            var panel = $("#lista_grados > tbody");
             panel.empty();
             console.log(r);
-            $(r).each(function (key, value) {
-                var html = '<div class="col-3 rounded text-center btn-light border">' +
-                    '<div class="flex-row pt-3">';
-
+            var correlativo = 1;
+            $(r.grados).each(function (key, value) {
+                var html = '<tr>' +
+                    '<td>' + correlativo + '</td>' +
+                    '<td>' + value.grado + '</td>' +
+                    '<td>' + value.seccion + '</td>';
                 if (value.turno) {
-                    html += '<span class="text-warning far fa-sun" style="font-size: 300%" data-toggle="tooltip" title="Matutino"></span>';
+                    html += '<td><span class="badge badge-warning col-12">Matutino</span></td>';
                 } else {
-                    html += '<span class="text-info far fa-sun" style="font-size: 300%" data-toggle="tooltip" title="Vespertino"></span>';
+                    html += '<td><span class="badge badge-info col-12">Vespertino</span></td>';
                 }
-                html += '</div>' +
-                    '<div class="flex-row mt-2 border-bottom">' +
-                    '<span class="font-weight-bold">' +
-                    value.grado + ' ' + value.seccion +
-                    '</span>' +
-                    '</div>' +
-                    '<div class="flex-row">';
                 if (value.f_profesor != null) {
-                    html += '<span class="font-sm">Prof. Alejandro Antonio</span>';
+                    html += '<td>' + r.docentes[key] + '</td>';
                 } else {
-                    html += '<span class="badge badge-danger">Sin docente</span>';
+                    html += '<td><span class="badge badge-light text-danger border-danger border">Sin docente</span></td>'
                 }
-                html += '</div>' +
-                    '<div class="flex-row mb-2 btn-group">' +
-                    '<button type="button" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></button>' +
+                html += '<td>' +
+                    '<div class="btn-group">' +
+                    '<button type="button" class="btn btn-sm btn-primary" data-tooltip="tooltip" title="Editar" onclick="editar_grado('+ value.id + ',' + value.turno + ',' + value.f_profesor +')"><i class="fas fa-edit"></i></button>' +
                     '</div>' +
-                    ' </div>';
-
+                    '</td>';
+                html += '</tr>';
+                correlativo++;
                 panel.append(html);
             });
+        }
+    });
+}
+
+function editar_grado(id, turno_actual, docente_actual) {
+    var notice = new PNotify({
+        title: '<span class="badge badge-primary">Editar</span> Grado',
+        text: $('#form_editar_grado').html(),
+        icon: false,
+        width: 'auto',
+        hide: false,
+        type: 'info',
+        confirm: {
+            buttons: [{
+                text: "Aceptar"
+            }, {
+                text: "Cancelar"
+            }],
+            confirm: true
+        },
+        buttons: {
+            closer: false,
+            sticker: false
+        },
+        addclass: 'stack-modal',
+        stack: {
+            'dir1': 'down',
+            'dir2': 'right',
+            'modal': true
+        },
+        insert_brs: false
+    });
+    if (turno_actual == 1) {
+        notice.get().find('input:eq(1)').prop('checked', false);
+        notice.get().find('input:eq(0)').prop('checked', true);
+    } else {
+        notice.get().find('input:eq(0)').prop('checked', false);
+        notice.get().find('input:eq(1)').prop('checked', true);
+    }
+    if (docente_actual != null) {
+        notice.get().find("#docente").val(docente_actual);
+    }
+    notice.get().on('pnotify.confirm', function () {
+        var turno = $(this).find('input:eq(0)').is(':checked');
+        var docente = $(this).find("#docente").val();
+        if (turno) {
+            turno = 1;
+        } else {
+            turno = 0;
+        }
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/grado/editar',
+            data: {
+                id: id,
+                turno: turno,
+                docente: docente
+            },
+            success: function (r) {
+                console.log(r);
+                if (r == 1) {
+                    sessionStorage.setItem('msg', 'msg');
+                    location.reload(true);
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
+            }
+        });
+    });
+}
+
+function buscar_seccion(o) {
+    seccion_ajax($(o), $("#y-id"));
+}
+
+function seccion_ajax(grado, anio) {
+    $.ajax({
+        type: 'get',
+        url: '/atlas/public/grado/seccion_siguiente',
+        data: {
+            grado: grado.val(),
+            anio: anio.val(),
+        },
+        success: function (r) {
+            var seccion = grado.parent('div').parent('div').parent('div').children('div:eq(1)').children('div').find('h1');
+            seccion.text(r);
         }
     });
 }

@@ -28,6 +28,6 @@ class Lectivo extends Model
     }
     /**Funciones por relacion */
     public function grados(){
-      return $this->hasMany('App\Grado','f_lectivo');
+      return $this->hasMany('App\Grado','f_lectivo')->orderBy('numero')->orderBy('seccion');
     }
 }
