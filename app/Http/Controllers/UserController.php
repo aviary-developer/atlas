@@ -95,6 +95,7 @@ class UserController extends Controller
       $usuario = User::find($id);
       $telefonos_usuarios = TelefonoUsuario::where('f_usuario',$id)->get();
       $passwordDefault='ENA'.str_pad($usuario->id,4,"0",STR_PAD_LEFT);
+      $password=0;
       if (Hash::check($passwordDefault, $usuario->password)) {
         $password=1;
       }
@@ -110,7 +111,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+      DB::beginTransaction();
+      try{
+      $usuario = User::find($id);
+      $usuario->fill($request->all());
+      if($request->nuevaContra){
+        $usuario->password=bcrypt($request->passwordEdit);
+      }
+      if (isset($request->telefono)) {
+        $telefonosAntiguos=TelefonoUsuario::where('f_usuario',$usuario->id)->delete();
+        foreach ($request->telefono as $k => $val) {
+          $telefono_usuario = new TelefonoUsuario;
+          $telefono_usuario->f_usuario = $usuario->id;
+          $telefono_usuario->telefono = $request->telefono[$k];
+          $telefono_usuario->save();
+        }
+      }
+      $usuario->save();
+      DB::commit();
+          }catch(Exception $e){
+            DB::rollback();
+            return redirect('/usuarios')->with('mensaje', '¡Algo salio mal!');
+          }
+          return redirect('/usuarios')->with('mensaje', '¡Guardado!');
     }
 
     /**
@@ -121,6 +144,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $usuario = User::findOrFail($id);
+      $telefonos = TelefonoUsuario::where('f_usuario',$id)->get();
+      foreach($telefonos as $telefono){
+      $telefono->delete();
+    }
+    $usuario->estado=false;
+    $usuario->save();
+    return redirect('/usuarios')->with('mensaje', '¡Eliminado!');
     }
 }
