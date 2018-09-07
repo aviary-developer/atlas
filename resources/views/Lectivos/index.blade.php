@@ -1,28 +1,29 @@
 @extends('welcome')
 @section('layout')
-<div class="row">
-    <div class="col-9">
-        <div class="">
-            <h1>Grados
+<nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
+        <a class="navbar-brand" href="#">
+            Grados
+            @if ($anio_activo != null)
+                <span class="badge badge-light text-primary" id="b-year">
+                    {{$anio_activo->anio}}
+                </span>
+            @endif
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="nuevo_grado">
+                        Nuevo
+                    </a>
+                </li>
+            </ul>
+            <div class="mr-5">
                 @if ($anio_activo != null)
-                    <span class="badge badge-primary" id="b-year">
-                        {{$anio_activo->anio}}
-                    </span>
-                @endif
-            </h1>
-        </div>
-        <div class="row">
-            <div class="col-10">
-                @if ($anio_activo != null)
-                    <button type="button" class="btn btn-sm btn-dark" id="nuevo_grado">
-                        <i class="fas fa-plus"></i> Nuevo
-                    </button>
-                @endif
-            </div>
-            <div class="col-2">
-                @if ($anio_activo != null)
-                    <label class="switch switch-sm switch-to-info">
-                        <span class="mr-1">Activar</span>
+                    <label class="switch switch-sm switch-to-primary">
+                        <span class="mr-2 text-light">Activar</span>
                         @if ($anio_activo->estado == 0)
                             <input type="checkbox" id="sw-activo" checked/>
                         @else
@@ -32,8 +33,18 @@
                     </label>
                 @endif
             </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Ayuda
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div class="row mt-3 ml-1" id="tablero-grado">
+    </nav>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-9">
             @if ($anio_activo != null)
                 <table class="table" id="lista_grados">
                     <thead>
@@ -83,11 +94,10 @@
                     </tbody>
                 </table>
             @endif
-
         </div>
-    </div>
-    <div class="col-3">
-        @include('Lectivos.partes.panel_r')
+        <div class="col-3">
+            @include('Lectivos.partes.panel_r')
+        </div>
     </div>
 </div>
 <input type="hidden" id="y-id" value={{($anio_activo != null)?$anio_activo->id:null}}>

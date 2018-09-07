@@ -16,6 +16,11 @@ function eliminar(id){
     icon: 'glyphicon glyphicon-question-sign',
     hide: false,
     confirm: {
+        buttons: [{
+            text: "Guardar"
+        }, {
+            text: "Cancelar"
+        }],
         confirm: true
     },
     buttons: {

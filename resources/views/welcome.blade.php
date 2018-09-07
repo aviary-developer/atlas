@@ -26,7 +26,7 @@
         </div>
         <ul id="sidebar-nav" class="sidebar-nav">
           <li class="sidebar-nav-btn">
-            <a href="./index.html" class="btn btn-block btn-outline-light">Get started</a>
+            <a href="/atlas" class="btn btn-block btn-outline-info text-light">Atlas</a>
           </li>
           <li class="sidebar-nav-group">
             <a href="#content" class="sidebar-nav-link" data-toggle="collapse">
@@ -132,7 +132,7 @@
                 <a href="grados" class="sidebar-nav-link">Grados</a>
               </li>
               <li>
-                <a href="./pages/reference/code-highlight.html" class="sidebar-nav-link">Code highlight</a>
+                <a href="asignaturas" class="sidebar-nav-link">Asignaturas</a>
               </li>
             </ul>
           </li>
@@ -150,55 +150,18 @@
         </div>
       </div>
       <div class="app-content">
-        <nav class="navbar navbar-expand navbar-light bg-white">
-          <button type="button" class="btn btn-sidebar" data-toggle="sidebar">
-            <i class="fa fa-bars"></i>
-          </button>
-          <div class="navbar-brand">Atlas
-          </div>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="badge badge-pill badge-primary">3</span>
-                <i class="far fa-bell"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a href="./pages/content/notification.html" class="dropdown-item">
-                  <small class="dropdown-item-title">Lorem ipsum (today)</small>
-                  <br>
-                  <div>Lorem ipsum dolor sit amet...</div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="./pages/content/notification.html" class="dropdown-item">
-                  <small class="text-secondary">Lorem ipsum (yesterday)</small>
-                  <br>
-                  <div>Lorem ipsum dolor sit amet...</div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="./pages/content/notification.html" class="dropdown-item">
-                  <small class="text-secondary">Lorem ipsum (12/25/2017)</small>
-                  <br>
-                  <div>Lorem ipsum dolor sit amet...</div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="./pages/content/notifications.html" class="dropdown-item dropdown-link">See all notifications</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-        <div class="container-fluid">
-            @yield('layout')
-        </div>
+        @yield('layout')
       </div>
     </div>
   </div>
   <script src= {{asset("js/app.js")}}></script>
   {{--  <script src= {{asset("js/jquery-3.3.1.js")}}></script>
   <script src= {{asset("js/popper.js")}}></script>  --}}
-  <script src= {{asset("js/admin4b.min.js")}}></script>
+  {{-- <script src= {{asset("js/admin4b.min.js")}}></script> --}}
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
-  <script src= {{asset("js/grados.js")}}></script>
+  <script src= {{asset("js/system/grados.js")}}></script>
+  <script src= {{asset("js/system/asignaturas.js")}}></script>
   <script src= {{asset("js/generalidades.js")}}></script>
 </body>
 

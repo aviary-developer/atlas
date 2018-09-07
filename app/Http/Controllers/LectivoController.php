@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lectivo;
 use App\Grado;
+use App\Asignatura;
 use App\User;
 use Illuminate\Http\Request;
 use DB;
@@ -17,6 +18,9 @@ class LectivoController extends Controller
      */
     public function index()
     {
+        //Crear las asignaturas por defecto del sistema
+        Asignatura::create_asignaturas();
+
         $lectivos = Lectivo::orderBy('anio','desc')->get();
         $anio_activo = Lectivo::where('estado',false)->first();
         if($anio_activo == null && $lectivos->count() > 0){

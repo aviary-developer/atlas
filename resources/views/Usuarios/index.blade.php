@@ -3,29 +3,42 @@
   <?php
   $estadoOpuesto=true;
   ?>
-  <h1>Usuarios</h1>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-7 col-xs-12">
-        <div class="form-group">
-          <div class="btn-group">
-          <a href={!! asset('/usuarios/create') !!} class="btn btn-dark btn-sm"><i class="fa fa-plus"></i> Nuevo</a>
-          <a href={!! asset('/usuarios/')!!} class="btn btn-dark btn-sm"><i class="fa fa-user"></i> Mi Perfil</a>
-          <a href="" class="btn btn-dark btn-sm"><i class="fa fa-file"></i> Reporte</a>
-          <a href="" class="btn btn-dark btn-sm">
-            @if ($estadoOpuesto)
-              <i class="fa fa-check"></i> Activos
-              <span class="label label-success"></span>
-            @else
-              <i class="fa fa-trash"></i> Papelera
-              <span class="label label-warning"></span>
-            @endif
-          </a>
-          <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-question"></i> Ayuda</button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
+        <a class="navbar-brand" href="#">
+            Usuarios
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href={!! asset('/usuarios/create') !!}>
+                        Nuevo
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={!! asset('/usuarios/')!!}>
+                        Mi Perfil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={!! asset('#')!!}>
+                        Reporte
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Ayuda
+                    </a>
+                </li>
+            </ul>
         </div>
-        </div>
-      </div>
-    </div>
+    </nav>
+
+  <div class="container-fluid mt-3">
     <div class="table-responsive">
     <table class="table" id="tablaIndex">
       <thead>
