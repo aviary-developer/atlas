@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('layout')
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
     <a class="navbar-brand" href="#">
         Grado
         <span class="badge badge-light text-primary">
@@ -40,4 +40,14 @@
         </ul>
     </div>
 </nav>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-9">
+            @include('Lectivos.partes.ver_panel')
+        </div>
+        <div class="col-3">
+            @include('Lectivos.partes.ver_der')
+        </div>
+    </div>
+</div>
 @endsection

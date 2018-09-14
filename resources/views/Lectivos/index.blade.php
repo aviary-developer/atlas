@@ -77,7 +77,7 @@
                                             $grado->docente->nombre.' '.$grado->docente->apellido
                                         }}
                                     @else
-                                        <span class="badge badge-light text-danger border-danger border">Sin docente</span>
+                                        <span class="badge badge-light text-danger border-danger border">No asignado</span>
                                     @endif
                                 </td>
                                 <td>
