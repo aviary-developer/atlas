@@ -33,3 +33,8 @@ Route::get('grado/seccion_siguiente','LectivoController@buscar_seccion')->name('
 Route::resource('asignaturas', 'AsignaturaController');
 Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatura.disabled');
 
+//Rutas estudiantes
+  Route::resource('estudiantes','EstudianteController');
+  Route::match(['get','post'],'/desactivateEstudiante/{id}','EstudianteController@desactivate');
+  Route::match(['get','post'],'/activateEstudiante/{id}','EstudianteController@activate');
+  Route::match(['get','post'],'/destroyEstudiante/{id}','EstudianteController@destroy');

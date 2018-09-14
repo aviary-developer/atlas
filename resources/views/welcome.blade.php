@@ -11,6 +11,7 @@
   {!!Html::style('css/all.css')!!}
   {!!Html::style('css/datatables.min.css')!!}
   {!!Html::style('css/pnotify.custom.min.css')!!}
+  <script src= {{asset("js/app.js")}}></script>
 </head>
 
 <body>
@@ -154,7 +155,6 @@
       </div>
     </div>
   </div>
-  <script src= {{asset("js/app.js")}}></script>
   {{--  <script src= {{asset("js/jquery-3.3.1.js")}}></script>
   <script src= {{asset("js/popper.js")}}></script>  --}}
   {{-- <script src= {{asset("js/admin4b.min.js")}}></script> --}}
