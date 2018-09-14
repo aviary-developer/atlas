@@ -82,8 +82,9 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
+                                        <a href={{asset('grados/'.$grado->id)}} class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></a>
                                         <button type="button" class="btn btn-sm btn-primary" data-tooltip="tooltip" title="Editar" onclick={{"editar_grado(".$grado->id.",".$grado->turno.",".$grado->f_profesor.")"}}><i class="fas fa-edit" ></i></button>
-                                        <button type="button" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></button>
+
                                     </div>
                                 </td>
                             </tr>

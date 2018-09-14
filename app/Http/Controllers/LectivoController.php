@@ -83,9 +83,13 @@ class LectivoController extends Controller
      * @param  \App\lectivo  $lectivo
      * @return \Illuminate\Http\Response
      */
-    public function show(lectivo $lectivo)
+    public function show($id)
     {
-        //
+        $grado = Grado::find($id);
+
+        return view('Lectivos.show',compact(
+            'grado'
+        ));
     }
 
     /**
