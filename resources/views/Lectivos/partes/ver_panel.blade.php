@@ -24,7 +24,7 @@
         </div>
         <div id="tb2" class="tab-pane">
             <div id="tb2-collapse" class="collapse" data-parent="#tab-contents">
-                <div class="mb-3 font-weight-bold">Asignaturas</div>
+                @include('Lectivos.partes.asignaturas')
             </div>
         </div>
         <div id="tb3" class="tab-pane">

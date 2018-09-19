@@ -130,10 +130,10 @@
               <i class="icon-settings"></i> Configuración</a>
             <ul id="reference" class="collapse" data-parent="#sidebar-nav">
               <li>
-                <a href="grados" class="sidebar-nav-link">Grados</a>
+                <a href={{asset("grados")}} class="sidebar-nav-link">Grados</a>
               </li>
               <li>
-                <a href="asignaturas" class="sidebar-nav-link">Asignaturas</a>
+                <a href={{asset("asignaturas")}} class="sidebar-nav-link">Asignaturas</a>
               </li>
             </ul>
           </li>

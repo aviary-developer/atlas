@@ -86,9 +86,11 @@ class LectivoController extends Controller
     public function show($id)
     {
         $grado = Grado::find($id);
+        $asignaturas = Asignatura::where('estado',true)->orderBy('nombre')->get();
 
         return view('Lectivos.show',compact(
-            'grado'
+            'grado',
+            'asignaturas'
         ));
     }
 

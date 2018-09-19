@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-9">
             @if ($anio_activo != null)
-                <table class="table" id="lista_grados">
+                <table class="table table-sm" id="lista_grados">
                     <thead>
                         <th>#</th>
                         <th>Grado</th>

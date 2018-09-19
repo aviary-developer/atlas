@@ -52,7 +52,7 @@
 <div class="container-fluid mt-3">
     <div class="col-7">
         <div class="table-responsive">
-            <table class="table" id="tablaIndex">
+            <table class="table table-sm" id="tablaIndex">
                 <thead>
                     <th>#</th>
                     <th>Nombre</th>
