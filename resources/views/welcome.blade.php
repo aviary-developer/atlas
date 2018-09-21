@@ -160,8 +160,6 @@
   {{-- <script src= {{asset("js/admin4b.min.js")}}></script> --}}
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
-  <script src= {{asset("js/system/grados.js")}}></script>
-  <script src= {{asset("js/system/asignaturas.js")}}></script>
   <script src= {{asset("js/generalidades.js")}}></script>
 </body>
 

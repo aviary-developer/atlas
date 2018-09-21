@@ -198,6 +198,45 @@ $(document).ready(function () {
             });
         });
     });
+
+    $("#asignatura_show_table").on("change", "#sw-add", function () {
+        var badge = $(this).parent('label').parent('td').parent('tr').find('td:eq(3)').find('span');
+        var grado = $("#id-g").val();
+        var asignatura = $(this).data('value');
+        var tipo = 1;
+
+        if ($(this).is(':checked')) {
+            badge.removeClass('border-danger text-danger').addClass('border-success text-success').text('Activa');
+        } else {
+            badge.removeClass('border-success text-success').addClass('border-danger text-danger').text('Inactiva');
+            tipo = 0;
+        }
+
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/grado/agregar_asignatura',
+            data: {
+                grado: grado,
+                asignatura: asignatura,
+                tipo: tipo
+            },
+            success: function (r) {
+                if (r == 1) {
+                    new PNotify({
+                        type: 'success',
+                        title: '¡Hecho!',
+                        text: 'Acción exitosa'
+                    });
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
+            }
+        });
+    });
 });
 
 function selected_year(year, id, estado, objeto) {
@@ -242,7 +281,8 @@ function selected_year(year, id, estado, objeto) {
                 }
                 html += '<td>' +
                     '<div class="btn-group">' +
-                    '<button type="button" class="btn btn-sm btn-primary" data-tooltip="tooltip" title="Editar" onclick="editar_grado('+ value.id + ',' + value.turno + ',' + value.f_profesor +')"><i class="fas fa-edit"></i></button>' +
+                    '<a href="/atlas/public/grados/' + value.id + '" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></a>'+
+                    '<button type="button" class="btn btn-sm btn-primary" data-tooltip="tooltip" title="Editar" onclick="editar_grado(' + value.id + ',' + value.turno + ',' + value.f_profesor + ')"><i class="fas fa-edit"></i></button>' +
                     '</div>' +
                     '</td>';
                 html += '</tr>';

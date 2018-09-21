@@ -52,7 +52,7 @@
 <div class="container-fluid mt-3">
     <div class="col-7">
         <div class="table-responsive">
-            <table class="table table-sm" id="tablaIndex">
+            <table class="table table-sm a-table">
                 <thead>
                     <th>#</th>
                     <th>Nombre</th>
@@ -99,4 +99,6 @@
         </div>
     </div>
 </div>
+
+<script src= {{asset("js/system/asignaturas.js")}}></script>
 @endsection

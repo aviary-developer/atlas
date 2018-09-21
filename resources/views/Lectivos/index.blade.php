@@ -53,7 +53,7 @@
                         <th>Sección</th>
                         <th>Turno</th>
                         <th>Docente</th>
-                        <th>Opciones</th>
+                        <th style="width: 100px;">Opciones</th>
                     </thead>
                     <tbody>
                         @php
@@ -105,4 +105,6 @@
 
 @include('Lectivos.partes.editar_grado')
 @include('Lectivos.partes.nuevo_grado')
+
+<script src= {{asset("js/system/grados.js")}}></script>
 @endsection

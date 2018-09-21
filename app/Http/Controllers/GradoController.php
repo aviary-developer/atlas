@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Grado;
+use App\AsignaturaGrado;
+use DB;
 use Illuminate\Http\Request;
 
 class GradoController extends Controller
@@ -81,5 +83,34 @@ class GradoController extends Controller
     public function destroy(Grado $grado)
     {
         //
+    }
+
+    public function add_asignatura(Request $request){
+        $grado = $request->grado;
+        $asignatura = $request->asignatura;
+        $tipo = $request->tipo;
+
+        DB::beginTransaction();
+
+        try{
+            if($tipo == 1){
+                //Crear
+                $relacion = new AsignaturaGrado;
+                $relacion->f_asignatura = $asignatura;
+                $relacion->f_grado = $grado;
+                $relacion->save();
+            }else{
+                //Eliminar
+                $relacion = AsignaturaGrado::where('f_asignatura',$asignatura)->where('f_grado',$grado)->first();
+
+                $relacion->delete();
+            }
+
+            DB::commit();
+            return 1;
+        }catch(Exception $e){
+            DB::rollback();
+            return 0;
+        }
     }
 }

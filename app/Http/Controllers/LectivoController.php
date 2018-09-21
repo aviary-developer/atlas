@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lectivo;
 use App\Grado;
 use App\Asignatura;
+use App\AsignaturaGrado;
 use App\User;
 use Illuminate\Http\Request;
 use DB;
@@ -67,6 +68,14 @@ class LectivoController extends Controller
                 $grado->seccion = "A";
                 $grado->f_lectivo = $lectivo->id;
                 $grado->save();
+
+                for($j = 0; $j < 11; $j++){
+                    $asignatura = Asignatura::where('indice',$j)->first();
+                    $relacion = new AsignaturaGrado();
+                    $relacion->f_asignatura = $asignatura->id;
+                    $relacion->f_grado = $grado->id;
+                    $relacion->save();
+                }
             }
 
             DB::commit();
@@ -205,6 +214,14 @@ class LectivoController extends Controller
             $grado->f_lectivo = $lectivo;
             $grado->seccion = $seccion;
             $grado->save();
+
+            for($j = 0; $j < 11; $j++){
+                $asignatura = Asignatura::where('indice',$j)->first();
+                $relacion = new AsignaturaGrado();
+                $relacion->f_asignatura = $asignatura->id;
+                $relacion->f_grado = $grado->id;
+                $relacion->save();
+            }
 
             DB::commit();
             return 1;

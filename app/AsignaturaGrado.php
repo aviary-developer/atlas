@@ -14,4 +14,13 @@ class AsignaturaGrado extends Model
             return false;
         }
     }
+
+    public static function docente($asignatura, $grado){
+        $contador = AsignaturaGrado::where('f_asignatura',$asignatura)->where('f_grado',$grado)->where('f_profesor','!=',null)->count();
+        if($contador > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

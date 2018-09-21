@@ -11,7 +11,7 @@
         Grado:
     </div>
     <div class="col-9 text-right">
-        <span class="badge badge-light border border-primary text-primary font-sm col-8">
+        <span class="badge border border-primary text-primary font-sm col-8">
             {{$grado->grado}}
         </span>
     </div>
@@ -21,7 +21,7 @@
         Sección:
     </div>
     <div class="col-9 text-right">
-        <span class="badge badge-light border border-primary text-primary font-sm col-8">
+        <span class="badge border border-primary text-primary font-sm col-8">
             {{$grado->seccion}}
         </span>
     </div>
@@ -32,9 +32,9 @@
     </div>
     <div class="col-9 text-right">
         @if ($grado->turno)
-            <span class="badge badge-light border border-warning font-sm col-8">Matutino</span>
+            <span class="badge border border-warning font-sm col-8">Matutino</span>
         @else
-            <span class="badge badge-light border border-info font-sm col-8">Vespertino</span>
+            <span class="badge border border-info font-sm col-8">Vespertino</span>
         @endif
     </div>
 </div>

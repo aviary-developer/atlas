@@ -13,7 +13,7 @@ $(document).ready(function() {
     }
     sessionStorage.clear();
 
-    $('#tablaIndex').DataTable();
+    $('.a-table').DataTable();
 } );
 function convertirFormatoFecha(string) {
        var info = string.split('-').reverse().join('/');

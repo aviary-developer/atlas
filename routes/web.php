@@ -27,6 +27,7 @@ Route::post('grado/editar','LectivoController@editar_grado')->name('grado.editar
 Route::post('grado/nuevo','LectivoController@nuevo_grado')->name('grado.nuevo');
 Route::get('grado/lista_grados','LectivoController@grado')->name('grado.lista_grados');
 Route::get('grado/seccion_siguiente','LectivoController@buscar_seccion')->name('grado.seccion_siguiente');
+Route::post('grado/agregar_asignatura','GradoController@add_asignatura')->name('grado.agregar_asignatura');
 
 //Routas de asignatura
 

@@ -1,8 +1,9 @@
 @extends('welcome')
 @section('layout')
 <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href={{asset('grados')}}>
         Grado
+        <input type="hidden" id="id-g" value={{$grado->id}}>
         <span class="badge badge-light text-primary">
             {{$grado->grado}}
         </span>
@@ -50,4 +51,6 @@
         </div>
     </div>
 </div>
+
+<script src= {{asset("js/system/grados.js")}}></script>
 @endsection

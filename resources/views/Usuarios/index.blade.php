@@ -40,7 +40,7 @@
 
   <div class="container-fluid mt-3">
     <div class="table-responsive">
-    <table class="table" id="tablaIndex">
+    <table class="table a-table">
       <thead>
       <th>#</th>
       <th>Usuario</th>
