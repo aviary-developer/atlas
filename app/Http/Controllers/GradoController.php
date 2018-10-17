@@ -107,8 +107,33 @@ class GradoController extends Controller
             }
 
             DB::commit();
+            if($tipo == 1){
+                return $relacion->id;
+            }else{
+                return -1;
+            }
+        }catch(Exception $e){
+            DB::rollback();
+            return 0;
+        }
+    }
+
+    public function add_docente(Request $request){
+        $docente = $request->docente;
+        $id = $request->id;
+
+
+        DB::beginTransaction();
+
+        try{
+            $relacion = AsignaturaGrado::find($id);
+            $relacion->f_profesor = $docente;
+            $relacion->save();
+            DB::commit();
+
             return 1;
         }catch(Exception $e){
+
             DB::rollback();
             return 0;
         }

@@ -15,6 +15,15 @@ class AsignaturaGrado extends Model
         }
     }
 
+    public static function id_relation($asignatura, $grado){
+        $registro = AsignaturaGrado::where('f_asignatura',$asignatura)->where('f_grado',$grado)->first();
+        if($registro != null){
+            return $registro->id;
+        }else{
+            return false;
+        }
+    }
+
     public static function docente($asignatura, $grado){
         $contador = AsignaturaGrado::where('f_asignatura',$asignatura)->where('f_grado',$grado)->where('f_profesor','!=',null)->count();
         if($contador > 0){
@@ -22,5 +31,9 @@ class AsignaturaGrado extends Model
         }else{
             return false;
         }
+    }
+
+    public function docentes(){
+      return $this->belongsTo('App\User','f_profesor');
     }
 }

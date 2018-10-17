@@ -69,12 +69,14 @@ class LectivoController extends Controller
                 $grado->f_lectivo = $lectivo->id;
                 $grado->save();
 
-                for($j = 0; $j < 11; $j++){
-                    $asignatura = Asignatura::where('indice',$j)->first();
-                    $relacion = new AsignaturaGrado();
-                    $relacion->f_asignatura = $asignatura->id;
-                    $relacion->f_grado = $grado->id;
-                    $relacion->save();
+                if($i > 2){
+                    for($j = 0; $j < 11; $j++){
+                        $asignatura = Asignatura::where('indice',$j)->first();
+                        $relacion = new AsignaturaGrado();
+                        $relacion->f_asignatura = $asignatura->id;
+                        $relacion->f_grado = $grado->id;
+                        $relacion->save();
+                    }
                 }
             }
 
@@ -97,9 +99,12 @@ class LectivoController extends Controller
         $grado = Grado::find($id);
         $asignaturas = Asignatura::where('estado',true)->orderBy('nombre')->get();
 
+        $docentes = User::where('estado',true)->orderBy('apellido')->get();
+
         return view('Lectivos.show',compact(
             'grado',
-            'asignaturas'
+            'asignaturas',
+            'docentes'
         ));
     }
 

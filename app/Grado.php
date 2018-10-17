@@ -10,4 +10,8 @@ class Grado extends Model
     public function docente(){
       return $this->belongsTo('App\User','f_profesor');
     }
+
+    public function lectivo(){
+      return $this->belongsTo('App\Lectivo','f_lectivo');
+    }
 }

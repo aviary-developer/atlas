@@ -8,6 +8,16 @@
 </div>
 <div class="row mt-3">
     <div class="col-3">
+        Año:
+    </div>
+    <div class="col-9 text-right">
+        <span class="badge border border-primary text-primary font-sm col-8">
+            {{$grado->lectivo->anio}}
+        </span>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col-3">
         Grado:
     </div>
     <div class="col-9 text-right">

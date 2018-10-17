@@ -200,7 +200,8 @@ $(document).ready(function () {
     });
 
     $("#asignatura_show_table").on("change", "#sw-add", function () {
-        var badge = $(this).parent('label').parent('td').parent('tr').find('td:eq(3)').find('span');
+        var badge = $(this).parent('label').parent('td').parent('tr').find('td:eq(4)').find('span');
+        var celda_responsable = $(this).parent('label').parent('td').parent('tr').find('td:eq(2)');
         var grado = $("#id-g").val();
         var asignatura = $(this).data('value');
         var tipo = 1;
@@ -209,6 +210,7 @@ $(document).ready(function () {
             badge.removeClass('border-danger text-danger').addClass('border-success text-success').text('Activa');
         } else {
             badge.removeClass('border-success text-success').addClass('border-danger text-danger').text('Inactiva');
+            celda_responsable.empty().append('<span class="badge border border-danger text-danger"> Agregue la asignatura</span > <span class="badge badge-danger"><i class="fas fa-arrow-right"></i></span>');
             tipo = 0;
         }
 
@@ -221,12 +223,15 @@ $(document).ready(function () {
                 tipo: tipo
             },
             success: function (r) {
-                if (r == 1) {
+                if (r != 0) {
                     new PNotify({
                         type: 'success',
                         title: '¡Hecho!',
                         text: 'Acción exitosa'
                     });
+                    if (r != -1) {
+                        celda_responsable.empty().append('<button type="button" class="btn btn-sm btn-success" id="btn-add-docente" data-value="'+r+'"><i class= "fas fa-plus" ></i> Agregar</button >');
+                    }
                 } else {
                     new PNotify({
                         type: 'error',
@@ -237,6 +242,75 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#asignatura_show_table").on('click', "#btn-add-docente", function (e) {
+        e.preventDefault();
+
+        var notice = new PNotify({
+            title: 'Asignar docente',
+            text: $('#form_agregar_docente').html(),
+            icon: false,
+            width: 'auto',
+            hide: false,
+            type: 'info',
+            confirm: {
+                buttons: [{
+                    text: "Aceptar"
+                }, {
+                    text: "Cancelar"
+                }],
+                confirm: true
+            },
+            buttons: {
+                closer: false,
+                sticker: false
+            },
+            addclass: 'stack-modal',
+            stack: {
+                'dir1': 'down',
+                'dir2': 'right',
+                'modal': true
+            },
+            insert_brs: false
+        });
+
+        var id = $(this).data('value');
+        var celda = $(this).parent('td');
+        console.log(id);
+
+        notice.get().on('pnotify.confirm', function () {
+            var docente = $(this).find("#docente_l").val();
+            var nombre_docente = $(this).find("#docente_l option:selected").text();
+
+            $.ajax({
+                type: 'post',
+                url: '/atlas/public/grado/agregar_docente',
+                data: {
+                    docente: docente,
+                    id: id
+                },
+                success: function (r) {
+                    console.log(r);
+                    if (r == 1) {
+                        new PNotify({
+                            type: 'success',
+                            title: '¡Hecho!',
+                            text: 'Acción exitosa'
+                        });
+                        celda.empty().append(nombre_docente);
+                    } else {
+                        new PNotify({
+                            type: 'error',
+                            title: '¡Error!',
+                            text: 'Algo salio mal'
+                        });
+                    }
+                }
+            });
+        });
+    });
+
+
 });
 
 function selected_year(year, id, estado, objeto) {
