@@ -2,9 +2,9 @@
 @section('layout')
   @php
     $create=false;
-    $fecha = $estudiante->fechaNacimiento;
+    $fecha = $usuario->fechaNacimiento;
   @endphp
-  <h1>Estudiantes</h1>
+  <h1>Usuarios</h1>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Nuevo</li>
@@ -17,15 +17,15 @@
         <a href="#personal" class="nav-link active" data-toggle="tab">
           <span class="font-lg">1.</span> Información personal
           <small class="d-block text-secondary">
-            Datos personales del nuevo estudiante
+            Datos personales del nuevo usuario
           </small>
         </a>
       </li>
       <li class="nav-item">
         <a href="#cuenta" class="nav-link" data-toggle="tab">
-          <span class="font-lg">2.</span> Información cuenta de estudiante
+          <span class="font-lg">2.</span> Información cuenta de usuario
           <small class="d-block text-secondary">
-            Datos de la cuenta de estudiante
+            Datos de la cuenta de usuario
           </small>
         </a>
       </li>
@@ -38,7 +38,7 @@
         </a>
       </li>
     </ul>
-    {!!Form::model($estudiante,['class' =>'tab-content','route' =>['estudiantes.update',$estudiante->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formEstudiante'])!!}
-   @include('Estudiantes.Formularios.form')
+    {!!Form::model($usuario,['class' =>'tab-content','route' =>['usuarios.update',$usuario->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
+   @include('Usuarios.Formularios.form')
     {!!Form::close()!!}
 @endsection
