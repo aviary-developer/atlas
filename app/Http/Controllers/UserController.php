@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('estado',true)->get();
+        $usuarios = User::where('estado',true)->orderBy('apellido','asc')->get();
         return view('Usuarios.index',compact('usuarios'));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Grado;
+use App\User;
 use App\AsignaturaGrado;
 use DB;
 use Illuminate\Http\Request;
@@ -107,10 +108,15 @@ class GradoController extends Controller
             }
 
             DB::commit();
+
+            $docentes = User::where('estado',true)->orderBy('apellido')->get();
+
             if($tipo == 1){
-                return $relacion->id;
+                $ids = $relacion->id;
+                return compact('ids','docentes');
             }else{
-                return -1;
+                $ids = -1;
+                return compact('ids','docentes');
             }
         }catch(Exception $e){
             DB::rollback();

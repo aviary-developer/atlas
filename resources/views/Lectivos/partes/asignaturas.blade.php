@@ -9,6 +9,11 @@
 <div class="row">
     <div class="col-sm-12">
         @if ($grado->numero > 2)
+            @if ($grado->numero == 9 || $grado->numero == 10 || $grado->numero == 11)
+                <input type="hidden" id="ciclo" value="3">
+            @else
+                <input type="hidden" id="ciclo" value="0">
+            @endif
             <table class="table table-sm a-table" id="asignatura_show_table">
                 <thead>
                     <th>#</th>
@@ -32,22 +37,7 @@
                                     $relacion = App\AsignaturaGrado::where('f_grado',$grado->id)->where('f_asignatura',$asignatura->id)->first();
                                 @endphp
                                 <td>
-                                    @if (App\AsignaturaGrado::asignatura_grado($asignatura->id,$grado->id))
-                                        @if($relacion->f_profesor != null)
-                                            {{$relacion->docentes->nombre.' '.$relacion->docentes->apellido}}
-                                        @else
-                                            <button type="button" class="btn btn-sm btn-success" id="btn-add-docente" data-value={{App\AsignaturaGrado::id_relation($asignatura->id, $grado->id)}}>
-                                                <i class="fas fa-plus"></i> Agregar
-                                            </button>
-                                        @endif
-                                    @else
-                                        <span class="badge border border-danger text-danger">
-                                            Agregue la asignatura
-                                        </span>
-                                        <span class="badge badge-danger">
-                                            <i class="fas fa-arrow-right"></i>
-                                        </span>
-                                    @endif
+                                    @include('Lectivos.partes.asesor_seleccion')
                                 </td>
                             @endif
                             <td>

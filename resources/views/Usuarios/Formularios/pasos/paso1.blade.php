@@ -2,13 +2,13 @@
   <div class="col-12 col-lg-6">
     <div class="form-group">
       <label>Nombre</label>
-      {!!Form::text('nombre',null,['id'=>'nombre','class'=>'form-control','placeholder'=>'Nombres de usuario', 'required'])!!}
+      {!!Form::text('nombre',null,['id'=>'nombre','class'=>'form-control form-control-sm','placeholder'=>'Nombres de usuario', 'required'])!!}
     </div>
   </div>
   <div class="col-12 col-lg-6">
     <div class="form-group">
       <label>Apellido</label>
-      {!!Form::text('apellido',null,['id'=>'apellido','class'=>'form-control','placeholder'=>'Apellidos de usuario', 'required'])!!}
+      {!!Form::text('apellido',null,['id'=>'apellido','class'=>'form-control form-control-sm','placeholder'=>'Apellidos de usuario', 'required'])!!}
     </div>
   </div>
 </div>
@@ -23,7 +23,7 @@
           $fecha = $fecha->subYears(12);
         }
       @endphp
-      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control has-feedback-left','required']) !!}
+      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control form-control-sm has-feedback-left','required']) !!}
     </div>
   </div>
   <div class="col-12 col-lg-3">
@@ -62,28 +62,28 @@
     <div class="col-12 col-lg-3">
       <div class="form-group">
         <label>DUI</label>
-        {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
+        {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control form-control-sm','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
       </div>
     </div>
     <div class="col-12 col-lg-3">
       <div class="form-group">
         <label>Correo</label>
-      {!! Form::email('email',null,['id'=>'email','class'=>'form-control','placeholder'=>'Dirección correo electrónico', 'required']) !!}
+      {!! Form::email('email',null,['id'=>'email','class'=>'form-control form-control-sm','placeholder'=>'Dirección correo electrónico', 'required']) !!}
       </div>
     </div>
 </div>
 <div class="row">
   <div class="col-12 col-lg-6">
     <label>Dirección</label>
-    {!! Form::textarea('direccion',null,['id'=>'direccion','class'=>'form-control','placeholder'=>'Dirección del nuevo usuario','rows'=>'2', 'required']) !!}
+    {!! Form::textarea('direccion',null,['id'=>'direccion','class'=>'form-control form-control-sm','placeholder'=>'Dirección del nuevo usuario','rows'=>'2', 'required']) !!}
   </div>
   <div class="col-12 col-lg-3">
     <div class="form-group">
       <label>Teléfono</label>
       <div class="input-group">
-      {!! Form::text('telefono',null,['id'=>'telefonoUsuario','class'=>'form-control','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+      {!! Form::text('telefono',null,['id'=>'telefonoUsuario','class'=>'form-control form-control-sm','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
         <div class="input-group-append">
-          <button type="button" name="button" class="btn btn-outline-primary" onclick="agregarTelefono();" data-toggle="tooltip" data-placement="top" title="Guardar teléfono">
+          <button type="button" name="button" class="btn btn-outline-primary btn-sm" onclick="agregarTelefono();" data-toggle="tooltip" data-placement="top" title="Guardar teléfono">
           <i class="fa fa-save"></i>
           </button>
         </button>

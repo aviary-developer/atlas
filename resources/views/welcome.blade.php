@@ -155,9 +155,9 @@
       </div>
     </div>
   </div>
-  {{--  <script src= {{asset("js/jquery-3.3.1.js")}}></script>
-  <script src= {{asset("js/popper.js")}}></script>  --}}
-  {{-- <script src= {{asset("js/admin4b.min.js")}}></script> --}}
+  <!-- InputMask -->
+  {!!Html::script('js/Inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
+
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
   <script src= {{asset("js/generalidades.js")}}></script>

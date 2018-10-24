@@ -200,104 +200,48 @@ $(document).ready(function () {
     });
 
     $("#asignatura_show_table").on("change", "#sw-add", function () {
-        var badge = $(this).parent('label').parent('td').parent('tr').find('td:eq(4)').find('span');
-        var celda_responsable = $(this).parent('label').parent('td').parent('tr').find('td:eq(2)');
-        var grado = $("#id-g").val();
-        var asignatura = $(this).data('value');
-        var tipo = 1;
+        if ($("#ciclo").val() == "3") {
+            var badge = $(this).parent('label').parent('td').parent('tr').find('td:eq(4)').find('span');
+            var celda_responsable = $(this).parent('label').parent('td').parent('tr').find('td:eq(2)');
+            var grado = $("#id-g").val();
+            var asignatura = $(this).data('value');
+            var tipo = 1;
 
-        if ($(this).is(':checked')) {
-            badge.removeClass('border-danger text-danger').addClass('border-success text-success').text('Activa');
-        } else {
-            badge.removeClass('border-success text-success').addClass('border-danger text-danger').text('Inactiva');
-            celda_responsable.empty().append('<span class="badge border border-danger text-danger"> Agregue la asignatura</span > <span class="badge badge-danger"><i class="fas fa-arrow-right"></i></span>');
-            tipo = 0;
-        }
-
-        $.ajax({
-            type: 'post',
-            url: '/atlas/public/grado/agregar_asignatura',
-            data: {
-                grado: grado,
-                asignatura: asignatura,
-                tipo: tipo
-            },
-            success: function (r) {
-                if (r != 0) {
-                    new PNotify({
-                        type: 'success',
-                        title: '¡Hecho!',
-                        text: 'Acción exitosa'
-                    });
-                    if (r != -1) {
-                        celda_responsable.empty().append('<button type="button" class="btn btn-sm btn-success" id="btn-add-docente" data-value="'+r+'"><i class= "fas fa-plus" ></i> Agregar</button >');
-                    }
-                } else {
-                    new PNotify({
-                        type: 'error',
-                        title: '¡Error!',
-                        text: 'Algo salio mal'
-                    });
-                }
+            if ($(this).is(':checked')) {
+                badge.removeClass('border-danger text-danger').addClass('border-success text-success').text('Activa');
+            } else {
+                badge.removeClass('border-success text-success').addClass('border-danger text-danger').text('Inactiva');
+                celda_responsable.empty().append('<span class="badge border border-danger text-danger"> Agregue la asignatura</span > <span class="badge badge-danger"><i class="fas fa-arrow-right"></i></span>');
+                tipo = 0;
             }
-        });
-    });
-
-    $("#asignatura_show_table").on('click', "#btn-add-docente", function (e) {
-        e.preventDefault();
-
-        var notice = new PNotify({
-            title: 'Asignar docente',
-            text: $('#form_agregar_docente').html(),
-            icon: false,
-            width: 'auto',
-            hide: false,
-            type: 'info',
-            confirm: {
-                buttons: [{
-                    text: "Aceptar"
-                }, {
-                    text: "Cancelar"
-                }],
-                confirm: true
-            },
-            buttons: {
-                closer: false,
-                sticker: false
-            },
-            addclass: 'stack-modal',
-            stack: {
-                'dir1': 'down',
-                'dir2': 'right',
-                'modal': true
-            },
-            insert_brs: false
-        });
-
-        var id = $(this).data('value');
-        var celda = $(this).parent('td');
-        console.log(id);
-
-        notice.get().on('pnotify.confirm', function () {
-            var docente = $(this).find("#docente_l").val();
-            var nombre_docente = $(this).find("#docente_l option:selected").text();
 
             $.ajax({
                 type: 'post',
-                url: '/atlas/public/grado/agregar_docente',
+                url: '/atlas/public/grado/agregar_asignatura',
                 data: {
-                    docente: docente,
-                    id: id
+                    grado: grado,
+                    asignatura: asignatura,
+                    tipo: tipo
                 },
                 success: function (r) {
-                    console.log(r);
-                    if (r == 1) {
+                    if (r.ids != 0) {
                         new PNotify({
                             type: 'success',
                             title: '¡Hecho!',
                             text: 'Acción exitosa'
                         });
-                        celda.empty().append(nombre_docente);
+                        if (r.ids != -1) {
+                            celda_responsable.empty();
+                            var html_ = '<select class="form-control form-control-sm" id="asesor-select-' + r.ids + '" data-value="'+r.ids+'"></select>';
+                            celda_responsable.append(html_);
+                            html_ = '<option value=null>Ninguno</option>';
+                            $("#asesor-select-" + r.ids).append(html_);
+                            $(r.docentes).each(function (k, v) {
+                                html_ = '<option value="'
+                                    + v.id + '">' + v.nombre + ' ' + v.apellido + '</option>';
+                                $("#asesor-select-" + r.ids).append(html_);
+                            });
+                        }
                     } else {
                         new PNotify({
                             type: 'error',
@@ -307,6 +251,83 @@ $(document).ready(function () {
                     }
                 }
             });
+        } else {
+            var badge = $(this).parent('label').parent('td').parent('tr').find('td:eq(3)').find('span');
+
+            var grado = $("#id-g").val();
+            var asignatura = $(this).data('value');
+            var tipo = 1;
+
+            if ($(this).is(':checked')) {
+                badge.removeClass('border-danger text-danger').addClass('border-success text-success').text('Activa');
+            } else {
+                badge.removeClass('border-success text-success').addClass('border-danger text-danger').text('Inactiva');
+
+                tipo = 0;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/atlas/public/grado/agregar_asignatura',
+                data: {
+                    grado: grado,
+                    asignatura: asignatura,
+                    tipo: tipo
+                },
+                success: function (r) {
+                    if (r.ids != 0) {
+                        new PNotify({
+                            type: 'success',
+                            title: '¡Hecho!',
+                            text: 'Acción exitosa'
+                        });
+                    } else {
+                        new PNotify({
+                            type: 'error',
+                            title: '¡Error!',
+                            text: 'Algo salio mal'
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    $("#asignatura_show_table").on('change', "select", function (e) {
+        e.preventDefault();
+
+        var id = $(this).data('value');
+
+        var docente = $(this).val();
+        if (docente == "null") {
+            docente = null;
+        }
+
+        console.log('docente: ' + docente + ' | relacion: ' + id);
+
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/grado/agregar_docente',
+            data: {
+                docente: docente,
+                id: id
+            },
+            success: function (r) {
+                console.log(r);
+                if (r == 1) {
+                    new PNotify({
+                        type: 'success',
+                        title: '¡Hecho!',
+                        text: 'Acción exitosa'
+                    });
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
+            }
         });
     });
 
