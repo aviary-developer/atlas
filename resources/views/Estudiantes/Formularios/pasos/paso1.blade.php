@@ -14,13 +14,13 @@
   <div class="col-12 col-lg-2">
     <div class="form-group">
       <label>NIE</label>
-      {!! Form::text('nie',null,['id'=>'nie','class'=>'form-control','placeholder'=>'Ej. 000000','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
+      {!! Form::text('nie',null,['id'=>'nie','class'=>'form-control','placeholder'=>'Ej. 000000','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
     </div>
   </div>
   <div class="col-12 col-lg-2">
     <div class="form-group">
       <label>DUI <small class="text-secondary">(Estudiante)</small></label>
-      {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'", 'required']) !!}
+      {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
     </div>
   </div>
   <div class="col-12 col-lg-2">
@@ -36,12 +36,19 @@
       {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control has-feedback-left','required']) !!}
     </div>
   </div>
+  <div class="col-12 col-lg-3">
+    <div class="form-group">
+      <label>Lugar de nacimiento</label>
+      {!!Form::text('lugarNacimiento',null,['class'=>'form-control','placeholder'=>'Lugar de nacimiento', 'required'])!!}
+    </div>
+  </div>
 </div>
 <div class="row">
+  @if ($create)
   <div class="col-12 col-lg-3">
     <div class="form-group">
     <label class="checkbox checkbox-success">
-      <input type="checkbox" onchange="partidaNacimiento(this);"/>
+      <input type="checkbox" name="actaNacimiento" onchange="partidaNacimiento(this);"/>
       <span class="check-mark"></span> Posee partida de nacimiento
     </label>
     <div id="divPartida" class="input-group" style="display:none;">
@@ -50,6 +57,33 @@
   {!! Form::number('tomo',null,['id'=>'tomo','class'=>'form-control','placeholder'=>'Tomo']) !!}
   {!! Form::number('libro',null,['id'=>'libro','class'=>'form-control','placeholder'=>'Libro']) !!}
         </div>
+      @elseif ($partida)
+        <div class="col-12 col-lg-3">
+          <div class="form-group">
+          <label class="checkbox checkbox-success">
+            <input type="checkbox" name="actaNacimiento" onchange="partidaNacimiento(this);" checked/>
+            <span class="check-mark"></span> Posee partida de nacimiento
+          </label>
+          <div id="divPartida" class="input-group">
+        {!! Form::number('numero',$partida->numero,['id'=>'numero','class'=>'form-control','placeholder'=>'Número']) !!}
+        {!! Form::number('folio',$partida->folio,['id'=>'folio','class'=>'form-control','placeholder'=>'Folio']) !!}
+        {!! Form::number('tomo',$partida->tomo,['id'=>'tomo','class'=>'form-control','placeholder'=>'Tomo']) !!}
+        {!! Form::number('libro',$partida->libro,['id'=>'libro','class'=>'form-control','placeholder'=>'Libro']) !!}
+              </div>
+              @else
+                <div class="col-12 col-lg-3">
+                  <div class="form-group">
+                  <label class="checkbox checkbox-success">
+                    <input type="checkbox" name="actaNacimiento" onchange="partidaNacimiento(this);"/>
+                    <span class="check-mark"></span> Posee partida de nacimiento
+                  </label>
+                <div id="divPartida" class="input-group" style="display:none;">
+              {!! Form::number('numero',null,['id'=>'numero','class'=>'form-control','placeholder'=>'Número']) !!}
+              {!! Form::number('folio',null,['id'=>'folio','class'=>'form-control','placeholder'=>'Folio']) !!}
+              {!! Form::number('tomo',null,['id'=>'tomo','class'=>'form-control','placeholder'=>'Tomo']) !!}
+              {!! Form::number('libro',null,['id'=>'libro','class'=>'form-control','placeholder'=>'Libro']) !!}
+                    </div>
+      @endif
   </div>
   </div>
   <div class="col-12 col-lg-3">
@@ -153,7 +187,7 @@
                     <input type="radio" name="trabaja" id="siTrabaja" value="1"> <span class="check-mark"></span>Si
                   </label> &nbsp
                   <label class="radio radio-danger">
-                    <input type="radio" name="trabaja" value="0" checked> <span class="check-mark"></span>No
+                    <input type="radio" name="trabaja" id="noTrabaja" value="0" checked> <span class="check-mark"></span>No
                   </label>
                 </div>
                 &nbsp
@@ -193,6 +227,63 @@
       <option value="Viudo">Viudo(a)</option>
     </select>
     </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-1">
+      <div class="form-group">
+        <label>Encargados</label>
+        <button type="button" onclick="agregarEncargado();" class="btn btn-info btn-block">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-12 col-lg-10">
+      <div class="form-group">
+        <label></label>
+        <table class="table table-sm" id='tablaEncargados'>
+          <thead>
+            <th colspan="2">Nombre</th>
+            <th>DUI</th>
+            <th>Dirección</th>
+            <th>Teléfono fijo</th>
+            <th>Teléfono celular</th>
+            <th>Correo</th>
+            <th style="width : 80px">Acción</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="modalEncargado" style="display:none;">
+    <div class="form-group">
+      <label>Nombre</label>
+        {!!Form::text('nombreEncargado',null,['class'=>'form-control','placeholder'=>'Nombres de encargado'])!!}
+    </div>
+    <div class="form-group">
+      <label>Apellido</label>
+      <div class="form-group">
+        {!!Form::text('apellidoEncargado',null,['class'=>'form-control','placeholder'=>'Apellidos de encargado'])!!}
+      </div>
+    </div>
+    <div class="form-group">
+      <label>DUI</label>
+        {!! Form::text('duiEncargado',null,['class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
+    </div>
+    <div class="form-group">
+      <label>Dirección exacta</label>
+      {!! Form::textarea('direccionEncargado',null,['class'=>'form-control','placeholder'=>'Dirección de encargado','rows'=>'1', 'required']) !!}
+    </div>
+    <div class="form-group">
+      <label>Teléfonos</label>
+      {!! Form::text('telefonoEncargado',null,['class'=>'form-control','placeholder'=>'Fijo','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+      {!! Form::text('celularEncargado',null,['class'=>'form-control','placeholder'=>'Celular','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+    </div>
+    <div class="form-group">
+      <label>Correo</label>
+      {!! Form::email('correoEncargado',null,['class'=>'form-control','placeholder'=>'Dirección electrónica']) !!}
     </div>
   </div>
 <script>
@@ -261,6 +352,8 @@ notice.get().on('pnotify.confirm', function() {
     $("#jornadaLaboral").val(jornadaLaboral);
     $("#detallesTrabajo").show();
 }).on('pnotify.cancel', function() {
+  $('#siTrabaja').prop('checked', false);
+  $('#noTrabaja').prop('checked', true);
 });
   }
 
@@ -289,4 +382,89 @@ notice.get().on('pnotify.confirm', function() {
       $("#condicionExtranjeria").show();
     }
   }
+  function agregarEncargado(){
+    var notice = new PNotify({
+      title: '<span class="badge badge-primary">Nuevo</span> Encargado',
+      text: $('#modalEncargado').html(),
+      icon: false,
+      width: 'auto',
+      type:'info',
+      hide: false,
+      buttons: {
+          closer: true,
+          sticker: false
+      },
+      confirm: {
+          buttons: [{
+              text: "Guardar"
+          }, {
+              text: "Cancelar"
+          }],
+          confirm:true,
+      },
+      insert_brs: false,
+      addclass: 'stack-modal',
+      stack: {
+          'dir1': 'down',
+          'dir2': 'right',
+          'modal': true
+      }
+  });
+  notice.get().on('pnotify.confirm', function() {
+    var nombre = $(this).find('input[name=nombreEncargado]').val();
+    var apellido = $(this).find('input[name=apellidoEncargado]').val();
+    var dui = $(this).find('input[name=duiEncargado]').val();
+    var direccion = $(this).find('textarea[name=direccionEncargado]').val();
+    var telefono= $(this).find('input[name=telefonoEncargado]').val();
+    var celular = $(this).find('input[name=celularEncargado]').val();
+    var correo = $(this).find('input[name=correoEncargado]').val();
+    if(nombre==""){
+      new PNotify({
+      title: 'Error',
+      text: 'Ingrese nombres',
+      type: 'error'
+      });
+    }else if(apellido==""){
+      new PNotify({
+      title: 'Error',
+      text: 'Ingrese apellidos',
+      type: 'error'
+      });
+  }else if(dui=="") {
+    new PNotify({
+    title: 'Error',
+    text: 'Ingrese DUI',
+    type: 'error'
+    });
+  }else if (direccion=="") {
+    new PNotify({
+    title: 'Error',
+    text: 'Ingrese una dirección',
+    type: 'error'
+    });
+  }else if (celular=="" && telefono=="") {
+    new PNotify({
+    title: 'Error',
+    text: 'Ingresea al menos un número telefonico',
+    type: 'error'
+    });
+  }
+  var tabla=$('#tablaEncargados');
+  var html="<tr><td><input type='hidden' name='nombreEncargado[]' value = '"+nombre+"'/><input type='hidden' name='apellidoEncargado[]' value = '"+apellido+"'/>"+
+  "<input type='hidden' name='duiEncargado[]' value = '"+dui+"'/><input type='hidden' name='direccionEncargado[]' value = '"+direccion+"'/>"+
+  "<input type='hidden' name='telefonoEncargado[]' value = '"+telefono+"'/><input type='hidden' name='celularEncargado[]' value = '"+celular+"'/>"+
+  "<input type='hidden' name='correoEncargado[]' value = '"+correo+"'/>"+
+  "</td><td>"+nombre+" "+apellido+"</td><td>"+dui+"</td><td>"+direccion+"</td><td>"+telefono+"</td><td>"+celular+"</td><td>"+correo+"</td>"+
+  "<td><button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarEncargado(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></button></td></tr>";
+  tabla.append(html);
+  }).on('pnotify.cancel', function() {
+  });
+    }
+    function eliminarEncargado(telefono){
+        $(telefono).parent('td').parent('tr').remove();
+        new PNotify({
+            type: 'error',
+            text: 'Eliminado'
+        })
+      }
 </script>
