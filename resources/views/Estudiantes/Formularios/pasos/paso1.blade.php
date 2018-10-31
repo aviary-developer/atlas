@@ -274,7 +274,7 @@
     </div>
     <div class="form-group">
       <label>Dirección exacta</label>
-      {!! Form::textarea('direccionEncargado',null,['class'=>'form-control','placeholder'=>'Dirección de encargado','rows'=>'1', 'required']) !!}
+      {!! Form::textarea('direccionEncargado',null,['class'=>'form-control','placeholder'=>'Dirección de encargado','rows'=>'1']) !!}
     </div>
     <div class="form-group">
       <label>Teléfonos</label>
@@ -450,10 +450,10 @@ notice.get().on('pnotify.confirm', function() {
     });
   }
   var tabla=$('#tablaEncargados');
-  var html="<tr><td><input type='hidden' name='nombreEncargado[]' value = '"+nombre+"'/><input type='hidden' name='apellidoEncargado[]' value = '"+apellido+"'/>"+
-  "<input type='hidden' name='duiEncargado[]' value = '"+dui+"'/><input type='hidden' name='direccionEncargado[]' value = '"+direccion+"'/>"+
-  "<input type='hidden' name='telefonoEncargado[]' value = '"+telefono+"'/><input type='hidden' name='celularEncargado[]' value = '"+celular+"'/>"+
-  "<input type='hidden' name='correoEncargado[]' value = '"+correo+"'/>"+
+  var html="<tr><td><input type='hidden' name='nombreEncargadoM[]' value = '"+nombre+"'/><input type='hidden' name='apellidoEncargadoM[]' value = '"+apellido+"'/>"+
+  "<input type='hidden' name='duiEncargadoM[]' value = '"+dui+"'/><input type='hidden' name='direccionEncargadoM[]' value = '"+direccion+"'/>"+
+  "<input type='hidden' name='telefonoEncargadoM[]' value = '"+telefono+"'/><input type='hidden' name='celularEncargadoM[]' value = '"+celular+"'/>"+
+  "<input type='hidden' name='correoEncargadoM[]' value = '"+correo+"'/>"+
   "</td><td>"+nombre+" "+apellido+"</td><td>"+dui+"</td><td>"+direccion+"</td><td>"+telefono+"</td><td>"+celular+"</td><td>"+correo+"</td>"+
   "<td><button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarEncargado(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></button></td></tr>";
   tabla.append(html);

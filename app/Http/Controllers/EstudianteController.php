@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Estudiante;
+use App\Encargado;
 use App\PartidaNacimiento;
 use App\TelefonoUsuario;
 use DB;
@@ -51,6 +52,20 @@ class EstudianteController extends Controller
             $partida->libro=$request->libro;
             $partida->f_estudiante=$estudiante->id;
             $partida->save();
+          }
+          if($request->nombreEncargadoM){
+            foreach ($request->nombreEncargadoM as $key => $encargados) {
+              $encargado= new Encargado;
+              $encargado->nombre=$request->nombreEncargadoM[$key];
+              $encargado->apellido=$request->apellidoEncargadoM[$key];
+              $encargado->dui=$request->duiEncargadoM[$key];
+              $encargado->correo=$request->correoEncargadoM[$key];
+              $encargado->direccion=$request->direccionEncargadoM[$key];
+              $encargado->telefono=$request->telefonoEncargadoM[$key];
+              $encargado->celular=$request->celularEncargadoM[$key];
+              $encargado->f_estudiante=$estudiante->id;
+              $encargado->save();
+            }
           }
           DB::commit();
         }catch(Exception $e){

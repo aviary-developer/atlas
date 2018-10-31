@@ -40,5 +40,10 @@
     </ul>
     {!!Form::open(['class' =>'tab-content','route' =>'estudiantes.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formEstudiante'])!!}
    @include('Estudiantes.Formularios.form')
+   <div class="d-block d-md-flex">
+     <div class="d-block d-md-inline ml-auto mb-3">
+       {!!Form::submit('Guardar Est',['class'=>'btn btn-danger btn-block'])!!}
+     </div>
+   </div>
     {!!Form::close()!!}
 @endsection
