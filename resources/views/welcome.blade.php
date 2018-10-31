@@ -135,6 +135,9 @@
               <li>
                 <a href={{asset("asignaturas")}} class="sidebar-nav-link">Asignaturas</a>
               </li>
+              <li>
+                <a href={{asset("usuarios")}} class="sidebar-nav-link">Usuarios</a>
+              </li>
             </ul>
           </li>
         </ul>

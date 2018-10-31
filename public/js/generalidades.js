@@ -14,6 +14,8 @@ $(document).ready(function() {
     sessionStorage.clear();
 
     $('.a-table').DataTable();
+
+    $(":input").inputmask();
 } );
 function convertirFormatoFecha(string) {
        var info = string.split('-').reverse().join('/');

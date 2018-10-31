@@ -32,8 +32,12 @@
                         <span class="badge badge-success col-8">
                             {{$usuario->tipoUsuario}}
                         </span>
-                    @else
+                    @elseif($usuario->tipoUsuario == "Dirección")
                         <span class="badge badge-primary col-8">
+                            {{$usuario->tipoUsuario}}
+                        </span>
+                    @else
+                        <span class="badge badge-info col-8">
                             {{$usuario->tipoUsuario}}
                         </span>
                     @endif

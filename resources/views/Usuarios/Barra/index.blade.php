@@ -18,8 +18,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href={!! asset('#')!!}>
-                    Reporte
+                <a class="nav-link" href={!! asset('/usuario/permisos')!!}>
+                    Permisos
                 </a>
             </li>
         </ul>

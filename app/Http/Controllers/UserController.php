@@ -153,4 +153,9 @@ class UserController extends Controller
     $usuario->save();
     return redirect('/usuarios')->with('mensaje', '¡Eliminado!');
     }
+
+    public function permisos(Request $request){
+        $usuarios = User::where('estado',true)->orderBy('apellido','asc')->get();
+        return view('Usuarios.permisos_index',compact('usuarios'));
+    }
 }

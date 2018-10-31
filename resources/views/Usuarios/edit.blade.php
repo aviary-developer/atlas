@@ -4,12 +4,7 @@
     $create=false;
     $fecha = $usuario->fechaNacimiento;
   @endphp
-  <h1>Usuarios</h1>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">Nuevo</li>
-    </ol>
-  </nav>
+  @include('Usuarios.Barra.create')
   <div class="container-fluid">
     <div class="nav-tabs-responsive">
     <ul class="nav nav-tabs-progress nav-tabs-3 mb-3">

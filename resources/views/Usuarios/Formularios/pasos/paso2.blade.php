@@ -1,37 +1,32 @@
 <div class="row">
-  <div class="col-12 col-md-6 col-lg-6">
+  <div class="col-12 col-md-3 col-lg-3">
     <div class="form-group">
       <label>Usuario</label>
-      {!! Form::text('name',null,['id'=>'name','class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
+      {!! Form::text('name',null,['id'=>'name','class'=>'form-control form-control-sm','placeholder'=>'Nombre de usuario', 'required']) !!}
     </div>
   </div>
   <div class="col-12 col-md-3 col-lg-3">
     <div class="form-group">
-      <label>Tipo de usuario</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-        <span class="fa fa-user form-control" aria-hidden="true"></span>
-        </div>
-        <select class="form-control" name="tipoUsuario" id="tipoUsuario">
-          @if($create)
+        <label>Tipo de usuario</label>
+        <select class="form-control form-control-sm" name="tipoUsuario" id="tipoUsuario">
+            @if($create)
             <option value="Dirección">Dirección</option>
             <option value="Subdirección">Subdirección</option>
             <option value="Docente">Docente</option>
-          @else
+            @else
             <option value="{{$usuario->tipoUsuario}}" selected>{{$usuario->tipoUsuario}}</option>
             <option value="Dirección">Dirección</option>
             <option value="Subdirección">Subdirección</option>
             <option value="Docente">Docente</option>
-          @endif
+            @endif
         </select>
-      </div>
     </div>
   </div>
   <div class="col-12 col-md-3 col-lg-3">
     <div class="form-group">
       @if($create)
           <label>Contraseña</label>
-      {!! Form::text('password','ENA'.str_pad($nuevoId,4,"0",STR_PAD_LEFT),['id'=>'password','class'=>'form-control','placeholder'=>'Nombre de usuario', 'required']) !!}
+      {!! Form::text('password','ENA'.str_pad($nuevoId,4,"0",STR_PAD_LEFT),['id'=>'password','class'=>'form-control form-control-sm','placeholder'=>'Nombre de usuario', 'required']) !!}
     @elseif ($password)
       <label></label>
       <button type="button" onclick="cambiarPassword();" class="btn btn-info btn-block">
@@ -60,16 +55,35 @@
     <input type="hidden" id="nuevaContra" name="nuevaContra" value=""/>
     </div>
   </div>
+    <div class="col-12 col-md-3 col-lg-3">
+        <div class="form-group">
+            <label>Turnos</label>
+            <select name="turnos" id="turnos" class="form-control form-control-sm">
+                @if ($create)
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                @else
+                    @if ($usuario->turnos == 1)
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                    @else
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                    @endif
+                @endif
+            </select>
+        </div>
+    </div>
 </div>
 <div id="modalPassword" style="display:none;">
   <div class="form-group">
   <label>Nueva contraseña</label>
-{!! Form::password('passwordEdit',['id'=>'passwordEditModal','class'=>'form-control','autocomplete'=>'off']) !!}
+{!! Form::password('passwordEdit',['id'=>'passwordEditModal','class'=>'form-control form-control-sm','autocomplete'=>'off']) !!}
 </div>
 <div class="form-group">
   <label>Confirme contraseña</label>
 <div class="form-group">
-{!! Form::password('passwordConfirm',['id'=>'passwordConfirmModal','class'=>'form-control','autocomplete'=>'off']) !!}
+{!! Form::password('passwordConfirm',['id'=>'passwordConfirmModal','class'=>'form-control form-control-sm','autocomplete'=>'off']) !!}
 </div>
 </div>
 </div>
