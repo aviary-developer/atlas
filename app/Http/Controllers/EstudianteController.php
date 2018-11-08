@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Estudiante;
 use App\Encargado;
+use App\Lectivo;
+use App\Grado;
 use App\PartidaNacimiento;
 use App\TelefonoUsuario;
 use DB;
@@ -29,7 +31,9 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-      return view('Estudiantes.create');
+      $lectivo=Lectivo::where('estado',0)->first();
+      $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->get();
+      return view('Estudiantes.create',compact('lectivo','grados'));
     }
 
     /**

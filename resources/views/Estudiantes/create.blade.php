@@ -42,8 +42,90 @@
    @include('Estudiantes.Formularios.form')
    <div class="d-block d-md-flex">
      <div class="d-block d-md-inline ml-auto mb-3">
-       {!!Form::submit('Guardar Est',['class'=>'btn btn-danger btn-block'])!!}
+       {!!Form::button('Guardar y matricular',['onclick'=>'matricular();','class'=>'btn btn-danger btn-block'])!!}
+     </div>
+   </div>
+   <div id="tituloMatricula" style="display:none;">
+   <span class="badge badge-primary">Matricula</span> {{$lectivo->anio}}
+ </div>
+   <div id="modalMatricula" style="display:none;">
+     <div class="row">
+         <div class="form-group col-10">
+             <label>Grados</label>
+             <div class="input-group">
+                 <div class="input-group-prepend">
+                     <span class="fa fa-cube form-control" aria-hidden="true"></span>
+                 </div>
+                 <select name="grado" id="grado_numero" class="form-control" onchange="detalleGrado(this)">
+                   <option value="">
+                       [Seleccione grado]
+                   </option>
+                   @foreach ($grados as $grado)
+                       <option value={{$grado->id}}>
+                           {{$grado->grado.' '.$grado->seccion}}
+                       </option>
+                   @endforeach
+                 </select>
+             </div>
+         </div>
+     </div>
+     <div class="form-group">
+       <label>Turno</label><br>
+       <span class="badge badge-warning" id="badgeTurno">gfgf</span>
+     </div>
+     <div class="form-group">
+       <label>Docente asesor</label><br>
+       <span class="badge badge-info" id="badgeDocente">fgf</span>
      </div>
    </div>
     {!!Form::close()!!}
+    <script>
+    function detalleGrado(grado){
+      $.ajax({
+          type: 'get',
+          url: '/atlas/public/grado/turno',
+          data: {
+              id:grado.value,
+          },
+          success: function (r) {
+            console.log(r.turno);
+            $('#badgeTurno').text(r.turno);
+            $('#badgeDocente').text(r.docente);
+          }
+      });
+    }
+      function matricular(){
+        var notice = new PNotify({
+          title: $('#tituloMatricula').html(),
+          text: $('#modalMatricula').html(),
+          icon: false,
+          width: 'auto',
+          type:'info',
+          hide: false,
+          buttons: {
+              closer: true,
+              sticker: false
+          },
+          confirm: {
+              buttons: [{
+                  text: "Matricular"
+              }, {
+                  text: "Cancelar"
+              }],
+              confirm:true,
+          },
+          insert_brs: false,
+          addclass: 'stack-modal',
+          stack: {
+              'dir1': 'down',
+              'dir2': 'right',
+              'modal': true
+          }
+      });
+      notice.get().on('pnotify.confirm', function() {
+      }).on('pnotify.cancel', function() {
+      });
+        //document.forms["formEstudiante"].submit();
+      }
+    </script>
 @endsection
