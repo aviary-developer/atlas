@@ -253,12 +253,12 @@ class LectivoController extends Controller
         $turno="Vespertino";
       }
       if($grado->f_profesor!=null){
-      $docente=User::where('id',$grado->f_profesor)->first();
-      $nombreDocente=$docente->nombre;
+      $docentes=User::where('id',$grado->f_profesor)->first();
+      $docente=$docentes->nombre." ".$docentes->apellido;
     }else {
-      $nombreDocente="No asignado";
+      $docente="No asignado";
     }
-    return (compact('nombreDocente','turno'));
+    return (compact('docente','turno'));
         //return Response()->json(['nombre'=>$nombreDocente,'turno'=>$turno]);
     }
 }

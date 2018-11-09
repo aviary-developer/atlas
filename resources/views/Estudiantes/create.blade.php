@@ -42,21 +42,27 @@
    @include('Estudiantes.Formularios.form')
    <div class="d-block d-md-flex">
      <div class="d-block d-md-inline ml-auto mb-3">
-       {!!Form::button('Guardar y matricular',['onclick'=>'matricular();','class'=>'btn btn-danger btn-block'])!!}
+       {!!Form::button('Guardar y matricular',['data-toggle'=>'modal','data-target'=>'#exampleModal','class'=>'btn btn-success btn-block'])!!}
      </div>
    </div>
-   <div id="tituloMatricula" style="display:none;">
-   <span class="badge badge-primary">Matricula</span> {{$lectivo->anio}}
- </div>
-   <div id="modalMatricula" style="display:none;">
+     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h5>Matricula <span class="badge badge-primary">{{$lectivo->anio}}</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
      <div class="row">
-         <div class="form-group col-10">
+         <div class="form-group col-8">
              <label>Grados</label>
              <div class="input-group">
                  <div class="input-group-prepend">
                      <span class="fa fa-cube form-control" aria-hidden="true"></span>
                  </div>
-                 <select name="grado" id="grado_numero" class="form-control" onchange="detalleGrado(this)">
+                 <select name="grado" class="form-control" onchange="detalleGrado(this)">
                    <option value="">
                        [Seleccione grado]
                    </option>
@@ -71,13 +77,20 @@
      </div>
      <div class="form-group">
        <label>Turno</label><br>
-       <span class="badge badge-warning" id="badgeTurno">gfgf</span>
+       <h5><span class="badge badge-warning" id="badgeTurno"></span></h5>
      </div>
      <div class="form-group">
        <label>Docente asesor</label><br>
-       <span class="badge badge-info" id="badgeDocente">fgf</span>
+       <h5><span class="badge badge-info" id="badgeDocente"></span></h5>
      </div>
    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" onclick="matricular();" class="btn btn-primary">Matricular</button>
+    </div>
+  </div>
+</div>
+</div>
     {!!Form::close()!!}
     <script>
     function detalleGrado(grado){
@@ -88,44 +101,13 @@
               id:grado.value,
           },
           success: function (r) {
-            console.log(r.turno);
             $('#badgeTurno').text(r.turno);
             $('#badgeDocente').text(r.docente);
           }
       });
     }
-      function matricular(){
-        var notice = new PNotify({
-          title: $('#tituloMatricula').html(),
-          text: $('#modalMatricula').html(),
-          icon: false,
-          width: 'auto',
-          type:'info',
-          hide: false,
-          buttons: {
-              closer: true,
-              sticker: false
-          },
-          confirm: {
-              buttons: [{
-                  text: "Matricular"
-              }, {
-                  text: "Cancelar"
-              }],
-              confirm:true,
-          },
-          insert_brs: false,
-          addclass: 'stack-modal',
-          stack: {
-              'dir1': 'down',
-              'dir2': 'right',
-              'modal': true
-          }
-      });
-      notice.get().on('pnotify.confirm', function() {
-      }).on('pnotify.cancel', function() {
-      });
-        //document.forms["formEstudiante"].submit();
-      }
+    function matricular(){
+        $('#formEstudiante').submit();
+    }
     </script>
 @endsection
