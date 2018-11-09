@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Estudiante;
 use App\Encargado;
 use App\Lectivo;
+use App\Matricula;
 use App\Grado;
 use App\PartidaNacimiento;
 use App\TelefonoUsuario;
@@ -44,7 +45,6 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request);
       DB::beginTransaction();
         try{
           $estudiante = Estudiante::create($request->all());
@@ -71,6 +71,12 @@ class EstudianteController extends Controller
               $encargado->f_estudiante=$estudiante->id;
               $encargado->save();
             }
+          }
+          if($request->grado!="Negativo"){
+            $matricula=new Matricula;
+            $matricula->f_estudiante=$estudiante->id;
+            $matricula->f_grado=$request->grado;
+            $matricula->save();
           }
           DB::commit();
         }catch(Exception $e){

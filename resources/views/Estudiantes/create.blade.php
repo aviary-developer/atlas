@@ -63,7 +63,7 @@
                      <span class="fa fa-cube form-control" aria-hidden="true"></span>
                  </div>
                  <select name="grado" class="form-control" onchange="detalleGrado(this)">
-                   <option value="">
+                   <option value="Negativo">
                        [Seleccione grado]
                    </option>
                    @foreach ($grados as $grado)
@@ -86,7 +86,7 @@
    </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" onclick="matricular();" class="btn btn-primary">Matricular</button>
+      <button type="submit" id="submitMatricula" onclick="matricular();" class="btn btn-primary">Omitir</button>
     </div>
   </div>
 </div>
@@ -94,6 +94,7 @@
     {!!Form::close()!!}
     <script>
     function detalleGrado(grado){
+      if(grado.value!='Negativo'){
       $.ajax({
           type: 'get',
           url: '/atlas/public/grado/turno',
@@ -103,11 +104,16 @@
           success: function (r) {
             $('#badgeTurno').text(r.turno);
             $('#badgeDocente').text(r.docente);
+            $('#submitMatricula').text('Matricular');
           }
       });
+    }else {
+      $('#badgeTurno').text('');
+      $('#badgeDocente').text('');
+      $('#submitMatricula').text('Omitir');
     }
+  }
     function matricular(){
-        $('#formEstudiante').submit();
     }
     </script>
 @endsection
