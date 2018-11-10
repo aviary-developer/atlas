@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Estudiante;
+use App\Encargado;
+use App\Lectivo;
+use App\Matricula;
+use App\Grado;
 use App\PartidaNacimiento;
 use App\TelefonoUsuario;
 use DB;
@@ -28,7 +32,9 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-      return view('Estudiantes.create');
+      $lectivo=Lectivo::where('estado',0)->first();
+      $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->get();
+      return view('Estudiantes.create',compact('lectivo','grados'));
     }
 
     /**
@@ -51,6 +57,26 @@ class EstudianteController extends Controller
             $partida->libro=$request->libro;
             $partida->f_estudiante=$estudiante->id;
             $partida->save();
+          }
+          if($request->nombreEncargadoM){
+            foreach ($request->nombreEncargadoM as $key => $encargados) {
+              $encargado= new Encargado;
+              $encargado->nombre=$request->nombreEncargadoM[$key];
+              $encargado->apellido=$request->apellidoEncargadoM[$key];
+              $encargado->dui=$request->duiEncargadoM[$key];
+              $encargado->correo=$request->correoEncargadoM[$key];
+              $encargado->direccion=$request->direccionEncargadoM[$key];
+              $encargado->telefono=$request->telefonoEncargadoM[$key];
+              $encargado->celular=$request->celularEncargadoM[$key];
+              $encargado->f_estudiante=$estudiante->id;
+              $encargado->save();
+            }
+          }
+          if($request->grado!="Negativo"){
+            $matricula=new Matricula;
+            $matricula->f_estudiante=$estudiante->id;
+            $matricula->f_grado=$request->grado;
+            $matricula->save();
           }
           DB::commit();
         }catch(Exception $e){

@@ -33,6 +33,7 @@ Route::get('grado/lista_grados','LectivoController@grado')->name('grado.lista_gr
 Route::get('grado/seccion_siguiente','LectivoController@buscar_seccion')->name('grado.seccion_siguiente');
 Route::post('grado/agregar_asignatura','GradoController@add_asignatura')->name('grado.agregar_asignatura');
 Route::post('grado/agregar_docente', 'GradoController@add_docente')->name('grado.agregar_docente');
+Route::get('grado/turno','LectivoController@turno')->name('grado.turno');
 
 //Routas de asignatura
 

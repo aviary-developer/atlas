@@ -9,6 +9,7 @@ use App\AsignaturaGrado;
 use App\User;
 use Illuminate\Http\Request;
 use DB;
+use Response;
 
 class LectivoController extends Controller
 {
@@ -243,5 +244,21 @@ class LectivoController extends Controller
         $grado = Grado::where('numero',$valor)->where('f_lectivo',$anio)->orderBy('seccion','desc')->first();
 
         return (++$grado->seccion);
+    }
+    public function turno(Request $request){
+      $grado=Grado::where('id',$request->id)->first();
+      if($grado->turno==1){
+        $turno="Matutino";
+      }else {
+        $turno="Vespertino";
+      }
+      if($grado->f_profesor!=null){
+      $docentes=User::where('id',$grado->f_profesor)->first();
+      $docente=$docentes->nombre." ".$docentes->apellido;
+    }else {
+      $docente="No asignado";
+    }
+    return (compact('docente','turno'));
+        //return Response()->json(['nombre'=>$nombreDocente,'turno'=>$turno]);
     }
 }
