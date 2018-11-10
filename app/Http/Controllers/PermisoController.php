@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Permiso;
+use App\Lectivo;
 use Illuminate\Http\Request;
+use DB;
 
 class PermisoController extends Controller
 {
@@ -35,7 +37,27 @@ class PermisoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        DB::beginTransaction();
+
+        try{
+            $permiso = new Permiso;
+            $permiso->fecha_inicio = $request->fecha_inicio;
+            $permiso->fecha_final = $request->fecha_final;
+            $permiso->horas = $request->horas;
+            $permiso->categoria = $request->categoria;
+            $permiso->f_profesor = $request->f_profesor;
+            $permiso->f_lectivo = Lectivo::activo();
+            $permiso->save();
+
+            DB::commit();
+            return 1;
+        }catch(Exception $e){
+
+            DB::rollback();
+            return 0;
+        }
+
     }
 
     /**

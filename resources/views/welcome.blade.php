@@ -160,6 +160,7 @@
   </div>
   <!-- InputMask -->
   {!!Html::script('js/Inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
+  {!!Html::script('js/moment.min.js')!!}
 
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>

@@ -8,11 +8,6 @@
     </button>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href={!! asset('/usuarios/create') !!}>
-                    Nuevo
-                </a>
-            </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">

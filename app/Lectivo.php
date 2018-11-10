@@ -30,4 +30,9 @@ class Lectivo extends Model
     public function grados(){
       return $this->hasMany('App\Grado','f_lectivo')->orderBy('numero')->orderBy('seccion');
     }
+
+    public static function activo(){
+        $lectivo = Lectivo::where('estado',false)->first();
+        return $lectivo->id;
+    }
 }

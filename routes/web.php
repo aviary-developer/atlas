@@ -21,6 +21,9 @@ Route::get('/', function () {
   Route::match(['get','post'],'/destroyUsuario/{id}','UserController@destroy');
   Route::get('/usuario/permisos','UserController@permisos');
 
+//Ruta de permisos de docentes
+Route::resource('permisos', 'PermisoController');
+
 //Rutas de años lectivos
 Route::resource('grados','LectivoController');
 Route::post('grados/activar','LectivoController@activar')->name('grados.activar');
