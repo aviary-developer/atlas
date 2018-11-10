@@ -31,25 +31,10 @@
           </li>
           <li class="sidebar-nav-group">
             <a href="#content" class="sidebar-nav-link" data-toggle="collapse">
-              <i class="icon-doc"></i> Content</a>
+              <i class="icon-doc"></i> Acádemica</a>
             <ul id="content" class="collapse" data-parent="#sidebar-nav">
               <li>
-                <a href="./pages/content/blank-page.html" class="sidebar-nav-link">Blank page</a>
-              </li>
-              <li>
-                <a href="./pages/content/details-page.html" class="sidebar-nav-link">Details page</a>
-              </li>
-              <li>
-                <a href="./pages/content/dashboard.html" class="sidebar-nav-link">Dashboard</a>
-              </li>
-              <li>
-                <a href="./pages/content/error-404.html" class="sidebar-nav-link">Error 404</a>
-              </li>
-              <li>
-                <a href="./pages/content/error-500.html" class="sidebar-nav-link">Error 500</a>
-              </li>
-              <li>
-                <a href="./pages/content/timeline.html" class="sidebar-nav-link">Timeline</a>
+                <a href={{asset('/estudiantes')}} class="sidebar-nav-link">Estudiantes</a>
               </li>
             </ul>
           </li>
