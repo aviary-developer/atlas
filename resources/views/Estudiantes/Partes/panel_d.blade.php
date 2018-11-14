@@ -30,6 +30,7 @@
   </a>
 </div>
 
+<hr>
 <div class="flex-row mt-4">
     @if ($create)
         <div class="d-block d-md-flex">

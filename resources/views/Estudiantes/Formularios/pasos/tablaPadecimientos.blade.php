@@ -11,9 +11,9 @@
       <th>Asma</th>
       <th>Drogas</th>
       <th>Diabetes</th>
-      <th>Tabaquismo</th>
-      <th style="width : 120px">Presion alta</th>
-      <th>Alcoholismo</th>
+      <th>Tabaco</th>
+      <th style="width : 70px">Presion alta</th>
+      <th>Alcohol</th>
       <th>Renales</th>
       <th>Otros</th>
     </thead>
@@ -49,7 +49,7 @@
           <input name="renales[]" type="checkbox"/>
           <span class="check-mark"></span>
         </label></td>
-        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control'])!!}</td>
+        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
       </tr>
       <tr>
         <td><strong>Padre</strong></td>
@@ -82,7 +82,7 @@
           <input name="renales[]" type="checkbox"/>
           <span class="check-mark"></span>
         </label></td>
-        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control'])!!}</td>
+        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
       </tr>
       <tr>
         <td><strong>Hermanos</strong></td>
@@ -115,7 +115,7 @@
           <input name="renales[]" type="checkbox"/>
           <span class="check-mark"></span>
         </label></td>
-        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control'])!!}</td>
+        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
       </tr>
       <tr>
         <td><strong>Tíos</strong></td>
@@ -148,7 +148,7 @@
           <input name="renales[]" type="checkbox"/>
           <span class="check-mark"></span>
         </label></td>
-        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control'])!!}</td>
+        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
       </tr>
       <tr>
         <td><strong>Abuelos</strong></td>
@@ -181,7 +181,7 @@
           <input name="renales[]" type="checkbox"/>
           <span class="check-mark"></span>
         </label></td>
-        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control'])!!}</td>
+        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
       </tr>
       <tr>
         <td><strong>Otro familiar</strong></td>
@@ -214,7 +214,7 @@
           <input name="renales[]" type="checkbox"/>
           <span class="check-mark"></span>
         </label></td>
-        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control'])!!}</td>
+        <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
       </tr>
 </tbody>
 </table>

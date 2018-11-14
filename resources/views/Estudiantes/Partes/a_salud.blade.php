@@ -51,6 +51,45 @@
         </tbody>
     </table>
 </div>
+<hr>
+@include('Estudiantes.Formularios.Pasos.tablaPadecimientos')
+<hr>
+<div class="form-group">
+    <label> ¿Cuenta la familia con un seguro médico?</label><br>
+    <div class="form-group">
+        <div class="btn-group">
+            <label class="radio radio-info">
+                <input type="radio" name="seguroFamiliar" value="1"> <span class="check-mark"></span>Si
+            </label> &nbsp
+            <label class="radio radio-danger">
+                <input type="radio" name="seguroFamiliar" value="0" checked> <span class="check-mark"></span>No
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-6">
+        <label> ¿Cuenta el alumno(a) con educación curricular?</label><br>
+        <div class="form-group">
+            <div class="btn-group" id="divCurricular">
+                <label class="radio radio-info">
+                    <input type="radio" name="educacionCurricular" value="1"> <span class="check-mark"></span>Si
+                </label> &nbsp
+                <label class="radio radio-danger">
+                    <input type="radio" name="educacionCurricular" value="0" checked> <span class="check-mark"></span>No
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-6" id="divTipoCurricular" style="display:none;">
+        <div class="form-group">
+            <label> ¿Que tipo de educación curricular?</label><br>
+            <div class="form-group">
+                {!! Form::textarea('tipoEducacionCurricular',null,['class'=>'form-control form-control-sm','rows'=>'2']) !!}
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function enfermedades(c){

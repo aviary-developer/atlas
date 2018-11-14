@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="six" role="tabpanel" aria-labelledby="six-tab">
-                            Socieconómica
+                            @include('Estudiantes.Partes.a_socioeconomica')
                         </div>
                     </div>
                 </div>
@@ -41,10 +41,10 @@
                 </div>
             </div>
 
+            @include('Estudiantes.Partes.modal_matricula')
         {!! Form::close() !!}
     </div>
 
-    @include('Estudiantes.Partes.moda_matricula')
 <script>
     function partidaNacimiento(c){
         $('#divPartida').toggle();

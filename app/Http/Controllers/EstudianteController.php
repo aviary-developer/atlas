@@ -33,7 +33,7 @@ class EstudianteController extends Controller
     public function create()
     {
       $lectivo=Lectivo::where('estado',0)->first();
-      $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->get();
+      $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->orderBy('numero','asc')->get();
       return view('Estudiantes.create2',compact('lectivo','grados'));
     }
 

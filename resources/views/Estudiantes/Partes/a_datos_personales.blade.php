@@ -6,19 +6,19 @@
 <div class="row">
     <div class="form-group col-6">
       <label>Nombre</label>
-      {!!Form::text('nombre',null,['id'=>'nombre','class'=>'form-control','placeholder'=>'Nombres de estudiante', 'required'])!!}
+      {!!Form::text('nombre',null,['id'=>'nombre','class'=>'form-control form-control-sm','placeholder'=>'Nombres de estudiante', 'required'])!!}
     </div>
     <div class="form-group col-6">
       <label>Apellido</label>
-      {!!Form::text('apellido',null,['id'=>'apellido','class'=>'form-control','placeholder'=>'Apellidos de estudiante', 'required'])!!}
+      {!!Form::text('apellido',null,['id'=>'apellido','class'=>'form-control form-control-sm','placeholder'=>'Apellidos de estudiante', 'required'])!!}
     </div>
     <div class="form-group col-6">
       <label>NIE</label>
-      {!! Form::text('nie',null,['id'=>'nie','class'=>'form-control','placeholder'=>'Ej. 000000','data-inputmask'=>"'mask' : '99999999'"]) !!}
+      {!! Form::text('nie',null,['id'=>'nie','class'=>'form-control form-control-sm','placeholder'=>'Ej. 000000','data-inputmask'=>"'mask' : '99999999'"]) !!}
     </div>
     <div class="form-group col-6">
       <label>DUI <small class="text-secondary">(Estudiante)</small></label>
-      {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
+      {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control form-control-sm','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
     </div>
     <div class="form-group col-6">
       <label>Fecha nacimiento</label>
@@ -29,11 +29,11 @@
           $fecha = $fecha->subYears(3);
         }
       @endphp
-      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control has-feedback-left','required']) !!}
+      {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control form-control-sm has-feedback-left','required']) !!}
     </div>
     <div class="form-group col-6">
       <label>Lugar de nacimiento</label>
-      {!!Form::text('lugarNacimiento',null,['class'=>'form-control','placeholder'=>'Lugar de nacimiento', 'required'])!!}
+      {!!Form::text('lugarNacimiento',null,['class'=>'form-control form-control-sm','placeholder'=>'Lugar de nacimiento', 'required'])!!}
     </div>
 
     @if ($create)
@@ -43,10 +43,10 @@
                 <span class="check-mark"></span> Posee partida de nacimiento
             </label>
             <div id="divPartida" class="input-group" style="display:none;">
-                {!! Form::number('numero',null,['id'=>'numero','class'=>'form-control','placeholder'=>'Número']) !!}
-                {!! Form::number('folio',null,['id'=>'folio','class'=>'form-control','placeholder'=>'Folio']) !!}
-                {!! Form::number('tomo',null,['id'=>'tomo','class'=>'form-control','placeholder'=>'Tomo']) !!}
-                {!! Form::number('libro',null,['id'=>'libro','class'=>'form-control','placeholder'=>'Libro']) !!}
+                {!! Form::number('numero',null,['id'=>'numero','class'=>'form-control form-control-sm','placeholder'=>'Número']) !!}
+                {!! Form::number('folio',null,['id'=>'folio','class'=>'form-control form-control-sm','placeholder'=>'Folio']) !!}
+                {!! Form::number('tomo',null,['id'=>'tomo','class'=>'form-control form-control-sm','placeholder'=>'Tomo']) !!}
+                {!! Form::number('libro',null,['id'=>'libro','class'=>'form-control form-control-sm','placeholder'=>'Libro']) !!}
             </div>
         </div>
     @elseif($partida)
@@ -56,10 +56,10 @@
                 <span class="check-mark"></span> Posee partida de nacimiento
             </label>
             <div id="divPartida" class="input-group">
-                {!! Form::number('numero',$partida->numero,['id'=>'numero','class'=>'form-control','placeholder'=>'Número']) !!}
-                {!! Form::number('folio',$partida->folio,['id'=>'folio','class'=>'form-control','placeholder'=>'Folio']) !!}
-                {!! Form::number('tomo',$partida->tomo,['id'=>'tomo','class'=>'form-control','placeholder'=>'Tomo']) !!}
-                {!! Form::number('libro',$partida->libro,['id'=>'libro','class'=>'form-control','placeholder'=>'Libro']) !!}
+                {!! Form::number('numero',$partida->numero,['id'=>'numero','class'=>'form-control form-control-sm','placeholder'=>'Número']) !!}
+                {!! Form::number('folio',$partida->folio,['id'=>'folio','class'=>'form-control form-control-sm','placeholder'=>'Folio']) !!}
+                {!! Form::number('tomo',$partida->tomo,['id'=>'tomo','class'=>'form-control form-control-sm','placeholder'=>'Tomo']) !!}
+                {!! Form::number('libro',$partida->libro,['id'=>'libro','class'=>'form-control form-control-sm','placeholder'=>'Libro']) !!}
             </div>
         </div>
     @else
@@ -69,10 +69,10 @@
                 <span class="check-mark"></span> Posee partida de nacimiento
             </label>
             <div id="divPartida" class="input-group" style="display:none;">
-                {!! Form::number('numero',null,['id'=>'numero','class'=>'form-control','placeholder'=>'Número']) !!}
-                {!! Form::number('folio',null,['id'=>'folio','class'=>'form-control','placeholder'=>'Folio']) !!}
-                {!! Form::number('tomo',null,['id'=>'tomo','class'=>'form-control','placeholder'=>'Tomo']) !!}
-                {!! Form::number('libro',null,['id'=>'libro','class'=>'form-control','placeholder'=>'Libro']) !!}
+                {!! Form::number('numero',null,['id'=>'numero','class'=>'form-control form-control-sm','placeholder'=>'Número']) !!}
+                {!! Form::number('folio',null,['id'=>'folio','class'=>'form-control form-control-sm','placeholder'=>'Folio']) !!}
+                {!! Form::number('tomo',null,['id'=>'tomo','class'=>'form-control form-control-sm','placeholder'=>'Tomo']) !!}
+                {!! Form::number('libro',null,['id'=>'libro','class'=>'form-control form-control-sm','placeholder'=>'Libro']) !!}
             </div>
         </div>
     @endif
@@ -111,7 +111,7 @@
 
     <div class="form-group col-6">
         <label>Dirección</label>
-        {!! Form::textarea('direccion',null,['id'=>'direccion','class'=>'form-control','placeholder'=>'Dirección del estudiante','rows'=>'2', 'required']) !!}
+        {!! Form::textarea('direccion',null,['id'=>'direccion','class'=>'form-control form-control-sm','placeholder'=>'Dirección del estudiante','rows'=>'2', 'required']) !!}
     </div>
     <div class="form-group col-6">
         <label>Zona de residencia</label><br>
@@ -126,21 +126,31 @@
             </div>
         </div>
     </div>
+
+    @php
+        if($create){
+            $pais = "El Salvador";
+            $nacionalidad = "Salvadoreño";
+        }else{
+            $pais = $estudiante->pais;
+            $nacionalidad = $estudiante->nacionalidad;
+        }
+    @endphp
     <div class="form-group col-6">
         <label>Pais</label>
         <div id="divNacionalidad" class="input-group">
-            {!! Form::text('pais',null,['onkeyup'=>'verificarPais();','onblur'=>'verExtranjeria();','id'=>'pais','class'=>'form-control','placeholder'=>'Pais']) !!}
-            {!! Form::text('nacionalidad',null,['id'=>'nacionalidad','class'=>'form-control','placeholder'=>'Nacionalidad']) !!}
-            {!! Form::text('condicionExtranjeria',null,['id'=>'condicionExtranjeria','class'=>'form-control','placeholder'=>'Extranjeria','style'=>'display:none;']) !!}
+            {!! Form::text('pais',$pais,['onkeyup'=>'verificarPais();','onblur'=>'verExtranjeria();','id'=>'pais','class'=>'form-control form-control-sm','placeholder'=>'Pais']) !!}
+            {!! Form::text('nacionalidad',$nacionalidad,['id'=>'nacionalidad','class'=>'form-control form-control-sm','placeholder'=>'Nacionalidad']) !!}
+            {!! Form::text('condicionExtranjeria',null,['id'=>'condicionExtranjeria','class'=>'form-control form-control-sm','placeholder'=>'Extranjeria','style'=>'display:none;']) !!}
         </div>
     </div>
     <div class="form-group col-6">
         <label>Correo electronico</label>
-        {!! Form::email('correo',null,['id'=>'correo','class'=>'form-control','placeholder'=>'Dirección de correo']) !!}
+        {!! Form::email('correo',null,['id'=>'correo','class'=>'form-control form-control-sm','placeholder'=>'Dirección de correo']) !!}
     </div>
     <div class="form-group col-6">
         <label>Estado Civil</label>
-        <select class="form-control" name="estadoCivil">
+        <select class="form-control form-control-sm" name="estadoCivil">
             <option value="Soltero">Soltero(a)</option>
             <option value="Casado">Casado(a)</option>
             <option value="Viudo">Viudo(a)</option>
