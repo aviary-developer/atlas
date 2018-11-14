@@ -29,3 +29,40 @@
       Socioeconónica
   </a>
 </div>
+
+<div class="flex-row mt-4">
+    @if ($create)
+        <div class="d-block d-md-flex">
+            <button type="submit" class="btn btn-success btn-block btn-sm col-12 mb-3">
+                Guardar
+            </button>
+        </div>
+        {!!Form::button('Guardar y matricular',['data-toggle'=>'modal','data-target'=>'#exampleModal','class'=>'btn btn-success btn-block btn-sm col-12'])!!}
+    @endif
+</div>
+
+<script>
+    function detalleGrado(grado){
+        if(grado.value!='Negativo'){
+            $.ajax({
+                type: 'get',
+                url: '/atlas/public/grado/turno',
+                data: {
+                    id:grado.value,
+                },
+                success: function (r) {
+                    $('#badgeTurno').text(r.turno);
+                    $('#badgeDocente').text(r.docente);
+                    $('#submitMatricula').text('Matricular');
+                }
+            });
+        }else {
+            $('#badgeTurno').text('');
+            $('#badgeDocente').text('');
+            $('#submitMatricula').text('Omitir');
+        }
+    }
+
+    function matricular(){
+    }
+</script>

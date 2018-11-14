@@ -24,11 +24,11 @@
                         </div>
 
                         <div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
-                            Cuatro
+                            @include('Estudiantes.Partes.a_talla')
                         </div>
 
                         <div class="tab-pane fade" id="five" role="tabpanel" aria-labelledby="five-tab">
-                            Salud
+                            @include('Estudiantes.Partes.a_salud')
                         </div>
 
                         <div class="tab-pane fade" id="six" role="tabpanel" aria-labelledby="six-tab">
@@ -43,6 +43,8 @@
 
         {!! Form::close() !!}
     </div>
+
+    @include('Estudiantes.Partes.moda_matricula')
 <script>
     function partidaNacimiento(c){
         $('#divPartida').toggle();
