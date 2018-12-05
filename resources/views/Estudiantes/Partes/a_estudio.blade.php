@@ -29,7 +29,7 @@
         <label>Presentó:</label><br>
         <div class="form-group">
             <label class="checkbox checkbox-success col-12">
-                <input type="checkbox" name="certificado"/>
+                <input type="checkbox" name="certificado" />
                 <span class="check-mark"></span> Certificado
             </label>
             <label class="checkbox checkbox-success col-12">

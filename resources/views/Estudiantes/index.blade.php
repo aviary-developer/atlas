@@ -9,8 +9,8 @@
     <table class="table a-table table-hover table-striped table-sm">
       <thead>
       <th>#</th>
-      <th>Nombre</th>
       <th>Apellido</th>
+      <th>Nombre</th>
       <th>Sexo</th>
       <th>Fecha de nacimiento</th>
       <th>NIE</th>
@@ -24,8 +24,8 @@
               @foreach ($estudiantes as $estudiante)
            <tr>
              <td>{{$correlativo}}</td>
-             <td>{{$estudiante->nombre}}</td>
              <td>{{$estudiante->apellido}}</td>
+             <td>{{$estudiante->nombre}}</td>
              <td>
                  @if ($estudiante->sexo)
                     <span class="badge border border-danger text-danger">Femenino</span>
@@ -34,10 +34,18 @@
                  @endif
              </td>
              <td>
-                 {{$estudiante->fechaNacimiento->format('d / m / Y')}}
+                 {{$estudiante->fechaNacimiento->format('d/m/Y')}}
                 <span class="badge badge-pill badge-primary">{{$estudiante->fechaNacimiento->age.' años'}}</span>
              </td>
-             <td>{{$estudiante->nie}}</td>
+                <td>
+                    @if ($estudiante->nie == null)
+                        <span class="badge border border-secondary text-secondary col-10">
+                            Vacio
+                        </span>
+                    @else
+                        {{$estudiante->nie}}
+                    @endif
+                </td>
              <td>
                 @include('Estudiantes.Formularios.desactivate')
              </td>
