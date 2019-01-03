@@ -21,7 +21,7 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-      $estudiantes = Estudiante::where('estado',true)->get();
+      $estudiantes = Estudiante::where('estado',true)->orderBy('apellido')->get();
       return view('Estudiantes.index',compact('estudiantes'));
     }
 
@@ -45,9 +45,14 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-      DB::beginTransaction();
+        DB::beginTransaction();
+        $v_certificado = ($request->certificado == "on")?true:false;
+        $v_libretaNotas = ($request->libretaNotas == "on")?true:false;
+
         try{
-          $estudiante = Estudiante::create($request->all());
+            $estudiante = Estudiante::create($request->all());
+          $estudiante->certificado = $v_certificado;
+          $estudiante->libretaNotas = $v_libretaNotas;
           $estudiante->save();
           if($request->actaNacimiento){
             $partida= new PartidaNacimiento;

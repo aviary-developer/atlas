@@ -11,11 +11,12 @@
         <input id="checkEnfermedad" type="checkbox" onchange="enfermedades(this);"/>
         <span class="check-mark"></span>¿Padece alguna enfermedad?
     </label>
+    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#m_enfermedad">Agregar</button>
     <button type="button" id="agregarEnfermedadBoton" class="btn btn-outline-success btn-sm" onclick="agregarEnfermedad();" data-toggle="tooltip" data-placement="top" title="Agregar enfermedad" style="display:none;">
         <i class="fa fa-plus"></i>
     </button>
 </div>
-
+@include('Estudiantes.Modal.enfermedad')
 <div id="divEnfermedades" style="display:none;">
     <table class="table table-sm" id='tablaEnfermedades'>
         <thead>

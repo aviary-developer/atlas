@@ -8,7 +8,7 @@
 <div class="row">
     <div class="form-group col-6">
         <label>Centro escolar procedente:</label>
-        {!!Form::text('centroEscolarProcedente',null,['id'=>'centroEscolarProcedente','class'=>'form-control','placeholder'=>'Centro escolar procedente'])!!}
+        {!!Form::text('centroEscolarProcedente',null,['id'=>'centroEscolarProcedente','class'=>'form-control form-control-sm','placeholder'=>'Centro escolar procedente'])!!}
     </div>
 
     <div class="form-group col-6">
