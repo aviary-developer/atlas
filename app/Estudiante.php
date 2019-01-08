@@ -31,7 +31,19 @@ class Estudiante extends Model
       'talla_final',
       'peso_inicial',
       'peso_medio',
-      'peso_final'
+      'peso_final',
+      'tipo_educacion_curricular',
+      'tipoVivienda',
+      'estadoCasa',
+      'pagoVivienda',
+      'personasEnVivienda',
+      'internet',
+      'ingresoFamiliar',
+      'beca',
+      'bonoEscolar',
+      'transporte',
+      'prioridadComedor',
+      'otro_tipo_ayuda'
     ];
 
     protected $dates = ['fechaNacimiento'];

@@ -7,16 +7,30 @@
 </div>
 
 <div class="form-group">
-    <label class="checkbox checkbox-success">
-        <input id="checkEnfermedad" type="checkbox" onchange="enfermedades(this);"/>
-        <span class="check-mark"></span>¿Padece alguna enfermedad?
+    <label class="checkbox checkbox-success" hidden>
+        <input id="checkEnfermedad" type="checkbox" onchange="enfermedades(this);" />
+        <span class="check-mark"></span>
     </label>
+    ¿Padece alguna enfermedad?
     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#m_enfermedad">Agregar</button>
     <button type="button" id="agregarEnfermedadBoton" class="btn btn-outline-success btn-sm" onclick="agregarEnfermedad();" data-toggle="tooltip" data-placement="top" title="Agregar enfermedad" style="display:none;">
         <i class="fa fa-plus"></i>
     </button>
 </div>
 @include('Estudiantes.Modal.enfermedad')
+<div>
+    <table class="table table-sm" id="tabla_enfermedad">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Atención médica</th>
+                <th>Toma médicamentos</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 <div id="divEnfermedades" style="display:none;">
     <table class="table table-sm" id='tablaEnfermedades'>
         <thead>
@@ -86,7 +100,7 @@
         <div class="form-group">
             <label> ¿Que tipo de educación curricular?</label><br>
             <div class="form-group">
-                {!! Form::textarea('tipoEducacionCurricular',null,['class'=>'form-control form-control-sm','rows'=>'2']) !!}
+                {!! Form::textarea('tipo_educacion_curricular',null,['class'=>'form-control form-control-sm','rows'=>'2']) !!}
             </div>
         </div>
     </div>
@@ -145,3 +159,4 @@
     });
 
 </script>
+<script src= {{asset("js/system/enfermedades.js")}}></script>

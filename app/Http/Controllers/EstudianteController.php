@@ -8,6 +8,8 @@ use App\Encargado;
 use App\Lectivo;
 use App\Matricula;
 use App\Grado;
+use App\EnfermedadEstudiante;
+use App\EnfermedadFamilia;
 use App\PartidaNacimiento;
 use App\TelefonoUsuario;
 use DB;
@@ -82,6 +84,36 @@ class EstudianteController extends Controller
             $matricula->f_estudiante=$estudiante->id;
             $matricula->f_grado=$request->grado;
             $matricula->save();
+          }
+          if($request->nombre_e[0] != null){
+            foreach($request->nombre_e as $k => $nombre_e){
+                $enfermedad = new EnfermedadEstudiante;
+                $enfermedad->nombre = $nombre_e;
+                $enfermedad->atencion_medica = $request->atencion_e[$k];
+                $enfermedad->medicamentos = $request->medicamentos_e[$k];
+                $enfermedad->fecha = $request->fecha_e[$k];
+                $enfermedad->resultados = $request->resultados_e[$k];
+                $enfermedad->anio_vacuna = $request->anio_vacuna_e[$k];
+                $enfermedad->tipo_vacuna = $request->tipo_vacuna_e[$k];
+                $enfermedad->refuerzo_vacuna = $request->refuerzo_vacuna_e[$k];
+                $enfermedad->f_estudiante = $estudiante->id;
+                $enfermedad->save();
+            }
+          }
+
+          for($i = 0; $i <= 5;$i++){
+            $e_familia = new EnfermedadFamilia;
+            $e_familia->asma = $request->asma[$i];
+            $e_familia->drogas = $request->drogas[$i];
+            $e_familia->diabetes = $request->diabetes[$i];
+            $e_familia->tabaco = $request->tabaquismo[$i];
+            $e_familia->presion_alta = $request->presionAlta[$i];
+            $e_familia->alcohol = $request->alcoholismo[$i];
+            $e_familia->renales = $request->renales[$i];
+            $e_familia->otros = $request->otraEnfermedad[$i];
+            $e_familia->pariente = $i;
+            $e_familia->f_estudiante = $estudiante->id;
+            $e_familia->save();
           }
           DB::commit();
         }catch(Exception $e){

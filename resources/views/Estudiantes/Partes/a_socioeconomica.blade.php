@@ -13,7 +13,7 @@
     <div class="form-group">
         <div class="btn-group col-12">
             <label class="radio radio-info col-3">
-                <input type="radio" name="tipoVivienda" value="1"><span class="check-mark"></span>Propia
+                <input type="radio" name="tipoVivienda" value="1" checked><span class="check-mark"></span>Propia
             </label> &nbsp&nbsp&nbsp&nbsp
             <label class="radio radio-info col-3">
                 <input type="radio" name="tipoVivienda" value="2"> <span class="check-mark"></span>Alquilada
@@ -35,7 +35,7 @@
     <div class="form-group">
         <div class="btn-group col-12">
             <label class="radio radio-info col-3">
-                <input type="radio" name="estadoCasa" value="1"><span class="check-mark"></span>Excelente
+                <input type="radio" name="estadoCasa" value="1" checked><span class="check-mark"></span>Excelente
             </label> &nbsp&nbsp&nbsp&nbsp
             <label class="radio radio-info col-3">
                 <input type="radio" name="estadoCasa" value="2"> <span class="check-mark"></span>Muy buena
@@ -70,7 +70,7 @@
                     <input type="radio" name="internet" value="1"> <span class="check-mark"></span>Si
                 </label>&nbsp&nbsp
                 <label class="radio radio-info">
-                    <input type="radio" name="internet" value="0"> <span class="check-mark"></span>No
+                    <input type="radio" name="internet" value="0" checked> <span class="check-mark"></span>No
                 </label>
             </div>
         </div>
@@ -99,27 +99,31 @@
     <tbody>
         <tr>
             <td><label class="checkbox checkbox-success">
-                <input name="beca" type="checkbox"/>
+                <input type="hidden" name="beca" value="0">
+                <input name="beca_" type="checkbox" onclick="check_act(this)"/>
                 <span class="check-mark"></span>
                 <span class="check-mark"></span>
             </label></td>
             <td><label class="checkbox checkbox-success">
-                <input name="bonoEscolar" type="checkbox"/>
+                <input type="hidden" name="bonoEscolar" value="0">
+                <input name="bonoEscolar_" type="checkbox" onclick="check_act(this)"/>
                 <span class="check-mark"></span>
                 <span class="check-mark"></span>
             </label></td>
             <td><label class="checkbox checkbox-success">
-                <input name="transporte" type="checkbox"/>
+                <input type="hidden" name="transporte" value="0">
+                <input name="transporte_" type="checkbox" onclick="check_act(this)"/>
                 <span class="check-mark"></span>
                 <span class="check-mark"></span>
             </label></td>
             <td><label class="checkbox checkbox-success">
-                <input name="prioridadComedor" type="checkbox"/>
+                <input type="hidden" name="prioridadComedor" value="0">
+                <input name="prioridadComedor_" type="checkbox" onclick="check_act(this)"/>
                 <span class="check-mark"></span>
                 <span class="check-mark"></span>
             </label></td>
             <td>
-                {!!Form::text('tomaMedicamento[]',null,['class'=>'form-control'])!!}
+                {!!Form::text('otro_tipo_ayuda',null,['class'=>'form-control'])!!}
             </td>
         </tr>
     </tbody>

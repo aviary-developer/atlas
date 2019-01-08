@@ -23,9 +23,12 @@
             <label>Toma medicamentos</label>
             {!!Form::text('medicamentos_enfermedad',null,['id'=>'medicamentos_enfermedad','class'=>'form-control form-control-sm','placeholder'=>'Toma de medicamentos'])!!}
         </div>
+        @php
+            $fecha = Carbon\Carbon::now();
+        @endphp
         <div class="form-group">
             <label>Fecha</label>
-            {!!Form::date('fecha_enfermedad',null,['id'=>'fecha_enfermedad','class'=>'form-control form-control-sm'])!!}
+            {!!Form::date('fecha_enfermedad',$fecha,['id'=>'fecha_enfermedad','class'=>'form-control form-control-sm'])!!}
         </div>
         <div class="form-group">
             <label>Resultados</label>
@@ -41,8 +44,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary btn-sm" id="save_enfermedad">Guardar</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

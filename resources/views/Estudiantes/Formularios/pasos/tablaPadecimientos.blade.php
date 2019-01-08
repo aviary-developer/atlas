@@ -21,32 +21,39 @@
       <tr>
         <td><strong>Madre</strong></td>
         <td><label class="checkbox checkbox-success">
-          <input name="asma[]" type="checkbox"/>
+            <input type="hidden" value="0" name="asma[]">
+          <input name="asma_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="drogas[]" type="checkbox"/>
+            <input type="hidden" value="0" name="drogas[]">
+          <input name="drogas_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="diabetes[]" type="checkbox"/>
+            <input type="hidden" value="0" name="diabetes[]">
+          <input name="diabetes_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="tabaquismo[]" type="checkbox"/>
+            <input type="hidden" value="0" name="tabaquismo[]">
+          <input name="tabaquismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="presionAlta[]" type="checkbox"/>
+            <input type="hidden" value="0" name="presionAlta[]">
+          <input name="presionAlta_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="alcoholismo[]" type="checkbox"/>
+            <input type="hidden" value="0" name="alcoholismo[]">
+          <input name="alcoholismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="renales[]" type="checkbox"/>
+            <input type="hidden" value="0" name="renales[]">
+          <input name="renales_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
@@ -54,32 +61,39 @@
       <tr>
         <td><strong>Padre</strong></td>
         <td><label class="checkbox checkbox-success">
-          <input name="asma[]" type="checkbox"/>
+          <input type="hidden" value="0" name="asma[]">
+          <input name="asma_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="drogas[]" type="checkbox"/>
+          <input type="hidden" value="0" name="drogas[]">
+          <input name="drogas_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="diabetes[]" type="checkbox"/>
+          <input type="hidden" value="0" name="diabetes[]">
+          <input name="diabetes_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="tabaquismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="tabaquismo[]">
+          <input name="tabaquismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="presionAlta[]" type="checkbox"/>
+          <input type="hidden" value="0" name="presionAlta[]">
+          <input name="presionAlta_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="alcoholismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="alcoholismo[]">
+          <input name="alcoholismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="renales[]" type="checkbox"/>
+          <input type="hidden" value="0" name="renales[]">
+          <input name="renales_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
@@ -87,32 +101,39 @@
       <tr>
         <td><strong>Hermanos</strong></td>
         <td><label class="checkbox checkbox-success">
-          <input name="asma[]" type="checkbox"/>
+          <input type="hidden" value="0" name="asma[]">
+          <input name="asma_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="drogas[]" type="checkbox"/>
+          <input type="hidden" value="0" name="drogas[]">
+          <input name="drogas_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="diabetes[]" type="checkbox"/>
+          <input type="hidden" value="0" name="diabetes[]">
+          <input name="diabetes_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="tabaquismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="tabaquismo[]">
+          <input name="tabaquismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="presionAlta[]" type="checkbox"/>
+          <input type="hidden" value="0" name="presionAlta[]">
+          <input name="presionAlta_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="alcoholismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="alcoholismo[]">
+          <input name="alcoholismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="renales[]" type="checkbox"/>
+          <input type="hidden" value="0" name="renales[]">
+          <input name="renales_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
@@ -120,32 +141,39 @@
       <tr>
         <td><strong>Tíos</strong></td>
         <td><label class="checkbox checkbox-success">
-          <input name="asma[]" type="checkbox"/>
+          <input type="hidden" value="0" name="asma[]">
+          <input name="asma_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="drogas[]" type="checkbox"/>
+          <input type="hidden" value="0" name="drogas[]">
+          <input name="drogas_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="diabetes[]" type="checkbox"/>
+          <input type="hidden" value="0" name="diabetes[]">
+          <input name="diabetes_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="tabaquismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="tabaquismo[]">
+          <input name="tabaquismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="presionAlta[]" type="checkbox"/>
+          <input type="hidden" value="0" name="presionAlta[]">
+          <input name="presionAlta_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="alcoholismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="alcoholismo[]">
+          <input name="alcoholismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="renales[]" type="checkbox"/>
+          <input type="hidden" value="0" name="renales[]">
+          <input name="renales_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
@@ -153,32 +181,39 @@
       <tr>
         <td><strong>Abuelos</strong></td>
         <td><label class="checkbox checkbox-success">
-          <input name="asma[]" type="checkbox"/>
+          <input type="hidden" value="0" name="asma[]">
+          <input name="asma_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="drogas[]" type="checkbox"/>
+          <input type="hidden" value="0" name="drogas[]">
+          <input name="drogas_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="diabetes[]" type="checkbox"/>
+          <input type="hidden" value="0" name="diabetes[]">
+          <input name="diabetes_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="tabaquismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="tabaquismo[]">
+          <input name="tabaquismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="presionAlta[]" type="checkbox"/>
+          <input type="hidden" value="0" name="presionAlta[]">
+          <input name="presionAlta_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="alcoholismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="alcoholismo[]">
+          <input name="alcoholismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="renales[]" type="checkbox"/>
+          <input type="hidden" value="0" name="renales[]">
+          <input name="renales_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
@@ -186,32 +221,39 @@
       <tr>
         <td><strong>Otro familiar</strong></td>
         <td><label class="checkbox checkbox-success">
-          <input name="asma[]" type="checkbox"/>
+          <input type="hidden" value="0" name="asma[]">
+          <input name="asma_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="drogas[]" type="checkbox"/>
+          <input type="hidden" value="0" name="drogas[]">
+          <input name="drogas_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="diabetes[]" type="checkbox"/>
+          <input type="hidden" value="0" name="diabetes[]">
+          <input name="diabetes_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="tabaquismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="tabaquismo[]">
+          <input name="tabaquismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="presionAlta[]" type="checkbox"/>
+          <input type="hidden" value="0" name="presionAlta[]">
+          <input name="presionAlta_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="alcoholismo[]" type="checkbox"/>
+          <input type="hidden" value="0" name="alcoholismo[]">
+          <input name="alcoholismo_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td><label class="checkbox checkbox-success">
-          <input name="renales[]" type="checkbox"/>
+          <input type="hidden" value="0" name="renales[]">
+          <input name="renales_e[]" type="checkbox" onclick="check_act(this)"/>
           <span class="check-mark"></span>
         </label></td>
         <td>{!!Form::text('otraEnfermedad[]',null,['class'=>'form-control form-control-sm'])!!}</td>
@@ -221,3 +263,16 @@
 </div>
   </div>
 </div>
+
+<script>
+    function check_act(o){
+        console.log($(o).is(':checked'));
+        var valor = $(o).parent('label').find('input:eq(0)');
+        if($(o).is(":checked")){
+            valor.val(1);
+        }else{
+            valor.val(0);
+        }
+
+    }
+</script>
