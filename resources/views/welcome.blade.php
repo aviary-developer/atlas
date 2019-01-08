@@ -20,9 +20,11 @@
       <div class="app-sidebar sidebar-slide-left">
         <div class="sidebar-header">
           <img src={{asset("img/john-doe.png")}} class="user-photo">
-          <p class="username">John Doe
+          <p class="username">{{auth()->user()->nombre}}
             <br>
-            <small>Administrator</small>
+            {{auth()->user()->apellido}}
+            <br>
+            <small>Bienvenido</small>
           </p>
         </div>
         <ul id="sidebar-nav" class="sidebar-nav">
@@ -55,15 +57,18 @@
           </li>
         </ul>
         <div class="sidebar-footer">
-          <a href="./pages/content/chat.html" data-toggle="tooltip" title="Support">
+          <!--<a href="./pages/content/chat.html" data-toggle="tooltip" title="Support">
             <i class="fa fa-comment"></i>
           </a>
           <a href="./pages/content/settings.html" data-toggle="tooltip" title="Settings">
             <i class="fa fa-cog"></i>
-          </a>
-          <a href="./pages/content/signin.html" data-toggle="tooltip" title="Logout">
-            <i class="fa fa-power-off"></i>
-          </a>
+          </a>-->
+          <form class="" action="{{ route('logout') }}" method="post">
+            {{ csrf_field() }}
+            <button class="btn btn-danger" data-toggle="tooltip" title="Cerrar sesión">
+              <i class="fa fa-power-off"></i>
+            </button>
+          </form>
         </div>
       </div>
       <div class="app-content">

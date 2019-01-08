@@ -38,6 +38,7 @@ class CreateUsersTable extends Migration
             false: Inactivo
             -------------------------
             */
+            $table->rememberToken();
             $table->timestamps();
         });
     }

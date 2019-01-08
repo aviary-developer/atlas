@@ -27,7 +27,8 @@ class DocenteAsignatura extends Migration
     public function down()
     {
         Schema::table('asignatura_grados', function (Blueprint $table) {
-            $table->dropForeign('f_profesor');
+            $table->dropForeign(['f_profesor']);
+            $table->dropColumn('f_profesor');
         });
     }
 }

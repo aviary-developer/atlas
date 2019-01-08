@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','Auth\LoginController@showLoginForm'); //El middleware esta en el Controller
+
+Route::get('/inicio','InicioController@inicio')->name('inicio');
+
+Route::post('login','Auth\LoginController@login')->name('login');
+Route::post('logout','Auth\LoginController@logout')->name('logout');
 //Rutas usuarios
   Route::resource('usuarios','UserController');
   Route::match(['get','post'],'/desactivateUsuario/{id}','UserController@desactivate');
