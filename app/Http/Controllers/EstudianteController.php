@@ -134,10 +134,10 @@ class EstudianteController extends Controller
                         $pariente->sabe_escribir = $request->par_sabe_escribir[$k];
                         $pariente->ultimo_grado = $request->par_ultimo_grado[$k];
                         $pariente->ultimo_anio = $request->par_ultimo_anio[$k];
-                        $pariente->fecha_naciminto = $request->par_fecha_nacimiento[$k];
+                        $pariente->fecha_nacimiento = $request->par_fecha_nacimiento[$k];
                         $pariente->nacionalidad = $request->par_nacionalidad[$k];
                         $pariente->estado_civil = $request->par_estado_civil[$k];
-                        $pariente->ocuapcion = $request->par_ocupacion[$k];
+                        $pariente->ocupacion = $request->par_ocupacion[$k];
                         $pariente->lugar_trabajo = $request->par_lugar_trabajo[$k];
                         $pariente->save();
                     }else{
