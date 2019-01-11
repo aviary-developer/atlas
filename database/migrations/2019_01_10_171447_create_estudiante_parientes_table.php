@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnfermedadEstudiantesTable extends Migration
+class CreateEstudianteParientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateEnfermedadEstudiantesTable extends Migration
      */
     public function up()
     {
-        Schema::create('enfermedad_estudiantes', function (Blueprint $table) {
+        Schema::create('estudiante_parientes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
-            $table->string('atencion_medica');
-            $table->string('medicamentos');
-            $table->date('fecha');
-            $table->string('resultados')->nullable();
-            $table->string('anio_vacuna')->nullable();
-            $table->string('tipo_vacuna')->nullable();
-            $table->string('refuerzo_vacuna')->nullable();
             $table->integer('f_estudiante')->unsigned();
             $table->foreign('f_estudiante')->references('id')->on('estudiantes');
+            $table->integer('f_pariente')->unsigned();
+            $table->foreign('f_pariente')->references('id')->on('parientes');
+            $table->string('parentesco');
             $table->timestamps();
         });
     }
@@ -36,6 +31,6 @@ class CreateEnfermedadEstudiantesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enfermedad_estudiantes');
+        Schema::dropIfExists('estudiante_parientes');
     }
 }

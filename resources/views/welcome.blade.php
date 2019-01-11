@@ -20,9 +20,9 @@
       <div class="app-sidebar sidebar-slide-left">
         <div class="sidebar-header">
           <img src={{asset("img/john-doe.png")}} class="user-photo">
-          <p class="username">{{auth()->user()->nombre}}
+          <p class="username">
             <br>
-            {{auth()->user()->apellido}}
+            
             <br>
             <small>Bienvenido</small>
           </p>

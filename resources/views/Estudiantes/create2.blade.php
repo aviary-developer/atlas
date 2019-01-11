@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
-                            Tres
+                            @include('Estudiantes.Partes.a_familia')
                         </div>
 
                         <div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">

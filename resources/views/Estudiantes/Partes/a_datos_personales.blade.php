@@ -21,7 +21,7 @@
       {!! Form::text('dui',null,['id'=>'dui','class'=>'form-control form-control-sm','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
     </div>
     <div class="form-group col-6">
-      <label>Fecha nacimiento</label>
+      <label>Fecha de nacimiento</label>
       @php
         $hoy = Carbon\Carbon::now();
         $hoy = $hoy->subYears(3);

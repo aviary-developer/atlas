@@ -7,6 +7,8 @@ use App\Estudiante;
 use App\Encargado;
 use App\Lectivo;
 use App\Matricula;
+use App\Pariente;
+use App\EstudiantePariente;
 use App\Grado;
 use App\EnfermedadEstudiante;
 use App\EnfermedadFamilia;
@@ -115,6 +117,39 @@ class EstudianteController extends Controller
             $e_familia->f_estudiante = $estudiante->id;
             $e_familia->save();
           }
+
+            if(isset($request->par_tipo)){
+                foreach($request->par_tipo as $k => $tipo){
+                    if($tipo == "new"){
+                        $pariente = new Pariente;
+                        $pariente->nombre = $request->par_nombre[$k];
+                        $pariente->apellido = $request->par_apellido[$k];
+                        $pariente->sexo = $request->par_sexo[$k];
+                        $pariente->correo = $request->par_correo[$k];
+                        $pariente->telefono_fijo = $request->par_fijo[$k];
+                        $pariente->telefono_celular = $request->par_celular[$k];
+                        $pariente->direccion = $request->par_direccion[$k];
+                        $pariente->encargado = $request->par_responsable[$k];
+                        $pariente->sabe_leer = $request->par_sabe_leer[$k];
+                        $pariente->sabe_escribir = $request->par_sabe_escribir[$k];
+                        $pariente->ultimo_grado = $request->par_ultimo_grado[$k];
+                        $pariente->ultimo_anio = $request->par_ultimo_anio[$k];
+                        $pariente->fecha_naciminto = $request->par_fecha_nacimiento[$k];
+                        $pariente->nacionalidad = $request->par_nacionalidad[$k];
+                        $pariente->estado_civil = $request->par_estado_civil[$k];
+                        $pariente->ocuapcion = $request->par_ocupacion[$k];
+                        $pariente->lugar_trabajo = $request->par_lugar_trabajo[$k];
+                        $pariente->save();
+                    }else{
+
+                    }
+                    $relacion = new EstudiantePariente;
+                    $relacion->f_pariente = $pariente->id;
+                    $relacion->f_estudiante = $estudiante->id;
+                    $relacion->parentesco = $request->par_parentesco[$k];
+                    $relacion->save();
+                }
+            }
           DB::commit();
         }catch(Exception $e){
           DB::rollback();

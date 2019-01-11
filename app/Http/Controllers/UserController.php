@@ -116,7 +116,7 @@ class UserController extends Controller
       $usuario = User::find($id);
       $usuario->fill($request->all());
       if($request->nuevaContra){
-        $usuario->password=bcrypt($request->passwordEdit);
+        $usuario->password=bcrypt($request->nuevaContra);
       }
       if (isset($request->telefono)) {
         $telefonosAntiguos=TelefonoUsuario::where('f_usuario',$usuario->id)->delete();
