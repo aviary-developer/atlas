@@ -36,4 +36,10 @@ class AsignaturaGrado extends Model
     public function docentes(){
       return $this->belongsTo('App\User','f_profesor');
     }
+    public function asignatura(){
+      return $this->belongsTo('App\Asignatura','f_asignatura');
+    }
+    public function grado(){
+      return $this->belongsTo('App\Grado','f_grado');
+    }
 }

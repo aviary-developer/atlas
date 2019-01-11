@@ -48,3 +48,6 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
   Route::match(['get','post'],'/desactivateEstudiante/{id}','EstudianteController@desactivate');
   Route::match(['get','post'],'/activateEstudiante/{id}','EstudianteController@activate');
   Route::match(['get','post'],'/destroyEstudiante/{id}','EstudianteController@destroy');
+
+//Rutas notas
+Route::resource('notas', 'NotaController');

@@ -22,7 +22,7 @@
           <img src={{asset("img/john-doe.png")}} class="user-photo">
           <p class="username">
             <br>
-            
+            {{Auth::user()->nombre}} {{Auth::user()->apellido}}
             <br>
             <small>Bienvenido</small>
           </p>
@@ -37,6 +37,9 @@
             <ul id="content" class="collapse" data-parent="#sidebar-nav">
               <li>
                 <a href={{asset('/estudiantes')}} class="sidebar-nav-link">Estudiantes</a>
+              </li>
+              <li>
+                <a href={{asset('/notas')}} class="sidebar-nav-link">Notas</a>
               </li>
             </ul>
           </li>
