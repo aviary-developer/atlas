@@ -41,6 +41,9 @@
               <li>
                 <a href={{asset('/notas')}} class="sidebar-nav-link">Notas</a>
               </li>
+              <li>
+                <a href={{asset('/asistencia')}} class="sidebar-nav-link">Asistencia</a>
+              </li>
             </ul>
           </li>
           <li class="sidebar-nav-group">
