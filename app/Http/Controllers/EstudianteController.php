@@ -129,7 +129,6 @@ class EstudianteController extends Controller
                         $pariente->telefono_fijo = $request->par_fijo[$k];
                         $pariente->telefono_celular = $request->par_celular[$k];
                         $pariente->direccion = $request->par_direccion[$k];
-                        $pariente->encargado = $request->par_responsable[$k];
                         $pariente->sabe_leer = $request->par_sabe_leer[$k];
                         $pariente->sabe_escribir = $request->par_sabe_escribir[$k];
                         $pariente->ultimo_grado = $request->par_ultimo_grado[$k];
@@ -147,6 +146,7 @@ class EstudianteController extends Controller
                     $relacion->f_pariente = $pariente->id;
                     $relacion->f_estudiante = $estudiante->id;
                     $relacion->parentesco = $request->par_parentesco[$k];
+                    $relacion->encargado = $request->par_responsable[$k];
                     $relacion->save();
                 }
             }
