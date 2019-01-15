@@ -52,4 +52,5 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
 //Rutas notas
 Route::resource('notas', 'NotaController');
 Route::resource('asistencia', 'AsistenciaController');
-Route::get('asistencia/verEstudiantes/{grado}','AsistenciaController@verEstudiantes')->name('asistencia.verEstudiantes');
+Route::get('asistencia/verEstudiantes/{grado}/{fecha}','AsistenciaController@verEstudiantes')->name('asistencia.verEstudiantes');
+Route::post('asistencia/guardarAsistencia','AsistenciaController@guardarAsistencia')->name('asistencia.guardarAsistencia');

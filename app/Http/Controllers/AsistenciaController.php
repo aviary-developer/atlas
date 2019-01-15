@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Grado;
 use App\Lectivo;
 use App\Matricula;
+use App\Asistencia;
 use DB;
 use Auth;
 
@@ -25,13 +26,42 @@ class AsistenciaController extends Controller
         'matriculados'
     ));
   }
+  public function guardarAsistencia(Request $request)
+  {
+    DB::beginTransaction();
+    try{
+      foreach ($request->idMatricula as $key => $matricula) {
+        $asistencia= new Asistencia;
+        $asistencia->f_matricula=$request->idMatricula[$key];
+        $asistencia->fecha=$request->fechaAsistencia;
+        $asistencia->estado=$request->selectAsistencia[$key];
+        $asistencia->save();
+      }
+
+      DB::commit();
+    }catch(Exception $e){
+        DB::rollback();
+    }
+    return redirect('/asistencia')->with('msg', '¡Guardado!');
+  }
   public function verEstudiantes(Request $request)
   {
     $estudiantes= DB::table('estudiantes')
             ->join('matriculas', 'estudiantes.id', '=', 'matriculas.f_estudiante')
+            ->join('asistencias', 'matriculas.id', '=', 'asistencias.f_matricula')
             ->where('matriculas.f_grado',$request->grado)
-            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido')
+            ->where('asistencias.fecha',$request->fecha)
+            ->select('matriculas.id','estudiantes.nombre','estudiantes.apellido','asistencias.estado')
+            ->orderBy('estudiantes.apellido', 'ASC')
             ->get();
+            if(count($estudiantes)==0){
+              $estudiantes= DB::table('estudiantes')
+                      ->join('matriculas', 'estudiantes.id', '=', 'matriculas.f_estudiante')
+                      ->where('matriculas.f_grado',$request->grado)
+                      ->select('matriculas.id','estudiantes.nombre','estudiantes.apellido')
+                      ->orderBy('estudiantes.apellido', 'ASC')
+                      ->get();
+            }
     return response()->json($estudiantes);
   }
 }

@@ -15,6 +15,10 @@ class CreateAsistenciasTable extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('f_matricula')->unsigned();
+            $table->foreign('f_matricula')->references('id')->on('matriculas');
+            $table->date('fecha');
+            $table->integer('estado');
             $table->timestamps();
         });
     }
