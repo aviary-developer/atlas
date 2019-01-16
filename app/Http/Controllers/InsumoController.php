@@ -19,7 +19,7 @@ class InsumoController extends Controller
           $request->estado = 1;
       }
       $estado = $request->estado;
-      $insumos=Insumo::where('estado',$estado)->get();
+      $insumos=Insumo::where('estado',$estado)->orderBy('nombre')->get();
       return view('Insumos.index',compact('insumos','estado'));
     }
 
