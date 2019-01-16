@@ -59,6 +59,9 @@
               <li>
                 <a href={{asset("usuarios")}} class="sidebar-nav-link">Usuarios</a>
               </li>
+              <li>
+                <a href={{asset("insumos")}} class="sidebar-nav-link">Insumos</a>
+              </li>
             </ul>
           </li>
         </ul>
