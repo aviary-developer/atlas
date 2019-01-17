@@ -20,6 +20,10 @@
     </div>
 </div>
 <div class="form-group col-6">
+    <label>DUI</label>
+    {!! Form::text('dui_m',null,['id'=>'dui_pariente_m','class'=>'form-control form-control-sm','placeholder'=>'Ej. 00000000-0','data-inputmask'=>"'mask' : '99999999-9'"]) !!}
+</div>
+<div class="form-group col-6">
     <label>Correo electrónico</label>
     {!!Form::email('correo_pariente_m',null,['id'=>'correo_pariente_m','class'=>'form-control form-control-sm','placeholder'=>'Correo electrónico de la persona'])!!}
 </div>

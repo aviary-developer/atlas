@@ -20,7 +20,7 @@
     </div>
     <div class="col-6">
         <center>
-            <button type="button" class="btn btn-lg btn-primary col-8">
+            <button type="button" class="btn btn-lg btn-primary col-8" data-target="#m_pariente_buscar" data-toggle="modal">
                 <i class="fas fa-search"></i> Agregar existente
             </button>
         </center>
@@ -35,6 +35,7 @@
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>DUI</th>
             <th>Tel. Fijo</th>
             <th>Tel. Celular</th>
             <th>Opciones</th>
@@ -46,4 +47,5 @@
 </table>
 
 @include('Estudiantes.Modal.pariente')
+@include('Estudiantes.Modal.buscar_pariente')
 <script src= {{asset("js/system/parientes.js")}}></script>

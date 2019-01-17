@@ -127,6 +127,7 @@ class EstudianteController extends Controller
                         $pariente->sexo = $request->par_sexo[$k];
                         $pariente->correo = $request->par_correo[$k];
                         $pariente->telefono_fijo = $request->par_fijo[$k];
+                        $pariente->dui = $request->par_dui[$k];
                         $pariente->telefono_celular = $request->par_celular[$k];
                         $pariente->direccion = $request->par_direccion[$k];
                         $pariente->sabe_leer = $request->par_sabe_leer[$k];
@@ -139,11 +140,12 @@ class EstudianteController extends Controller
                         $pariente->ocupacion = $request->par_ocupacion[$k];
                         $pariente->lugar_trabajo = $request->par_lugar_trabajo[$k];
                         $pariente->save();
+                        $pariente_id = $pariente->id;
                     }else{
-
+                        $pariente_id = $request->par_id[$k];
                     }
                     $relacion = new EstudiantePariente;
-                    $relacion->f_pariente = $pariente->id;
+                    $relacion->f_pariente = $pariente_id;
                     $relacion->f_estudiante = $estudiante->id;
                     $relacion->parentesco = $request->par_parentesco[$k];
                     $relacion->encargado = $request->par_responsable[$k];
@@ -204,5 +206,18 @@ class EstudianteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscar_pariente(Request $request){
+        $valor = $request->valor;
+        $valor = trim($valor);
+        $parientes = Pariente::where(
+          function ($query) use ($valor){
+            $query->where('nombre','like','%'.$valor.'%')
+            ->orWhere('apellido','like','%'.$valor.'%')
+            ->orWhere('dui','like','%'.$valor.'%');
+          }
+        )->where('estado',true)->orderBy('apellido')->take(5)->get();
+        return $parientes;
     }
 }
