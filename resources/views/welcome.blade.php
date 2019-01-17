@@ -59,6 +59,12 @@
               <li>
                 <a href={{asset("usuarios")}} class="sidebar-nav-link">Usuarios</a>
               </li>
+              <li>
+                <a href={{asset("insumos")}} class="sidebar-nav-link">Insumos</a>
+              </li>
+              <li>
+                <a href={{asset("transacciones")}} class="sidebar-nav-link">Entradas de Insumos</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -89,6 +95,28 @@
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
   <script src= {{asset("js/generalidades.js")}}></script>
+  @if(Session::has('msg'))
+  @php
+    echo "<script>
+    new PNotify({
+        type: 'success',
+        title: '¡Hecho!',
+        text: 'Acción exitosa'
+    });
+    </script>";
+  @endphp
+  @endif
+  @if(Session::has('error'))
+  @php
+  echo "<script>
+  new PNotify({
+      type: 'error',
+      title: '¡Ocurrio algo inesperado!',
+      text: 'Error'
+  });
+  </script>";
+  @endphp
+  @endif
 </body>
 
 </html>

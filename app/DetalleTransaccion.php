@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Asistencia extends Model
+class DetalleTransaccion extends Model
 {
   protected $fillable = [
-    'f_matricula','fecha','estado'
+    'f_transaccion','cantidad','f_insumo'
   ];
 }

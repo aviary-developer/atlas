@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Asistencia extends Model
+class Insumo extends Model
 {
   protected $fillable = [
-    'f_matricula','fecha','estado'
+    'nombre','estado'
   ];
 }
