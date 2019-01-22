@@ -30,21 +30,9 @@
 <center>
     Personas agregadas
 </center>
-<table class="table table-sm" id="tabla-pariente">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>DUI</th>
-            <th>Tel. Fijo</th>
-            <th>Tel. Celular</th>
-            <th>Opciones</th>
-        </tr>
-    </thead>
-    <tbody>
+<div id="campo_familia">
 
-    </tbody>
-</table>
+</div>
 
 @include('Estudiantes.Modal.pariente')
 @include('Estudiantes.Modal.buscar_pariente')

@@ -5,7 +5,7 @@ $(document).ready(function () {
         var apellido_pariente = $("#apellido_pariente_m").val();
         var sexo_pariente = $("#sexo_m_pariente").is(':checked');
         sexo_pariente = (sexo_pariente) ? 1 : 0;
-        var dui_pariente = $("#dui__pariente_m").val();
+        var dui_pariente = $("#dui_pariente_m").val();
         var correo_pariente = $("#correo_pariente_m").val();
         var fijo_pariente = $("#telefono_fijo_pariente_m").val();
         var celular_pariente = $("#telefono_celular_pariente_m").val();
@@ -25,64 +25,88 @@ $(document).ready(function () {
         var ocupacion_pariente = $("#ocupacion-pariente").val();
         var lugar_trabajo_pariente = $("#lugar_trabajo-pariente").val();
 
-        var tabla_pariente = $("#tabla-pariente");
+        //Validar que no se ingresen datos nulos
+        if (nombre_pariente.length > 0 && apellido_pariente.length > 0 && direccion_pariente.length > 0) {
+            //Ajax
+            $.ajax({
+                type: 'post',
+                url: '/atlas/public/parientes',
+                data: {
+                    nombre: nombre_pariente,
+                    apellido: apellido_pariente,
+                    sexo: sexo_pariente,
+                    correo: correo_pariente,
+                    telefono_fijo: fijo_pariente,
+                    telefono_celular: celular_pariente,
+                    direccion: direccion_pariente,
+                    sabe_leer: sabe_leer_pariente,
+                    sabe_escribir: sabe_escribir_pariente,
+                    ultimo_grado: ultimo_grado_pariente,
+                    ultimo_anio: ultimo_anio_pariente,
+                    fecha_nacimiento: fecha_nacimiento_pariente,
+                    nacionalidad: nacionalidad_pariente,
+                    estado_civil: estado_civil_pariente,
+                    ocupacion: ocupacion_pariente,
+                    lugar_trabajo: lugar_trabajo_pariente,
+                    dui: dui_pariente
+                },
+                success: function (r) {
+                    if (r != 0) {
+                        var datos = {
+                            nombre: nombre_pariente,
+                            apellido: apellido_pariente,
+                            sexo: sexo_pariente,
+                            encargado: responsable_pariente,
+                            parentesco: parentesco_pariente,
+                            fijo: fijo_pariente,
+                            celular: celular_pariente,
+                            direccion: direccion_pariente,
+                            correo: correo_pariente,
+                            dui: dui_pariente,
+                            id: r
+                        };
 
-        var html = '<tr>' +
-            '<td>' + nombre_pariente + '</td>' +
-            '<td>' + apellido_pariente + '</td>' +
-            '<td>' + dui_pariente + '</td>' +
-            '<td>' + fijo_pariente + '</td>' +
-            '<td>' + celular_pariente + '</td>' +
-            '<td>' +
-            '<button type="button" class="btn btn-sm btn-danger" id="eliminar-pariente"><i class="fas fa-trash"></i></button>' +
-            '<input type="hidden" name="par_nombre[]" value="' + nombre_pariente + '">' +
-            '<input type="hidden" name="par_apellido[]" value="' + apellido_pariente + '">' +
-            '<input type="hidden" name="par_sexo[]" value="' + sexo_pariente + '">' +
-            '<input type="hidden" name="par_dui[]" value="' + dui_pariente + '">' +
-            '<input type="hidden" name="par_fijo[]" value="' + fijo_pariente + '">' +
-            '<input type="hidden" name="par_celular[]" value="' + celular_pariente + '">' +
-            '<input type="hidden" name="par_correo[]" value="' + correo_pariente + '">' +
-            '<input type="hidden" name="par_direccion[]" value="' + direccion_pariente + '">' +
-            '<input type="hidden" name="par_parentesco[]" value="' + parentesco_pariente + '">' +
-            '<input type="hidden" name="par_responsable[]" value="' + responsable_pariente + '">' +
-            '<input type="hidden" name="par_sabe_leer[]" value="' + sabe_leer_pariente + '">' +
-            '<input type="hidden" name="par_sabe_escribir[]" value="' + sabe_escribir_pariente + '">' +
-            '<input type="hidden" name="par_ultimo_grado[]" value="' + ultimo_grado_pariente + '">' +
-            '<input type="hidden" name="par_ultimo_anio[]" value="' + ultimo_anio_pariente + '">' +
-            '<input type="hidden" name="par_fecha_nacimiento[]" value="' + fecha_nacimiento_pariente + '">' +
-            '<input type="hidden" name="par_nacionalidad[]" value="' + nacionalidad_pariente + '">' +
-            '<input type="hidden" name="par_estado_civil[]" value="' + estado_civil_pariente + '">' +
-            '<input type="hidden" name="par_ocupacion[]" value="' + ocupacion_pariente + '">' +
-            '<input type="hidden" name="par_lugar_trabajo[]" value="' + lugar_trabajo_pariente + '">' +
-            '<input type="hidden" name="par_tipo[]" value="new">' +
-            '<input type="hidden" name="par_id[]" value="0">' +
-            '</td>' +
-            '</tr>';
+                        imprimir_familiar(datos);
 
-        tabla_pariente.append(html);
-
-        $("#nombre_pariente_m").val("");
-        $("#apellido_pariente_m").val("");
-        $("#sexo_m_pariente").prop("checked","true");
-        $("#correo_pariente_m").val("");
-        $("#dui_pariente_m").val("");
-        $("#telefono_fijo_pariente_m").val("");
-        $("#telefono_celular_pariente_m").val("");
-        $("#direccion_pariente_m").val("");
-        $("#parentesco_m").val("");
-        $("#responsable_n_pariente").prop("checked", "true");
-        $("#sabe_leer-s-pariente").prop("checked", "true");
-        $("#sabe_escribir-s-pariente").prop("checked", "true");
-        $("#ultimo_grado-pariente").val("");
-        $("#ultimo_anio-pariente").val("");
-        $("#fecha_nacimiento-pariente").val(moment().subtract(10, 'years').format("YYYY-MM-DD"));
-        $("#nacionalidad-pariente").val("Salvadoreño");
-        $("#estado_civil-pariente").val("Soltero");
-        $("#ocuapcion-pariente").val("");
-        $("#lugar_trabajo-pariente").val("");
+                        $("#nombre_pariente_m").val("");
+                        $("#apellido_pariente_m").val("");
+                        $("#sexo_m_pariente").prop("checked", "true");
+                        $("#correo_pariente_m").val("");
+                        $("#dui_pariente_m").val("");
+                        $("#telefono_fijo_pariente_m").val("");
+                        $("#telefono_celular_pariente_m").val("");
+                        $("#direccion_pariente_m").val("");
+                        $("#parentesco_m").val("");
+                        $("#responsable_n_pariente").prop("checked", "true");
+                        $("#sabe_leer-s-pariente").prop("checked", "true");
+                        $("#sabe_escribir-s-pariente").prop("checked", "true");
+                        $("#ultimo_grado-pariente").val("");
+                        $("#ultimo_anio-pariente").val("");
+                        $("#fecha_nacimiento-pariente").val(moment().subtract(10, 'years').format("YYYY-MM-DD"));
+                        $("#nacionalidad-pariente").val("Salvadoreño");
+                        $("#estado_civil-pariente").val("Soltero");
+                        $("#ocuapcion-pariente").val("");
+                        $("#lugar_trabajo-pariente").val("");
 
 
-        $("#m_pariente").modal('hide');
+                        $("#m_pariente").modal('hide');
+                    } else {
+                        new PNotify({
+                            type: 'error',
+                            title: '¡Error!',
+                            text: 'Algo salio mal'
+                        });
+                    }
+                }
+            });
+        } else {
+            new PNotify({
+                type: 'error',
+                title: '¡Error!',
+                text: 'Debe llenar los campos obligatorios'
+            });
+        }
+
     });
 
     $("#buscar_pariente_m").on('keyup', async function () {
@@ -117,6 +141,8 @@ $(document).ready(function () {
                                 '<input type="hidden" name="bp-telefono_fijo[]" value="' + v.telefono_fijo + '">' +
                                 '<input type="hidden" name="bp-telefono_celular[]" value="' + v.telefono_celular + '">' +
                                 '<input type="hidden" name="bp-id[]" value="' + v.id + '">' +
+                                '<input type="hidden" name="bp-correo[]" value="' + v.correo + '">' +
+                                '<input type="hidden" name="bp-direccion[]" value="' + v.direccion + '">' +
                             '</td>'+
                             '<tr>';
 
@@ -135,6 +161,13 @@ $(document).ready(function () {
         var fijo = $(this).parent('center').parent('td').find('input:eq(4)').val();
         var celular = $(this).parent('center').parent('td').find('input:eq(5)').val();
         var id = $(this).parent('center').parent('td').find('input:eq(6)').val();
+        var correo = $(this).parent('center').parent('td').find('input:eq(7)').val();
+        var direccion = $(this).parent('center').parent('td').find('input:eq(8)').val();
+
+        aux_sexo = sexo;
+        aux_fijo = fijo;
+        aux_dui = dui;
+        aux_celular = celular;
 
         var html;
         if (sexo == 0) {
@@ -169,11 +202,13 @@ $(document).ready(function () {
 
         $("#sp-nombre").val(nombre);
         $("#sp-apellido").val(apellido);
-        $("#sp-fijo").val(fijo);
-        $("#sp-celular").val(celular);
+        $("#sp-fijo").val(aux_fijo);
+        $("#sp-celular").val(aux_celular);
         $("#sp-id").val(id);
-        $("#sp-sexo").val(sexo);
-        $("#sp-dui").val(dui);
+        $("#sp-sexo").val(aux_sexo);
+        $("#sp-dui").val(aux_dui);
+        $("#sp-correo").val(correo);
+        $("#sp-direccion").val(direccion);
     });
 
     $("#pariente_existe").click(function (e) {
@@ -182,36 +217,90 @@ $(document).ready(function () {
         var apellido_pariente = $("#sp-apellido").val();
         var fijo_pariente = $("#sp-fijo").val();
         var celular_pariente = $("#sp-celular").val();
-        var dui_pariente = $("#sp-celular").val();
+        var dui_pariente = $("#sp-dui").val();
         var id = $("#sp-id").val();
-        var parentesco_pariente = $("#patentesco_m2").val();
-        var responsable_pariente = $("#responsable_s_pariente").is(":checked");
+        var sexo = $("#sp-sexo").val();
+        var direccion = $("#sp-direccion").val();
+        var correo = $("#sp-correo").val();
+        var parentesco_pariente = $("#parentesco_m2").val();
+        var responsable_pariente = $("#responsable_s_pariente2").is(":checked");
         responsable_pariente = (responsable_pariente) ? 1 : 0;
 
-        var tabla_pariente = $("#tabla-pariente");
+        var datos = {
+            nombre: nombre_pariente,
+            apellido: apellido_pariente,
+            fijo: fijo_pariente,
+            celular: celular_pariente,
+            dui: dui_pariente,
+            id: id,
+            parentesco: parentesco_pariente,
+            encargado: responsable_pariente,
+            direccion: direccion,
+            sexo: sexo,
+            correo: correo
+        };
 
-        var html = '<tr>' +
-            '<td>' + nombre_pariente + '</td>' +
-            '<td>' + apellido_pariente + '</td>' +
-            '<td>' + dui_pariente + '</td>' +
-            '<td>' + fijo_pariente + '</td>' +
-            '<td>' + celular_pariente + '</td>' +
-            '<td>' +
-            '<button type="button" class="btn btn-sm btn-danger" id="eliminar-pariente"><i class="fas fa-trash"></i></button>' +
-            '<input type="hidden" name="par_nombre[]" value="' + nombre_pariente + '">' +
-            '<input type="hidden" name="par_apellido[]" value="' + apellido_pariente + '">' +
-            '<input type="hidden" name="par_dui[]" value="' + dui_pariente + '">' +
-            '<input type="hidden" name="par_fijo[]" value="' + fijo_pariente + '">' +
-            '<input type="hidden" name="par_celular[]" value="' + celular_pariente + '">' +
-            '<input type="hidden" name="par_parentesco[]" value="' + parentesco_pariente + '">' +
-            '<input type="hidden" name="par_responsable[]" value="' + responsable_pariente + '">' +
-            '<input type="hidden" name="par_id[]" value="' + id + '">' +
-            '<input type="hidden" name="par_tipo[]" value="old">' +
-            '</td>' +
-            '</tr>';
-
-        tabla_pariente.append(html);
+        imprimir_familiar(datos);
 
         $("#m_pariente_buscar").modal('hide');
     });
+
+    function imprimir_familiar(datos) {
+        var campo = $("#campo_familia");
+
+        var color = (datos.sexo == 1) ? 'text-primary' : 'text-danger';
+
+        var encargado = (datos.encargado == 1) ? '<span class="badge badge-success font-sm">Responsable</span>' : '';
+
+        var dui = (!(datos.dui == null || datos.dui == "null")) ? datos.dui : '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
+
+        var fijo = (!(datos.fijo == null || datos.fijo == "null")) ? datos.fijo : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+
+        var celular = (!(datos.celular == null || datos.celular == "null")) ? datos.celular : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+
+        var correo = (!(datos.correo == null || datos.correo == "null")) ? datos.correo : '<span class="badge border border-secondary text-secondary">Sin Correo</span>';
+
+        var html = '<div id="tag">' +
+            '<div class="row">' +
+            '<h4 class="col-12">' +
+            '<i class="' + color + ' fas fa-user"></i> ' +
+            datos.nombre + ' ' + datos.apellido +
+            ' <span class="font-sm badge badge-secondary">' + datos.parentesco + '</span> ' +
+            encargado+
+            '</h4>' +
+            '</div>' +
+            '<div class="row">' +
+            '<div class="col-3">' +
+            '<span><i class="fas fa-id-card"></i> '+dui+'</span>'+
+            '</div>' +
+            '<div class="col-3">' +
+            '<span><i class="fas fa-phone"></i> ' + fijo + '</span>' +
+            '</div>' +
+            '<div class="col-3">' +
+            '<span><i class="fas fa-mobile-alt"></i> ' + celular + '</span>' +
+            '</div>' +
+            '<div class="col-3">' +
+            '<span><i class="fas fa-envelope"></i> ' + correo + '</span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="row mt-2">' +
+            '<div class="col-10">' +
+            '<span><i class="fas fa-home"></i> '+datos.direccion +'</span>'+
+            '</div>' +
+            '<div class="col-2 right">' +
+            '<div class="btn-group right">' +
+            '<button type="button" class="btn btn-sm btn-info col" id="btn-vpariente"><i class="fas fa-eye"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-primary" id="btn-epariente"><i class="fas fa-edit"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-danger" id="btn-dpariente"><i class="fas fa-trash"></i></button>' +
+            '</div>' +
+            '</div>' +
+            '<input type="hidden" name="par_parentesco[]" value="' + datos.parentesco + '">' +
+            '<input type="hidden" name="par_responsable[]" value="' + datos.encargado + '">' +
+            '<input type="hidden" name="par_id[]" value="' + datos.id + '">' +
+            '<input type="hidden" name="par_tipo[]" value="old">' +
+            '</div>' +
+            '</div><hr>';
+
+        campo.append(html);
+    }
 });

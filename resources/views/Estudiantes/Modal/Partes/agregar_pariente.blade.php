@@ -75,4 +75,7 @@
     <input type="hidden" id="sp-fijo">
     <input type="hidden" id="sp-celular">
     <input type="hidden" id="sp-id">
+    <input type="hidden" id="sp-direccion">
+    <input type="hidden" id="sp-correo">
+    <input type="hidden" id="sp-sexo">
 </div>

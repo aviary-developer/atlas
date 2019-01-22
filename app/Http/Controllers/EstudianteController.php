@@ -120,32 +120,8 @@ class EstudianteController extends Controller
 
             if(isset($request->par_tipo)){
                 foreach($request->par_tipo as $k => $tipo){
-                    if($tipo == "new"){
-                        $pariente = new Pariente;
-                        $pariente->nombre = $request->par_nombre[$k];
-                        $pariente->apellido = $request->par_apellido[$k];
-                        $pariente->sexo = $request->par_sexo[$k];
-                        $pariente->correo = $request->par_correo[$k];
-                        $pariente->telefono_fijo = $request->par_fijo[$k];
-                        $pariente->dui = $request->par_dui[$k];
-                        $pariente->telefono_celular = $request->par_celular[$k];
-                        $pariente->direccion = $request->par_direccion[$k];
-                        $pariente->sabe_leer = $request->par_sabe_leer[$k];
-                        $pariente->sabe_escribir = $request->par_sabe_escribir[$k];
-                        $pariente->ultimo_grado = $request->par_ultimo_grado[$k];
-                        $pariente->ultimo_anio = $request->par_ultimo_anio[$k];
-                        $pariente->fecha_nacimiento = $request->par_fecha_nacimiento[$k];
-                        $pariente->nacionalidad = $request->par_nacionalidad[$k];
-                        $pariente->estado_civil = $request->par_estado_civil[$k];
-                        $pariente->ocupacion = $request->par_ocupacion[$k];
-                        $pariente->lugar_trabajo = $request->par_lugar_trabajo[$k];
-                        $pariente->save();
-                        $pariente_id = $pariente->id;
-                    }else{
-                        $pariente_id = $request->par_id[$k];
-                    }
                     $relacion = new EstudiantePariente;
-                    $relacion->f_pariente = $pariente_id;
+                    $relacion->f_pariente = $request->par_id[$k];
                     $relacion->f_estudiante = $estudiante->id;
                     $relacion->parentesco = $request->par_parentesco[$k];
                     $relacion->encargado = $request->par_responsable[$k];

@@ -50,6 +50,9 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
   Route::match(['get','post'],'/destroyEstudiante/{id}','EstudianteController@destroy');
   Route::get('/estudiante/buscar_pariente','EstudianteController@buscar_pariente')->name('estudiante.buscar_pariente');
 
+  //Rutas parientes
+  Route::resource('parientes', 'ParienteController');
+
 //Rutas notas
 Route::resource('notas', 'NotaController');
 Route::resource('insumos', 'InsumoController');
