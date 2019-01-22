@@ -52,6 +52,7 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
 
   //Rutas parientes
   Route::resource('parientes', 'ParienteController');
+  Route::get('pariente/datos','ParienteController@get_pariente');
 
 //Rutas notas
 Route::resource('notas', 'NotaController');

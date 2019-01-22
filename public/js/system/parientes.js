@@ -289,7 +289,7 @@ $(document).ready(function () {
             '</div>' +
             '<div class="col-2 right">' +
             '<div class="btn-group right">' +
-            '<button type="button" class="btn btn-sm btn-info col" id="btn-vpariente"><i class="fas fa-eye"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-info" id="btn-vpariente" data-toggle="modal" data-target="#show_pariente"><i class="fas fa-eye"></i></button>' +
             '<button type="button" class="btn btn-sm btn-primary" id="btn-epariente"><i class="fas fa-edit"></i></button>' +
             '<button type="button" class="btn btn-sm btn-danger" id="btn-dpariente"><i class="fas fa-trash"></i></button>' +
             '</div>' +

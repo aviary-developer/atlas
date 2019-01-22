@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pariente;
+use App\EstudiantePariente;
 use Illuminate\Http\Request;
 use DB;
 
@@ -92,5 +93,12 @@ class ParienteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function get_pariente (Request $request){
+        $relacion = EstudiantePariente::find($request->id);
+        $pariente = $relacion->pariente;
+
+        return (compact('relacion','pariente'));
     }
 }

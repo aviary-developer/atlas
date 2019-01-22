@@ -193,7 +193,7 @@ class EstudianteController extends Controller
             ->orWhere('apellido','like','%'.$valor.'%')
             ->orWhere('dui','like','%'.$valor.'%');
           }
-        )->where('estado',true)->orderBy('apellido')->take(5)->get();
+        )->where('estado',true)->orderBy('apellido')->take(4)->get();
         return $parientes;
     }
 }

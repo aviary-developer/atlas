@@ -30,10 +30,12 @@
 <center>
     Personas agregadas
 </center>
+<hr>
 <div id="campo_familia">
 
 </div>
 
 @include('Estudiantes.Modal.pariente')
 @include('Estudiantes.Modal.buscar_pariente')
+@include('Estudiantes.Modal.ver_familiar')
 <script src= {{asset("js/system/parientes.js")}}></script>
