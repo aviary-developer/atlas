@@ -15,6 +15,7 @@ class CreateTransaccionsTable extends Migration
     {
         Schema::create('transaccions', function (Blueprint $table) {
             $table->increments('id');
+            $table->dateTime('fecha');
             $table->timestamps();
         });
     }

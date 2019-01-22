@@ -4,7 +4,7 @@
     <a class="navbar-brand" href="#">
         Entrada de Insumos
             <span class=" badge badge-success">
-                {{$hoy = Carbon\Carbon::now()->format('d-m-Y')}}
+                {{$hoy = Carbon\Carbon::now()->format('Y')}}
             </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,13 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <div class="row">
   <div class="col-3">
+    <div class="form-group">
+      <label>Fecha</label>
+      @php
+        $hoy = Carbon\Carbon::now();
+      @endphp
+      {!! Form::date('fechaIngreso',$hoy,['max'=>$hoy->format('Y-m-d'),'id'=>'idFechaIngreso','class'=>'form-control has-feedback-left','required']) !!}
+    </div>
       <div class="form-group w-75">
         <label>Cantidad</label>
         <div class="input-group">

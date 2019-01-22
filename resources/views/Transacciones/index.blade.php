@@ -65,7 +65,7 @@
                   @foreach ($transacciones as $transaccion)
                         <tr>
                             <td>{{$correlativo}}</td>
-                            <td>{{$transaccion->created_at->format('d-m-Y h:i:s a')}}</td>
+                            <td>{{($transaccion->fecha)}}</td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary btn-sm" onclick={{"ver(".$transaccion->id.")"}} data-tooltip="tooltip" title="Ver">
