@@ -41,7 +41,7 @@
         <label>Cantidad</label>
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="fa fa-weight form-control" aria-hidden="true"></span>
+            <span class="fa fa-list-ol form-control" aria-hidden="true"></span>
           </div>
         {!! Form::number('cantidad',null,['min'=>'0.1','step'=>'0.1','placeholder'=>'Kilos','id'=>'cantidad','class'=>'form-control']) !!}
       </div>
@@ -50,7 +50,7 @@
     <label>Insumo</label>
     <div class="input-group">
       <div class="input-group-prepend">
-        <span class="fa fa-shopping-basket form-control" aria-hidden="true"></span>
+        <span class="fa fa-shopping-bag form-control" aria-hidden="true"></span>
       </div>
       <select class="form-control" name="insumo" id="insumo">
         @foreach ($insumos as $insumo)
