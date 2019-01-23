@@ -64,3 +64,5 @@ Route::post('asistencia/guardarAsistencia','AsistenciaController@guardarAsistenc
 
 Route::resource('transacciones', 'TransaccionController');
 Route::post('transacciones/guardarTransaccion','TransaccionController@guardarTransaccion');
+
+Route::resource('menus', 'MenuController');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransaccionsTable extends Migration
+class CreateCalendarioMenusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateTransaccionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaccions', function (Blueprint $table) {
+        Schema::create('calendario_menus', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('fecha');
+            $table->integer('dia');
+            $table->integer('f_menu')->unsigned()->nullable();
+            $table->foreign('f_menu')->references('id')->on('menus');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateTransaccionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaccions');
+        Schema::dropIfExists('calendario_menus');
     }
 }

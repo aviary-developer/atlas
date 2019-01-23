@@ -2,9 +2,8 @@
 @section('layout')
 <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
     <a class="navbar-brand" href="#">
-        Entrada de Insumos
+        Creación de menús
             <span class=" badge badge-success">
-                {{$hoy = Carbon\Carbon::now()->format('Y')}}
             </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,16 +32,18 @@
     </div>
 </nav>
 <div class="container-fluid mt-3">
-  <form action="{{action('TransaccionController@guardarTransaccion')}}" method="post">
+  <form id="formMenu" action="{{url('menus')}}" method="post">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <div class="row">
   <div class="col-3">
-    <div class="form-group">
-      <label>Fecha</label>
-      @php
-        $hoy = Carbon\Carbon::now();
-      @endphp
-      {!! Form::date('fechaIngreso',$hoy,['max'=>$hoy->format('Y-m-d'),'id'=>'idFechaIngreso','class'=>'form-control has-feedback-left','required']) !!}
+    <div class="form-group w-75">
+      <label>Nombre</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="fa fa-utensils form-control" aria-hidden="true"></span>
+        </div>
+      {!! Form::text('nombre',null,['id'=>'nombre','placeholder'=>'Nombre menú','class'=>'form-control']) !!}
+    </div>
     </div>
       <div class="form-group w-75">
         <label>Cantidad</label>
@@ -100,7 +101,7 @@
     <div class="row">
       <div class="col-5"></div>
     <div class="col-1">
-      <button type="submit" class="btn btn-info btn-sm" data-tooltip="tooltip" title="Guardar entrada">
+      <button type="button" id="GuardarMenu" class="btn btn-info btn-sm" data-tooltip="tooltip" title="Almacenar asistencias">
         <i class="fas fa-check-circle"></i> Guardar
       </button>
     </div>
@@ -108,6 +109,25 @@
   </form>
 </div>
 <script type="text/javascript">
+$("#GuardarMenu").on('click',function(e){
+  var nFilas = $("#tablaInsumos tr").length;
+  var nombre=$("#nombre").val();
+  if(nombre==""){
+    new PNotify({
+        type: 'error',
+        title: '¡Error!',
+        text: 'Ingrese nombre de menú'
+    });
+  }else if((nFilas-2)==0){
+    new PNotify({
+        type: 'error',
+        title: '¡Error!',
+        text: 'Ingrese insumos a menú'
+    });
+  }else{
+    $("#formMenu").submit();
+  }
+});
 $("#agregar").on('click',function(e){
   var cantidad=$("#cantidad").val();
   var idInsumo = $("#insumo option:selected").val();

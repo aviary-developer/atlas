@@ -23,6 +23,7 @@ class TransaccionController extends Controller
     DB::beginTransaction();
     try{
       $transaccion = new Transaccion;
+      $transaccion->fecha=$request->fechaIngreso;
       $transaccion->save();
       foreach ($request->cantidades as $key => $entradaInsumo) {
         $detalleTransaccion= new DetalleTransaccion;

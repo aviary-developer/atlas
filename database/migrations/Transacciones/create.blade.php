@@ -4,7 +4,7 @@
     <a class="navbar-brand" href="#">
         Entrada de Insumos
             <span class=" badge badge-success">
-                {{$hoy = Carbon\Carbon::now()->format('Y')}}
+                {{$hoy = Carbon\Carbon::now()->format('d-m-Y')}}
             </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,18 +37,11 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <div class="row">
   <div class="col-3">
-    <div class="form-group">
-      <label>Fecha</label>
-      @php
-        $hoy = Carbon\Carbon::now();
-      @endphp
-      {!! Form::date('fechaIngreso',$hoy,['max'=>$hoy->format('Y-m-d'),'id'=>'idFechaIngreso','class'=>'form-control has-feedback-left','required']) !!}
-    </div>
       <div class="form-group w-75">
         <label>Cantidad</label>
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="fa fa-weight form-control" aria-hidden="true"></span>
+            <span class="fa fa-list-ol form-control" aria-hidden="true"></span>
           </div>
         {!! Form::number('cantidad',null,['min'=>'0.1','step'=>'0.1','placeholder'=>'Kilos','id'=>'cantidad','class'=>'form-control']) !!}
       </div>
@@ -57,7 +50,7 @@
     <label>Insumo</label>
     <div class="input-group">
       <div class="input-group-prepend">
-        <span class="fa fa-shopping-basket form-control" aria-hidden="true"></span>
+        <span class="fa fa-shopping-bag form-control" aria-hidden="true"></span>
       </div>
       <select class="form-control" name="insumo" id="insumo">
         @foreach ($insumos as $insumo)
