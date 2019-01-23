@@ -29,7 +29,7 @@
         <span class="text-monospace font-weight-light font-sm">
             Correo
         </span>
-        <h6 class="font-weight-bold" id="vp_sexo">
+        <h6 class="font-weight-bold" id="vp_correo">
 
         </h6>
     </div>
@@ -37,9 +37,10 @@
         <span class="text-monospace font-weight-light font-sm">
             Teléfono(s)
         </span>
-        <h6 class="font-weight-bold" id="vp_dui">
+        <h6 class="font-weight-bold">
             <i class="fas fa-phone"></i>
             <span id="vp_fijo"></span>
+            &nbsp;
             <i class="fas fa-mobile-alt"></i>
             <span id="vp_movil"></span>
         </h6>
@@ -52,24 +53,6 @@
     <h6 class="font-weight-bold" id="vp_direccion">
 
     </h6>
-</div>
-<div class="row">
-    <div class="col-6">
-        <span class="text-monospace font-weight-light font-sm">
-            Parentesco
-        </span>
-        <h6 class="font-weight-bold" id="vp_parentesco">
-
-        </h6>
-    </div>
-    <div class="col-6">
-        <span class="text-monospace font-weight-light font-sm">
-            Encargado
-        </span>
-        <h6 class="font-weight-bold" id="vp_encargado">
-
-        </h6>
-    </div>
 </div>
 <div class="row">
     <div class="col-6">

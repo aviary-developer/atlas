@@ -245,12 +245,123 @@ $(document).ready(function () {
         $("#m_pariente_buscar").modal('hide');
     });
 
+    $("#campo_familia").on("click","#btn-vpariente",function (e) {
+        e.preventDefault();
+        var id = $(this).data('value');
+
+        $.ajax({
+            type: 'get',
+            url: '/atlas/public/pariente/datos',
+            data: {
+                id : id
+            },
+            success: function (r) {
+                $("#vp_nombre_completo").text(r.pariente.nombre + ' ' + r.pariente.apellido);
+                var html;
+                if (r.pariente.sexo == 1) {
+                    html = '<span class="badge border border-primary text-primary">Masculino</span>';
+                } else {
+                    html = '<span class="badge border border-danger text-danger">Femenino</span>';
+                }
+                $("#vp_sexo").empty().append(html);
+                if (r.pariente.dui == "null" || r.pariente.dui == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
+                } else {
+                    html = r.pariente.dui;
+                }
+                $("#vp_dui").empty().append(html);
+                if (r.pariente.correo == "null" || r.pariente.correo == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Correo</span>';
+                } else {
+                    html = r.pariente.correo;
+                }
+                $("#vp_correo").empty().append(html);
+
+                if (r.pariente.telefono_fijo == "null" || r.pariente.telefono_fijo == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+                } else {
+                    html = r.pariente.telefono_fijo;
+                }
+                $("#vp_fijo").empty().append(html);
+
+                if (r.pariente.telefono_celular == "null" || r.pariente.telefono_celular == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+                } else {
+                    html = r.pariente.telefono_celular;
+                }
+                $("#vp_movil").empty().append(html);
+
+                $("#vp_direccion").text(r.pariente.direccion);
+
+                if (r.pariente.sabe_leer == 1) {
+                    html = '<span class="badge border border-primary text-primary">Si</span>';
+                } else {
+                    html = '<span class="badge border border-danger text-danger">No</span>';
+                }
+                $("#vp_sabe_leer").empty().append(html);
+
+                if (r.pariente.sabe_escribir == 1) {
+                    html = '<span class="badge border border-primary text-primary">Si</span>';
+                } else {
+                    html = '<span class="badge border border-danger text-danger">No</span>';
+                }
+                $("#vp_sabe_escribir").empty().append(html);
+
+                if (r.pariente.ultimo_grado == "null" || r.pariente.ultimo_grado == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Información</span>';
+                } else {
+                    html = r.pariente.ultimo_grado;
+                }
+                $("#vp_ultimo_grado").empty().append(html);
+
+                if (r.pariente.ultimo_anio == "null" || r.pariente.ultimo_anio == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Información</span>';
+                } else {
+                    html = r.pariente.ultimo_anio;
+                }
+                $("#vp_ultimo_anio").empty().append(html);
+
+                var fecha = moment(r.pariente.fecha_nacimiento).format('DD [/] MM [/] YYYY');
+
+                var hoy = moment();
+                var fecha_moment = moment(r.pariente.fecha_nacimiento);
+                var edad = hoy.diff(fecha_moment, 'years');
+                html = ' <span class="badge badge-primary badge-pill">'+edad+' años</span>';
+                $("#vp_fecha").empty().append(fecha + html);
+
+                if (r.pariente.nacionalidad == "null" || r.pariente.nacionalidad == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Información</span>';
+                } else {
+                    html = r.pariente.nacionalidad;
+                }
+                $("#vp_nacionalidad").empty().append(html);
+
+                $("#vp_civil").text(r.pariente.estado_civil);
+
+                if (r.pariente.ocupacion == "null" || r.pariente.ocupacion == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Información</span>';
+                } else {
+                    html = r.pariente.ocupacion;
+                }
+                $("#vp_ocupacion").empty().append(html);
+
+                if (r.pariente.lugar_trabajo == "null" || r.pariente.lugar_trabajo == null) {
+                    html = '<span class="badge border border-secondary text-secondary">Sin Información</span>';
+                } else {
+                    html = r.pariente.lugar_trabajo;
+                }
+                $("#vp_trabajo").empty().append(html);
+            }
+        });
+    });
+
+    //Funciones
     function imprimir_familiar(datos) {
         var campo = $("#campo_familia");
 
-        var color = (datos.sexo == 1) ? 'text-primary' : 'text-danger';
+        var img = (datos.sexo == 1) ? 'chico.png' : 'chica.png';
 
-        var encargado = (datos.encargado == 1) ? '<span class="badge badge-success font-sm">Responsable</span>' : '';
+        var encargado = (datos.encargado == 1) ? '<span class="badge badge-success badge-pill" title="Responsable">R</span>' : '';
 
         var dui = (!(datos.dui == null || datos.dui == "null")) ? datos.dui : '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
 
@@ -260,7 +371,7 @@ $(document).ready(function () {
 
         var correo = (!(datos.correo == null || datos.correo == "null")) ? datos.correo : '<span class="badge border border-secondary text-secondary">Sin Correo</span>';
 
-        var html = '<div id="tag">' +
+        /*var html = '<div id="tag">' +
             '<div class="row">' +
             '<h4 class="col-12">' +
             '<i class="' + color + ' fas fa-user"></i> ' +
@@ -289,7 +400,7 @@ $(document).ready(function () {
             '</div>' +
             '<div class="col-2 right">' +
             '<div class="btn-group right">' +
-            '<button type="button" class="btn btn-sm btn-info" id="btn-vpariente" data-toggle="modal" data-target="#show_pariente"><i class="fas fa-eye"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-info" id="btn-vpariente" data-toggle="modal" data-target="#show_pariente" data-value="'+datos.id+'"><i class="fas fa-eye"></i></button>' +
             '<button type="button" class="btn btn-sm btn-primary" id="btn-epariente"><i class="fas fa-edit"></i></button>' +
             '<button type="button" class="btn btn-sm btn-danger" id="btn-dpariente"><i class="fas fa-trash"></i></button>' +
             '</div>' +
@@ -299,7 +410,54 @@ $(document).ready(function () {
             '<input type="hidden" name="par_id[]" value="' + datos.id + '">' +
             '<input type="hidden" name="par_tipo[]" value="old">' +
             '</div>' +
-            '</div><hr>';
+            '</div><hr>';*/
+
+        var html = '<div id="tag" class="col-4 rounded border">' + //Div1
+            '<div class="flex-row">' +//Div 2
+            '<center>' +
+            '<img src="/atlas/public/img/' + img + '" class="w-50 rounded-circle mt-2 mb-2"/>' +
+            '</center>' +
+            '</div>' +//Div 2
+            '<div class="flex-row mb-0">' +//Div 3
+            '<center>' +
+            '<span class="font-weight-bold font-sm">' + datos.nombre + '</span>' +
+            ' <span class="font-weight-light font-sm">' + datos.apellido + '</span>' +
+            '</center>' +
+            '</div>' +//Div 3
+            '<div class="flex-row mt-0">' +//Div 4
+            '<center>' +
+            '<span class="badge badge-primary badge-pill">' + datos.parentesco + '</span> ' + encargado +
+            '</center>' +
+            '</div>' +//Div 4
+            '<hr class="mb-1 mt-1">' +
+            '<div class="flex-row">' +//Div 5
+            '<center>' +
+            '<span class="font-sm"><i class="fas fa-id-card"></i> ' + dui + '</span>' +
+            '</center>' +
+            '</div>' +//Div5
+            '<div class="flex-row">' +//Div 6
+            '<center>' +
+            '<span class="font-sm"><i class="fas fa-phone"></i> ' + fijo + '</span> <span class="badge badge-pill text-primary">&#183;</span> ' + '<span class="font-sm"><i class="fas fa-mobile-alt"></i> ' + celular + '</span>' +
+            '</center>' +
+            '</div>' +//Div6
+            '<div class="flex-row">' +//Div 7
+            '<center>' +
+            '<span class="font-sm"><i class="fas fa-home"></i> ' + datos.direccion + '</span>' +
+            '</center>' +
+            '</div>' +//Div7
+            '<hr class="mb-1 mt-1">' +
+            '<div class="flex-row">' +//Div8
+            '<div class="btn-group col-12 mb-2">' +//Div9
+            '<button type="button" class="btn btn-sm btn-info col-4" id="btn-vpariente" data-toggle="modal" data-target="#show_pariente" data-value="'+datos.id+'"><i class="fas fa-eye"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-primary col-4" id="btn-epariente"><i class="fas fa-edit"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-danger col-4" id="btn-dpariente"><i class="fas fa-trash"></i></button>' +
+            '</div>' +//Div9
+            '<input type="hidden" name="par_parentesco[]" value="' + datos.parentesco + '">' +
+            '<input type="hidden" name="par_responsable[]" value="' + datos.encargado + '">' +
+            '<input type="hidden" name="par_id[]" value="' + datos.id + '">' +
+            '<input type="hidden" name="par_tipo[]" value="old">'
+            '</div>' +//Div8
+            '</div>';//Div 1
 
         campo.append(html);
     }

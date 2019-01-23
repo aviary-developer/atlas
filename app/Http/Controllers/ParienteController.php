@@ -96,8 +96,8 @@ class ParienteController extends Controller
     }
 
     public function get_pariente (Request $request){
-        $relacion = EstudiantePariente::find($request->id);
-        $pariente = $relacion->pariente;
+        $relacion = Pariente::find($request->id);
+        $pariente = $relacion;
 
         return (compact('relacion','pariente'));
     }

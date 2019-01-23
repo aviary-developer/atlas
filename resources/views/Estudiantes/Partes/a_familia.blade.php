@@ -31,7 +31,7 @@
     Personas agregadas
 </center>
 <hr>
-<div id="campo_familia">
+<div id="campo_familia" class="row">
 
 </div>
 
