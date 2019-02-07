@@ -245,6 +245,11 @@ $(document).ready(function () {
         $("#m_pariente_buscar").modal('hide');
     });
 
+    $("#campo_familia").on("click", "#btn-dpariente", function (e) {
+        e.preventDefault();
+        $(this).parents('#tag').remove();
+    });
+
     $("#campo_familia").on("click","#btn-vpariente",function (e) {
         e.preventDefault();
         var id = $(this).data('value');
