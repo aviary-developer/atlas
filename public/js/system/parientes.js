@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    var lbl_nombre = null;
+    var lbl_apellido = null;
+    var lbl_parentesco = null;
+    var lbl_responsable = null;
+    var lbl_dui = null;
+    var lbl_fijo = null;
+    var lbl_celular = null;
+    var lbl_direccion = null;
+    var img_sexo = null;
+
     $("#save-pariente").click(function (e) {
         e.preventDefault();
         var nombre_pariente = $("#nombre_pariente_m").val();
@@ -209,6 +219,28 @@ $(document).ready(function () {
         $("#sp-dui").val(aux_dui);
         $("#sp-correo").val(correo);
         $("#sp-direccion").val(direccion);
+
+        $("#lm_pariente_buscar").hide();
+        $("#rm_pariente_buscar").show();
+        $("#dm_pariente_buscar").show();
+    });
+
+    $("#reset_buscar").click(function (e) {
+        $("#buscar_pariente_m").val("");
+        $("#tabla-busqueda_familiar > tbody").empty();
+
+        $("#lm_pariente_buscar").show();
+        $("#rm_pariente_buscar").hide();
+        $("#dm_pariente_buscar").hide();
+
+        $("#parentesco_m2").val("");
+        $("#responsable_n_pariente2").prop('checked', 'true');
+    });
+
+    $("#back_pariente_buscar").click(function (e) {
+        $("#lm_pariente_buscar").show();
+        $("#rm_pariente_buscar").hide();
+        $("#dm_pariente_buscar").hide();
     });
 
     $("#pariente_existe").click(function (e) {
@@ -238,16 +270,94 @@ $(document).ready(function () {
             direccion: direccion,
             sexo: sexo,
             correo: correo
-        };
+				};
 
-        imprimir_familiar(datos);
+			if (parentesco_pariente == null || parentesco_pariente == "") {
+				new PNotify({
+					title: 'Error',
+					text: 'Indicar el parentesco de la persona con el estudiante',
+					type: 'error'
+				});
+			} else {
+				imprimir_familiar(datos);
 
-        $("#m_pariente_buscar").modal('hide');
+				$("#m_pariente_buscar").modal('hide');
+			}
+
     });
 
     $("#campo_familia").on("click", "#btn-dpariente", function (e) {
         e.preventDefault();
         $(this).parents('#tag').remove();
+    });
+
+	$("#campo_familia").on("click", "#btn-epariente", function (e) {
+		e.preventDefault();
+
+		var id = $(this).parent('div').parent('div').find('input:eq(2)').val();
+
+		var parentesco = $(this).parent('div').parent('div').find('input:eq(0)').val();
+		var encargado = $(this).parent('div').parent('div').find('input:eq(1)').val();
+
+        lbl_nombre = $(this).parents('#tag').find('div:eq(1)').find('span:eq(0)');
+        lbl_apellido = $(this).parents('#tag').find('div:eq(1)').find('span:eq(1)');
+        lbl_parentesco = $(this).parents('#tag').find('div:eq(2)').find('span:eq(0)');
+        lbl_responsable = $(this).parents('#tag').find('div:eq(2)').find('span:eq(1)');
+        lbl_dui = $(this).parents('#tag').find('div:eq(3)').find('span:eq(0)');
+        lbl_fijo = $(this).parents('#tag').find('div:eq(4)').find('span:eq(0)');
+        lbl_celular = $(this).parents('#tag').find('div:eq(4)').find('span:eq(2)');
+        lbl_direccion = $(this).parents('#tag').find('div:eq(5)').find('span:eq(0)');
+        img_sexo = $(this).parents('#tag').find('img');
+
+        $.ajax({
+            type: 'get',
+            url: '/atlas/public/pariente/datos',
+            data: {
+                id: id
+            },
+            success: function (r) {
+                $("#nombre_pariente_m").val(r.pariente.nombre);
+                $("#apellido_pariente_m").val(r.pariente.apellido);
+
+                if (r.pariente.sexo == 1) {
+                    $("#sexo_f_pariente").prop('checked', 'false');
+                    $("#sexo_m_pariente").prop('checked', 'true');
+                } else {
+                    $("#sexo_m_pariente").prop('checked', 'false');
+                    $("#sexo_f_pariente").prop('checked', 'true');
+                }
+
+                $("#dui_pariente_m").val(r.pariente.dui);
+                $("#correo_pariente").val(r.pariente.correo);
+                $("#telefono_fijo_pariente_m").val(r.pariente.telefono_fijo);
+                $("#telefono_celular_pariente_m").val(r.pariente.telefono_celular);
+                $("#direccion_pariente_m").val(r.pariente.direccion);
+                $("#parentesco_m").val(parentesco);
+                if (encargado == 1) {
+                    $("#responsable_s_pariente").prop('checked', 'true');
+                } else {
+                    $("#responsable_n_pariente").prop('checked', "true");
+                }
+
+                if (r.pariente.sabe_leer == 1) {
+                    $("#sabe_leer-s-pariente").prop('checked', 'true');
+                } else {
+                    $("#sabe_leer-n-pariente").prop('checked', 'true');
+                }
+                if (r.pariente.sabe_escribir == 1) {
+                    $("#sabe_escribir-s-pariente").prop('checked', 'true');
+                } else {
+                    $("#sabe_escribir-n-pariente").prop('checked', 'true');
+                }
+                $("#ultimo_grado-pariente").val(r.pariente.ultimo_grado);
+                $("#ultimo_anio-pariente").val(r.pariente.ultimo_anio);
+                $("#fecha_nacimiento-pariente").val(moment(r.pariente.fecha_nacimiento).format('YYYY-MM-DD'));
+                $("#estado_civil-pariente").val(r.pariente.estado_civil);
+                $("#ocupacion-pariente").val(r.pariente.ocupacion);
+                $("#lugar_trabajo-pariente").val(r.pariente.lugar_trabajo);
+                $("#h-pariente").val('edit');
+            }
+		});
     });
 
     $("#campo_familia").on("click","#btn-vpariente",function (e) {
@@ -366,7 +476,7 @@ $(document).ready(function () {
 
         var img = (datos.sexo == 1) ? 'chico.png' : 'chica.png';
 
-        var encargado = (datos.encargado == 1) ? '<span class="badge badge-success badge-pill" title="Responsable">R</span>' : '';
+        var encargado = (datos.encargado == 1) ? '<span class="badge badge-success badge-pill" title="Responsable">R</span>' : '<span></span>';
 
         var dui = (!(datos.dui == null || datos.dui == "null")) ? datos.dui : '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
 
@@ -375,47 +485,6 @@ $(document).ready(function () {
         var celular = (!(datos.celular == null || datos.celular == "null")) ? datos.celular : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
 
         var correo = (!(datos.correo == null || datos.correo == "null")) ? datos.correo : '<span class="badge border border-secondary text-secondary">Sin Correo</span>';
-
-        /*var html = '<div id="tag">' +
-            '<div class="row">' +
-            '<h4 class="col-12">' +
-            '<i class="' + color + ' fas fa-user"></i> ' +
-            datos.nombre + ' ' + datos.apellido +
-            ' <span class="font-sm badge badge-secondary">' + datos.parentesco + '</span> ' +
-            encargado+
-            '</h4>' +
-            '</div>' +
-            '<div class="row">' +
-            '<div class="col-3">' +
-            '<span><i class="fas fa-id-card"></i> '+dui+'</span>'+
-            '</div>' +
-            '<div class="col-3">' +
-            '<span><i class="fas fa-phone"></i> ' + fijo + '</span>' +
-            '</div>' +
-            '<div class="col-3">' +
-            '<span><i class="fas fa-mobile-alt"></i> ' + celular + '</span>' +
-            '</div>' +
-            '<div class="col-3">' +
-            '<span><i class="fas fa-envelope"></i> ' + correo + '</span>' +
-            '</div>' +
-            '</div>' +
-            '<div class="row mt-2">' +
-            '<div class="col-10">' +
-            '<span><i class="fas fa-home"></i> '+datos.direccion +'</span>'+
-            '</div>' +
-            '<div class="col-2 right">' +
-            '<div class="btn-group right">' +
-            '<button type="button" class="btn btn-sm btn-info" id="btn-vpariente" data-toggle="modal" data-target="#show_pariente" data-value="'+datos.id+'"><i class="fas fa-eye"></i></button>' +
-            '<button type="button" class="btn btn-sm btn-primary" id="btn-epariente"><i class="fas fa-edit"></i></button>' +
-            '<button type="button" class="btn btn-sm btn-danger" id="btn-dpariente"><i class="fas fa-trash"></i></button>' +
-            '</div>' +
-            '</div>' +
-            '<input type="hidden" name="par_parentesco[]" value="' + datos.parentesco + '">' +
-            '<input type="hidden" name="par_responsable[]" value="' + datos.encargado + '">' +
-            '<input type="hidden" name="par_id[]" value="' + datos.id + '">' +
-            '<input type="hidden" name="par_tipo[]" value="old">' +
-            '</div>' +
-            '</div><hr>';*/
 
         var html = '<div id="tag" class="col-4 rounded border">' + //Div1
             '<div class="flex-row">' +//Div 2
@@ -454,7 +523,7 @@ $(document).ready(function () {
             '<div class="flex-row">' +//Div8
             '<div class="btn-group col-12 mb-2">' +//Div9
             '<button type="button" class="btn btn-sm btn-info col-4" id="btn-vpariente" data-toggle="modal" data-target="#show_pariente" data-value="'+datos.id+'"><i class="fas fa-eye"></i></button>' +
-            '<button type="button" class="btn btn-sm btn-primary col-4" id="btn-epariente"><i class="fas fa-edit"></i></button>' +
+            '<button type="button" class="btn btn-sm btn-primary col-4" id="btn-epariente" data-toggle="modal" data-target="#m_pariente"><i class="fas fa-edit"></i></button>' +
             '<button type="button" class="btn btn-sm btn-danger col-4" id="btn-dpariente"><i class="fas fa-trash"></i></button>' +
             '</div>' +//Div9
             '<input type="hidden" name="par_parentesco[]" value="' + datos.parentesco + '">' +

@@ -37,6 +37,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="h-pariente" value="create">
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-primary btn-sm" id="save-pariente">Guardar</button>

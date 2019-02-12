@@ -20,18 +20,23 @@
     </div>
     <div class="col-6">
         <center>
-            <button type="button" class="btn btn-lg btn-primary col-8" data-target="#m_pariente_buscar" data-toggle="modal">
+            <button type="button" class="btn btn-lg btn-primary col-8" data-target="#m_pariente_buscar" data-toggle="modal" id="reset_buscar">
                 <i class="fas fa-search"></i> Agregar existente
             </button>
         </center>
     </div>
 </div>
-<hr>
-<center>
-    Personas agregadas
-</center>
-<hr>
-<div id="campo_familia" class="row">
+<br>
+<div class="row m-1 p-1 border rounded border-primary">
+    <div class="col-12 mb-2">
+        <center class="font-weight-bold">
+            Personas agregadas
+        </center>
+    </div>
+    <div class="col-12">
+        <div id="campo_familia" class="row">
+    </div>
+</div>
 
 </div>
 
