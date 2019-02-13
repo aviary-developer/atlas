@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Menu;
 use App\DetalleMenu;
 use App\Insumo;
+use App\CalendarioMenu;
 use DB;
 use Illuminate\Http\Request;
 
@@ -18,8 +19,9 @@ class MenuController extends Controller
     public function index()
     {
       $menus=Menu::orderBy('nombre')->get();
+      $calendario=CalendarioMenu::all();
       $estado=true;
-      return view('Menus.index',compact('menus','estado'));
+      return view('Menus.index',compact('menus','estado','calendario'));
     }
 
     /**
@@ -102,5 +104,14 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         //
+    }
+    public function cambioDiaMenu(Request $request)
+    {
+      if($request->menu!=0){
+      CalendarioMenu::where('dia',$request->dia)->update(['f_menu'=>$request->menu]);
+    }else {
+      CalendarioMenu::where('dia',$request->dia)->update(['f_menu'=>null]);
+    }
+      return $request->menus;
     }
 }
