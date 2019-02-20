@@ -66,6 +66,7 @@
                 <tbody>
                     @php
                         $correlativo = 1;
+                        $menuses=$menus;
                     @endphp
                   @foreach ($menus as $menus)
                         <tr>
@@ -99,15 +100,118 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        @php
+        $dias=['Lunes','Martes','Miércoles','Jueves','Viernes'];
+        @endphp
+        <div class="row">
+        <div class="col-5">
+        <div class="form-group">
+        <label>Días</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="fas fa-calendar form-control" aria-hidden="true"></span>
+          </div>
+          <select class="form-control" name="dia" onchange="verMenuDia(this);" id="diaCalendario" disabled>
+            @foreach ($calendario as $cont =>$calendar)
+              <option value={{$calendar->id}}>
+                {{$dias[$cont]}}
+              </option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+      </div>
+      <div class="col-5">
+        <div class="form-group">
+        <label>Menú</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="fas fa-utensils form-control" aria-hidden="true"></span>
+          </div>
+          <select class="form-control" onchange="cambiarDiaMenu(this);" name="menu" id="menuCalendario" disabled>
+            <option value="" disabled selected>Elija menú</option>
+            @foreach ($menuses as $menus)
+              <option value={{$menus->id}}>
+                {{$menus->nombre}}
+              </option>
+            @endforeach
+            <option value="0" style="color:red;">Quitar Menú</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" id="bandera" value="0">
+        <div class="col-1">
+        <div class="form-group">
+        <label>Opción</label>
+        <button type="button" class="btn btn-primary btn-sm" onclick="editarCalendario()" data-tooltip="tooltip" title="Editar">
+            <i class="fas fa-edit"></i>
+        </button>
+      </div>
+      </div>
+      </div>
+        <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Dia</th>
+      <th scope="col">Menú</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($calendario as $contador => $calendar)
+      <tr>
+        <td>{{$dias[$contador]}}</td>
+        @if($calendar->menu)
+        <td>{{$calendar->menu->nombre}}</td>
+      @else
+        <td><span class="badge badge-info">No Asignado</span></td>
+      @endif
+      </tr>
+    @endforeach
+  </tbody>
+</table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
 <script>
+function editarCalendario(){
+  if($("#bandera").val()==0){
+    $("#menuCalendario").prop('disabled',false);
+    $("#diaCalendario").prop('disabled',false);
+    $("#bandera").val(1);
+  }else if ($("#bandera").val()==1) {
+    $("#menuCalendario").prop('disabled',true);
+    $("#diaCalendario").prop('disabled',true);
+    $("#bandera").val(0);
+  }
+}
+function cambiarDiaMenu(select) {
+  var idDia=$("#diaCalendario").val();
+  var idMenu=select.value;
+  $.ajax({
+      type: 'post',
+      url: '/atlas/public/cambioDiaMenu',
+      data: {
+          dia: idDia,
+          menu: idMenu,
+      },
+      success: function (r) {
+          console.log(r);
+          sessionStorage.setItem('msg', 'msg');
+          location.reload();
+      },
+      error: function () {
+        new PNotify({
+            type: 'error',
+            title: '¡Error!',
+            text: 'Algo salio mal'
+        });
+   }
+  });
+}
 </script>
 @endsection

@@ -66,3 +66,4 @@ Route::resource('transacciones', 'TransaccionController');
 Route::post('transacciones/guardarTransaccion','TransaccionController@guardarTransaccion');
 
 Route::resource('menus', 'MenuController');
+Route::post('cambioDiaMenu', 'MenuController@cambioDiaMenu')->name('menu.cambio');
