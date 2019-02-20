@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-6">
         <center>
-            <button type="button" class="btn btn-lg btn-success col-8" data-target="#m_pariente" data-toggle="modal">
+            <button type="button" class="btn btn-lg btn-success col-8" data-target="#m_pariente" data-toggle="modal" onclick="$('#h-pariente').val('create');"
                 <i class="fas fa-plus"></i> Crear nuevo
             </button>
         </center>

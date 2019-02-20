@@ -37,7 +37,6 @@ class ParienteController extends Controller
      */
     public function store(Request $request)
     {
-
         DB::beginTransaction();
 
         try{
@@ -81,7 +80,18 @@ class ParienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        $pariente = Pariente::find($id);
+
+        try {
+            $pariente->fill($request->all());
+            $pariente->save();
+            DB::commit();
+            return $pariente->id;
+        } catch (Exception $e) {
+            DB::rollback();
+            return 0;
+        }
     }
 
     /**

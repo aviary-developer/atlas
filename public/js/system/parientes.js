@@ -8,6 +8,8 @@ $(document).ready(function () {
     var lbl_celular = null;
     var lbl_direccion = null;
     var img_sexo = null;
+    var inp_parentesco = null;
+    var inp_responsable = null;
 
     $("#save-pariente").click(function (e) {
         e.preventDefault();
@@ -37,10 +39,19 @@ $(document).ready(function () {
 
         //Validar que no se ingresen datos nulos
         if (nombre_pariente.length > 0 && apellido_pariente.length > 0 && direccion_pariente.length > 0) {
+            var metodo = 'post';
+            var url = '/atlas/public/parientes';
+            if ($("#h-pariente").val() == 'edit') {
+                metodo = 'put';
+                url = '/atlas/public/parientes/' + $("#m-id-pariente").val();
+            } else {
+                metodo = 'post';
+                url = '/atlas/public/parientes';
+            }
             //Ajax
             $.ajax({
-                type: 'post',
-                url: '/atlas/public/parientes',
+                type: metodo,
+                url: url,
                 data: {
                     nombre: nombre_pariente,
                     apellido: apellido_pariente,
@@ -76,7 +87,11 @@ $(document).ready(function () {
                             id: r
                         };
 
-                        imprimir_familiar(datos);
+                        if ($("#h-pariente").val() == 'edit') {
+                            actualizar_familiar(datos);
+                        } else {
+                            imprimir_familiar(datos);
+                        }
 
                         $("#nombre_pariente_m").val("");
                         $("#apellido_pariente_m").val("");
@@ -304,10 +319,12 @@ $(document).ready(function () {
         lbl_parentesco = $(this).parents('#tag').find('div:eq(2)').find('span:eq(0)');
         lbl_responsable = $(this).parents('#tag').find('div:eq(2)').find('span:eq(1)');
         lbl_dui = $(this).parents('#tag').find('div:eq(3)').find('span:eq(0)');
-        lbl_fijo = $(this).parents('#tag').find('div:eq(4)').find('span:eq(0)');
-        lbl_celular = $(this).parents('#tag').find('div:eq(4)').find('span:eq(2)');
+        lbl_fijo = $(this).parents('#tag').find('div:eq(4)').find('span.font-sm:eq(0)');
+        lbl_celular = $(this).parents('#tag').find('div:eq(4)').find('#x-c');
         lbl_direccion = $(this).parents('#tag').find('div:eq(5)').find('span:eq(0)');
         img_sexo = $(this).parents('#tag').find('img');
+        inp_parentesco = $(this).parent('div').parent('div').find('input:eq(0)');
+        inp_responsable = $(this).parent('div').parent('div').find('input:eq(1)');
 
         $.ajax({
             type: 'get',
@@ -356,6 +373,7 @@ $(document).ready(function () {
                 $("#ocupacion-pariente").val(r.pariente.ocupacion);
                 $("#lugar_trabajo-pariente").val(r.pariente.lugar_trabajo);
                 $("#h-pariente").val('edit');
+                $("#m-id-pariente").val(r.pariente.id);
             }
 		});
     });
@@ -478,11 +496,11 @@ $(document).ready(function () {
 
         var encargado = (datos.encargado == 1) ? '<span class="badge badge-success badge-pill" title="Responsable">R</span>' : '<span></span>';
 
-        var dui = (!(datos.dui == null || datos.dui == "null")) ? datos.dui : '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
+        var dui = (!(datos.dui == null || datos.dui == "null" || datos.dui == '')) ? datos.dui : '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
 
-        var fijo = (!(datos.fijo == null || datos.fijo == "null")) ? datos.fijo : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+        var fijo = (!(datos.fijo == null || datos.fijo == "null" || datos.fijo == '')) ? datos.fijo : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
 
-        var celular = (!(datos.celular == null || datos.celular == "null")) ? datos.celular : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+        var celular = (!(datos.celular == null || datos.celular == "null" || datos.celular == '')) ? datos.celular : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
 
         var correo = (!(datos.correo == null || datos.correo == "null")) ? datos.correo : '<span class="badge border border-secondary text-secondary">Sin Correo</span>';
 
@@ -511,7 +529,7 @@ $(document).ready(function () {
             '</div>' +//Div5
             '<div class="flex-row">' +//Div 6
             '<center>' +
-            '<span class="font-sm"><i class="fas fa-phone"></i> ' + fijo + '</span> <span class="badge badge-pill text-primary">&#183;</span> ' + '<span class="font-sm"><i class="fas fa-mobile-alt"></i> ' + celular + '</span>' +
+            '<span class="font-sm" id="x-f"><i class="fas fa-phone"></i> ' + fijo + '</span> <span class="badge badge-pill text-primary">&#183;</span> ' + '<span class="font-sm" id="x-c"><i class="fas fa-mobile-alt"></i> ' + celular + '</span>' +
             '</center>' +
             '</div>' +//Div6
             '<div class="flex-row">' +//Div 7
@@ -534,5 +552,41 @@ $(document).ready(function () {
             '</div>';//Div 1
 
         campo.append(html);
+    }
+
+    function actualizar_familiar(datos) {
+        lbl_nombre.text(datos.nombre);
+        lbl_apellido.text(datos.apellido);
+        lbl_parentesco.text(datos.parentesco);
+
+        if (datos.encargado) {
+            lbl_responsable.addClass('badge badge-success badge-pill');
+            lbl_responsable.text('R');
+        } else {
+            lbl_responsable.text('');
+            lbl_responsable.removeClass('badge badge-success badge-pill');
+        }
+
+        if (datos.sexo) {
+            img_sexo.attr('src', '/atlas/public/img/chico.png');
+        } else {
+            img_sexo.attr('src', '/atlas/public/img/chica.png');
+        }
+
+        var dui = (!(datos.dui == null || datos.dui == "null" ||datos.dui == '')) ? datos.dui : '<span class="badge border border-secondary text-secondary">Sin DUI</span>';
+
+        var fijo = (!(datos.fijo == null || datos.fijo == "null" ||datos.fijo == '')) ? datos.fijo : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+
+        var celular = (!(datos.celular == null || datos.celular == "null" || datos.celular == '')) ? datos.celular : '<span class="badge border border-secondary text-secondary">Sin Teléfono</span>';
+
+        var direccion = '<i class="fas fa-home"></i> ' + datos.direccion;
+
+        lbl_dui.empty().append('<i class="fas fa-id-card"></i> ' +  dui);
+        lbl_celular.empty().append('<i class="fas fa-mobile-alt"></i> ' + celular);
+        lbl_fijo.empty().append('<i class="fas fa-phone"></i> ' + fijo);
+        lbl_direccion.empty().append(direccion);
+
+        inp_parentesco.val(datos.parentesco);
+        inp_responsable.val(datos.encargado);
     }
 });
