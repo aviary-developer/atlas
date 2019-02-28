@@ -29,26 +29,26 @@
                 @foreach ($estudiantes as $estudiante)
                     <tr>
                         <td>{{$correlativo}}</td>
-                        <td>{{$estudiante->estudianteMatriculado->apellido}}</td>
-                        <td>{{$estudiante->estudianteMatriculado->nombre}}</td>
+                        <td>{{$estudiante->apellido}}</td>
+                        <td>{{$estudiante->nombre}}</td>
                         <td>
-                            @if ($estudiante->estudianteMatriculado->sexo)
+                            @if ($estudiante->sexo)
                                 <span class="badge border border-danger text-danger">Femenino</span>
                             @else
                                 <span class="badge border border-primary text-primary">Masculino</span>
                             @endif
                         </td>
                         <td>
-                            {{$estudiante->estudianteMatriculado->fechaNacimiento->format('d/m/Y')}}
-                            <span class="badge badge-pill badge-primary">{{$estudiante->estudianteMatriculado->fechaNacimiento->age.' años'}}</span>
+                            {{$estudiante->fechaNacimiento->format('d/m/Y')}}
+                            <span class="badge badge-pill badge-primary">{{$estudiante->fechaNacimiento->age.' años'}}</span>
                         </td>
                             <td>
-                                @if ($estudiante->estudianteMatriculado->nie == null)
+                                @if ($estudiante->nie == null)
                                     <span class="badge border border-secondary text-secondary col-10">
                                         Vacio
                                     </span>
                                 @else
-                                    {{$estudiante->estudianteMatriculado->nie}}
+                                    {{$estudiante->nie}}
                                 @endif
                             </td>
                         <td>

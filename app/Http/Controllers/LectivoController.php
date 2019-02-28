@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lectivo;
 use App\Grado;
 use App\Asignatura;
+use App\Estudiante;
 use App\AsignaturaGrado;
 use App\User;
 use App\Matricula;
@@ -100,7 +101,7 @@ class LectivoController extends Controller
     {
         $grado = Grado::find($id);
         $asignaturas = Asignatura::where('estado',true)->orderBy('nombre')->get();
-        $estudiantes = Matricula::where('f_grado',$id)->get();
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$id)->orderBy('estudiantes.apellido')->get();
         $docentes = User::where('estado',true)->orderBy('apellido')->get();
 
         return view('Lectivos.show',compact(
