@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Lectivo extends Model
 {
@@ -34,5 +35,13 @@ class Lectivo extends Model
     public static function activo(){
         $lectivo = Lectivo::where('estado',false)->first();
         return $lectivo->id;
+    }
+
+    public function asignaturas_asignadas(){
+        return $this->hasManyThrough('App\AsignaturaGrado', 'App\Grado','f_lectivo','f_grado')->where('asignatura_grados.f_profesor',Auth::user()->id);
+    }
+
+    public function asignaturas_asignadas_grados(){
+        return $this->hasManyThrough('App\AsignaturaGrado', 'App\Grado','f_lectivo','f_grado')->where('asignatura_grados.f_profesor',Auth::user()->id);
     }
 }

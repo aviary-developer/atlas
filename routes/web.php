@@ -37,6 +37,7 @@ Route::get('grado/seccion_siguiente','LectivoController@buscar_seccion')->name('
 Route::post('grado/agregar_asignatura','GradoController@add_asignatura')->name('grado.agregar_asignatura');
 Route::post('grado/agregar_docente', 'GradoController@add_docente')->name('grado.agregar_docente');
 Route::get('grado/turno','LectivoController@turno')->name('grado.turno');
+Route::post('grado/matricula', 'LectivoController@matricula')->name('grado.matricula');
 
 //Routas de asignatura
 
@@ -49,6 +50,9 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
   Route::match(['get','post'],'/activateEstudiante/{id}','EstudianteController@activate');
   Route::match(['get','post'],'/destroyEstudiante/{id}','EstudianteController@destroy');
   Route::get('/estudiante/buscar_pariente','EstudianteController@buscar_pariente')->name('estudiante.buscar_pariente');
+
+  Route::get('/estudiante/buscar_estudiante', 'NotaController@buscar_estudiante')->name('estudiante.buscar_estudiante');
+
 
   //Rutas parientes
   Route::resource('parientes', 'ParienteController');

@@ -19,7 +19,7 @@
     <div class="tab-content" id="tab-contents">
         <div id="tb1" class="tab-pane show active">
             <div id="tb1-collapse" class="collapse" data-parent="#tab-contents">
-                <div class="mb-3 font-weight-bold">Estudiantes</div>
+                @include('Lectivos.partes.estudiantes')
             </div>
         </div>
         <div id="tb2" class="tab-pane">

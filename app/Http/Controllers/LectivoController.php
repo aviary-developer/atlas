@@ -7,6 +7,7 @@ use App\Grado;
 use App\Asignatura;
 use App\AsignaturaGrado;
 use App\User;
+use App\Matricula;
 use Illuminate\Http\Request;
 use DB;
 use Response;
@@ -99,13 +100,14 @@ class LectivoController extends Controller
     {
         $grado = Grado::find($id);
         $asignaturas = Asignatura::where('estado',true)->orderBy('nombre')->get();
-
+        $estudiantes = Matricula::where('f_grado',$id)->get();
         $docentes = User::where('estado',true)->orderBy('apellido')->get();
 
         return view('Lectivos.show',compact(
             'grado',
             'asignaturas',
-            'docentes'
+            'docentes',
+            'estudiantes'
         ));
     }
 
@@ -260,5 +262,20 @@ class LectivoController extends Controller
     }
     return (compact('docente','turno'));
         //return Response()->json(['nombre'=>$nombreDocente,'turno'=>$turno]);
+    }
+
+    public function matricula(Request $request){
+        DB::beginTransaction();
+        try {
+            $matricula = new Matricula;
+            $matricula->f_estudiante = $request->estudiante;
+            $matricula->f_grado = $request->grado;
+            $matricula->save();
+            DB::commit();
+            return 1;
+        } catch (Exception $e) {
+            DB::rollback();
+            return 0;
+        }
     }
 }

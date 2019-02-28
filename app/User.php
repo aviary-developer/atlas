@@ -42,4 +42,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Permiso', 'f_profesor');
     }
+
+    public function asignaturas(){
+        return $this->hasMany('App\AsignaturaGrado','f_profesor');
+    }
 }

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\AsignaturaGrado;
 use App\Lectivo;
 use App\Matricula;
+use App\Grado;
+use App\User;
 use DB;
 use Auth;
 
@@ -18,12 +20,25 @@ class NotaController extends Controller
      */
     public function index()
     {
-      $lectivo = Lectivo::where('estado',0)->first();
-      $asignaturasAsignadas = AsignaturaGrado::where('f_profesor',Auth::user()->id)->get();
-      return view('Notas.index',compact(
-          'asignaturasAsignadas',
-          'lectivo'
-      ));
+        $docente = User::find(Auth::user()->id);
+        //Obtener el año lectivo
+        $lectivo = Lectivo::where('estado',0)->first();
+        //Obtener todos los grados en los que el docente es asesor
+        $grados_asesorados = Grado::where('f_profesor', $docente->id)->where('f_lectivo',$lectivo->id)->orderBy('numero')->get();
+        $asignaturas_asignadas = $lectivo->asignaturas_asignadas;
+        foreach($asignaturas_asignadas as $k => $asignaturas){
+            $auxiliar[$k] = $asignaturas->grado;
+        }
+        $unico = array_unique($auxiliar);
+        $unico = collect($unico);
+        $grados = $grados_asesorados->concat($unico);
+        $grados = $grados->sortBy('numero');
+
+        return view('Notas.index',compact(
+            'grados',
+            'lectivo',
+            'docente'
+        ));
     }
 
     /**
@@ -31,9 +46,15 @@ class NotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $grado)
+    public function create(Request $request)
     {
-      
+        $id_asignatura = $request->asignatura;
+        $asignatura = AsignaturaGrado::find($id_asignatura);
+        $lectivo = Lectivo::where('estado',0)->first();
+        return view('Notas.create',compact(
+            'lectivo',
+            'asignatura'
+        ));
     }
 
     /**
@@ -90,5 +111,31 @@ class NotaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscar_estudiante(Request $request){
+        $lectivo = Lectivo::where('estado',0)->first();
+        $valor = $request->valor;
+        $valor = trim($valor);
+
+        $estudiantes = DB::table('estudiantes')
+        ->whereNotExists(
+            function ($query) use ($lectivo){
+                $query->select(DB::raw(1))
+                ->from('matriculas')
+                ->join('grados','matriculas.f_grado','grados.id')
+                ->where('grados.f_lectivo',$lectivo->id)
+                ->whereRaw('estudiantes.id = matriculas.f_estudiante');
+            }
+        )->where(
+            function ($query) use ($valor){
+                $query->where('nombre','like','%'.$valor.'%')
+                ->orWhere('apellido','like','%'.$valor.'%')
+                ->orWhere('nie','like','%'.$valor.'%');
+            }
+        )->where('estado',1)->orderBy('apellido')->take(5)->get(['id','nombre','apellido','nie','sexo','fechaNacimiento']);
+
+
+        return $estudiantes;
     }
 }

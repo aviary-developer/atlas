@@ -51,6 +51,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="id-g" value={{$grado->id}}>
 
 <script src= {{asset("js/system/grados.js")}}></script>
 @endsection

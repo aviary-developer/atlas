@@ -331,7 +331,76 @@ $(document).ready(function () {
         });
     });
 
+    $("#buscar_estudiante_m").on('keyup', async function () {
+        var texto = $("#buscar_estudiante_m").val();
+        if (texto.length > 0) {
+            await $.ajax({
+                type: 'get',
+                url: '/atlas/public/estudiante/buscar_estudiante',
+                data: {
+                    valor: texto
+                },
+                success: function (r) {
+                    var tabla = $("#tabla-busqueda_estudiante");
+                    $("#tabla-busqueda_estudiante tbody > tr").remove();
+                    var html;
+                    var aux;
+                    $(r).each(function (k, v) {
+                        var hoy = moment();
+                        var fecha_moment = moment(v.fechaNacimiento);
+                        var edad = hoy.diff(fecha_moment, 'years');
 
+                        html = '<tr>' +
+                            '<td>';
+                        if (v.sexo == 0) {
+                            aux = '<span class="badge badge-light border border-primary text-primary"><i class="fas fa-male"></i></span>';
+                        } else {
+                            aux = '<span class="badge badge-light border border-danger text-danger"><i class="fas fa-female"></i></span>';
+                        }
+                        html += aux + ' ' + v.nombre + ' ' + v.apellido + ' <span class="badge badge-pill badge-ligth text-secondary float-right border">' + edad + ' años</span><br>';
+                        if (v.nie != null) {
+                            html += '<small class="text-primary">'+ v.nie + '<small>';
+                        } else {
+                            html += '<small class="text-secondary">Sin NIE</small>';
+                        }
+
+                        html += '</td>' +
+                            '<td>' +
+                            '<button class="btn btn-primary btn-sm" id="add_student" data-value="'+v.id+'"><i class="fas fa-check"></i></button>'+
+                            '</td>' +
+                            '</tr>';
+
+                        tabla.append(html);
+                    });
+                }
+            });
+        }
+    });
+
+    $("#tabla-busqueda_estudiante").on('click', '#add_student', function (e) {
+        e.preventDefault();
+        var estudiante = $(this).data('value');
+        var grado = $("#id-g").val();
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/grado/matricula',
+            data: {
+                grado: grado,
+                estudiante: estudiante
+            }, success: function (r) {
+                if (r == 1) {
+                    sessionStorage.setItem('msg', 'msg');
+                    location.reload(true);
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
+            }
+        });
+    });
 });
 
 function selected_year(year, id, estado, objeto) {
