@@ -66,6 +66,9 @@
                 <a href={{asset("transacciones")}} class="sidebar-nav-link">Entradas de Insumos</a>
               </li>
               <li>
+                <a href={{asset("salidas")}} class="sidebar-nav-link">Salida de Insumos</a>
+              </li>
+              <li>
                 <a href={{asset("menus")}} class="sidebar-nav-link">Menús</a>
               </li>
             </ul>

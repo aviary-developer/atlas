@@ -5,7 +5,7 @@ setlocale(LC_ALL,'es');
   @endphp
 <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
     <a class="navbar-brand" href="#">
-        Entradas de insumos
+        Salidas de insumos
         @if ($estado)
             <span class=" badge badge-success">
                 Activos
@@ -22,7 +22,7 @@ setlocale(LC_ALL,'es');
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href={!! asset('/transacciones/create') !!} id="new-insumo">
+                <a class="nav-link" href={!! asset('/salidas/create') !!} id="new-insumo">
                     Nuevo
                 </a>
             </li>
@@ -65,7 +65,7 @@ setlocale(LC_ALL,'es');
                     @php
                         $correlativo = 1;
                     @endphp
-                  @foreach ($transacciones as $transaccion)
+                  @foreach ($salidas as $salida)
                         <tr>
                             <td>{{$correlativo}}</td>
                             @php
@@ -74,7 +74,7 @@ setlocale(LC_ALL,'es');
                             <td>{{$dt->formatLocalized('%d de %B de %Y')}}</td>
                             <td>
                                 <div class="btn-group">
-                                  <a href={{asset('transacciones/'.$transaccion->id)}} class="btn btn-sm btn-info"  data-tooltip="tooltip" title="Ver detalles"><i class="fas fa-info-circle"></i></a>
+                                  <a href={{asset('salidas/'.$salida->id)}} class="btn btn-sm btn-info"  data-tooltip="tooltip" title="Ver detalles"><i class="fas fa-info-circle"></i></a>
                                 </div>
                             </td>
                         </tr>

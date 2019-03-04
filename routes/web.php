@@ -69,5 +69,8 @@ Route::post('asistencia/guardarAsistencia','AsistenciaController@guardarAsistenc
 Route::resource('transacciones', 'TransaccionController');
 Route::post('transacciones/guardarTransaccion','TransaccionController@guardarTransaccion');
 
+Route::resource('salidas', 'SalidaController');
+Route::post('salidas/guardarSalida','SalidaController@guardarSalida');
+
 Route::resource('menus', 'MenuController');
 Route::post('cambioDiaMenu', 'MenuController@cambioDiaMenu')->name('menu.cambio');
