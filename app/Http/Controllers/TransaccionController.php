@@ -7,6 +7,8 @@ use App\DetalleTransaccion;
 use App\Insumo;
 use App\Transaccion;
 use DB;
+use DateTime;
+use Carbon\Carbon;
 
 class TransaccionController extends Controller
 {
@@ -23,18 +25,25 @@ class TransaccionController extends Controller
     DB::beginTransaction();
     try{
       $transaccion = new Transaccion;
-      $transaccion->fecha=$request->fechaIngreso;
+      $transaccion->fecha=new Carbon($request->fechaIngreso);
       $transaccion->save();
       foreach ($request->cantidades as $key => $entradaInsumo) {
         $detalleTransaccion= new DetalleTransaccion;
         $detalleTransaccion->f_transaccion=$transaccion->id;
         $detalleTransaccion->cantidad=$request->cantidades[$key];
         $detalleTransaccion->f_insumo=$request->insumos[$key];
+        $detalleTransaccion->save();
       }
         DB::commit();
     }catch(Exception $e){
         DB::rollback();
     }
     return redirect('/transacciones')->with('msg', '¡Guardado!');
+  }
+  public function show($id)
+  {
+    $transaccion=Transaccion::find($id);
+    $detalles=DetalleTransaccion::where('f_transaccion',$id)->get();
+      return view('Transacciones.show',compact('detalles','transaccion'));
   }
 }

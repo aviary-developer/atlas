@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DetalleTransaccion extends Model
+class DetalleSalida extends Model
 {
   protected $fillable = [
-    'f_transaccion','cantidad','f_insumo'
+    'f_salida','cantidad','f_insumo'
   ];
   public function insumo(){
     return $this->belongsTo('App\Insumo','f_insumo');
