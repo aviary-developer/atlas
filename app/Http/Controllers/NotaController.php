@@ -8,6 +8,7 @@ use App\Lectivo;
 use App\Matricula;
 use App\Grado;
 use App\User;
+use App\Nota;
 use DB;
 use Auth;
 
@@ -67,7 +68,38 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(isset($request->f_estudiante)){
+
+            DB::beginTransaction();
+            try {
+                foreach($request->f_estudiante as $k => $estudiante){
+                    $nota = Nota::where('f_estudiante',$estudiante)->where('f_asignatura',$request->id_a)->first();
+
+                    if($nota == null){
+                        //Crear el registro
+                        $nota = new Nota;
+                        $nota->f_estudiante = $estudiante;
+                        $nota->f_asignatura = $request->id_a;
+                    }
+
+                    $nota->n1p1 = $request->n1p1[$k];
+                    $nota->n2p1 = $request->n2p1[$k];
+                    $nota->n3p1 = $request->n3p1[$k];
+                    $nota->n1p2 = $request->n1p2[$k];
+                    $nota->n2p2 = $request->n2p2[$k];
+                    $nota->n3p2 = $request->n3p2[$k];
+                    $nota->n1p3 = $request->n1p3[$k];
+                    $nota->n2p3 = $request->n2p3[$k];
+                    $nota->n3p3 = $request->n3p3[$k];
+                    $nota->save();
+                }
+                DB::commit();
+                return redirect('/notas')->with('mensaje', '¡Guardado!');
+            } catch (Exception $e) {
+                DB::rollback();
+                return redirect('/notas')->with('mensaje', '¡Algo salio mal!');
+            }
+        }
     }
 
     /**
