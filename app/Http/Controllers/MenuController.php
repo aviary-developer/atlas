@@ -20,6 +20,10 @@ class MenuController extends Controller
     {
       $menus=Menu::orderBy('nombre')->get();
       $calendario=CalendarioMenu::all();
+      if(count($calendario)==0){
+        $crearDias=CalendarioMenu::crearDias();
+        $calendario=CalendarioMenu::all();
+      }
       $estado=true;
       return view('Menus.index',compact('menus','estado','calendario'));
     }
