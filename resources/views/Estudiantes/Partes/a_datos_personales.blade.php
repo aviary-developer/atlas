@@ -56,6 +56,8 @@
         $hoy = $hoy->subYears(3);
         if($create){
           $fecha = $fecha->subYears(3);
+        }else{
+            $fecha = $estudiante->fechaNacimiento;
         }
       @endphp
       {!! Form::date('fechaNacimiento',$fecha,['max'=>$hoy->format('Y-m-d'),'id'=>'fechaNacimiento','class'=>'form-control form-control-sm has-feedback-left','required']) !!}

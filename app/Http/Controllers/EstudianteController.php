@@ -157,8 +157,14 @@ class EstudianteController extends Controller
     {
       $estudiante = Estudiante::find($id);
       $partida = PartidaNacimiento::where('f_estudiante',$id)->first();
-      //dd($partida);
-      return view('Estudiantes.edit',compact('estudiante','partida'));
+      $lectivo=Lectivo::where('estado',0)->first();
+      $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->orderBy('numero','asc')->get();
+      return view('Estudiantes.edit2',compact(
+          'estudiante',
+          'partida',
+          'lectivo',
+          'grados'
+        ));
     }
 
     /**

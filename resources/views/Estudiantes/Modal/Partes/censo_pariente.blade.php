@@ -40,10 +40,9 @@
     @php
     $hoy_p = Carbon\Carbon::now();
     $hoy_p = $hoy_p->subYears(10);
-    if($create){
-        $hoy2 = Carbon\Carbon::now();
-        $fecha_p = $hoy2->subYears(10);
-    }
+
+    $hoy2 = Carbon\Carbon::now();
+    $fecha_p = $hoy2->subYears(10);
     @endphp
     {!! Form::date('fecha_nacimiento-pariente',$fecha_p,['max'=>$hoy_p->format('Y-m-d'),'id'=>'fecha_nacimiento-pariente','class'=>'form-control form-control-sm']) !!}
 </div>

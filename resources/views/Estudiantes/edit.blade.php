@@ -2,7 +2,7 @@
 @section('layout')
   @php
     $create=false;
-    $fecha = $usuario->fechaNacimiento;
+    //$fecha = $usuario->fechaNacimiento;
   @endphp
   <h1>Usuarios</h1>
   <nav aria-label="breadcrumb">
