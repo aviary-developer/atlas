@@ -57,7 +57,7 @@
 <div class="container-fluid mt-3">
     <div class="col-7">
         <div class="table-responsive">
-            <table class="table table-sm a-table">
+            <table id="tableMenus" class="table table-sm a-table">
                 <thead>
                     <th>#</th>
                     <th>Nombre</th>
@@ -74,7 +74,7 @@
                             <td>{{$menus->nombre}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary btn-sm" onclick={{"ver(".$menus->id.")"}} data-tooltip="tooltip" title="Ver">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick={{"showMenu(this,".$menus->id.")"}} data-target="#modalShowMenu" data-toggle="modal" data-tooltip="tooltip" title="Ver">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -177,7 +177,58 @@
     </div>
   </div>
 </div>
+<!-- INICIO MODAL SHOW -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalShowMenu" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+            Menú
+            <span class="badge badge-info" id="spanMenu"></span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+            <div class="flex-row">
+                <center>
+                    <h5>Ingredientes</h5>
+                </center>
+            </div>
+            <div class="flex-row">
+                <table class="table table-sm" id="tablaShowMenu">
+                    <thead>
+                        <tr>
+                            <th>Insumo</th>
+                            <th>Cantidad por alumno</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FINAL MODAL SHOW -->
 <script>
+function showMenu(nombre,menu){
+  var url='menus/'+menu;
+  var tabla=$("#tablaShowMenu");
+  $('#spanMenu').text($(nombre).parents('tr').find('td:eq(1)').text());
+  $.get(url, function(data){
+    $('#tablaShowMenu tbody > tr').remove();
+    $.each(data, function(index) {
+      tabla.append("<tr><td>"+data[index].nombre+"</td><td>"+data[index].cantidad+" kg</td></tr>");
+    });
+  });
+}
 function editarCalendario(){
   if($("#bandera").val()==0){
     $("#menuCalendario").prop('disabled',false);

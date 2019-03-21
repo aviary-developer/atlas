@@ -57,6 +57,7 @@ class MenuController extends Controller
           $detalleMenu->f_menu=$menu->id;
           $detalleMenu->cantidad=$request->cantidades[$key];
           $detalleMenu->f_insumo=$request->insumos[$key];
+          $detalleMenu->save();
         }
           DB::commit();
       }catch(Exception $e){
@@ -71,9 +72,14 @@ class MenuController extends Controller
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function show(Menu $menu)
+    public function show($id)
     {
-        //
+        $detallesMenu=DB::table('detalle_menus as dm')
+            ->join('insumos as i', 'dm.f_insumo', '=', 'i.id')
+            ->where('dm.f_menu', '=', $id)
+            ->select('i.nombre', 'dm.cantidad')
+            ->get();
+        return $detallesMenu;
     }
 
     /**
