@@ -54,11 +54,41 @@
         if($(this).val()==1){
             trabajo();
         }else{
-            $("#tipo").val("");
-            $("#lugar").val("");
-            $("#jornadaLaboral").val("");
-            $("#detallesTrabajo").hide();
-            $("#siTrabaja").prop('disabled', false);
+            var valor = $("#tipo").val();
+            if(!(valor == null || valor == "")){
+                (new PNotify({
+                    title: 'Eliminar trabajo',
+                    text: '¿Está seguro? no se podrá deshacer',
+                    icon: 'glyphicon glyphicon-question-sign',
+                    hide: false,
+                    confirm: {
+                        confirm: true
+                    },
+                    buttons: {
+                        closer: false,
+                        sticker: false
+                    },
+                    history: {
+                        history: true
+                    }
+                })).get().on('pnotify.confirm', function() {
+                    $("#tipo").val("");
+                    $("#lugar").val("");
+                    $("#jornadaLaboral").val("");
+                    $("#detallesTrabajo").hide();
+                    $("#siTrabaja").prop('disabled', false);
+                }).on('pnotify.cancel', function() {
+                    $('#siTrabaja').prop('checked', true);
+                    $('#noTrabaja').prop('checked', false);
+                });
+            }else{
+                $("#tipo").val("");
+                $("#lugar").val("");
+                $("#jornadaLaboral").val("");
+                $("#detallesTrabajo").hide();
+                $("#siTrabaja").prop('disabled', false);
+            }
+
         }
     });
 
@@ -113,8 +143,12 @@
             $("#jornadaLaboral").val(jornadaLaboral);
             $("#detallesTrabajo").show();
         }).on('pnotify.cancel', function() {
-            $('#siTrabaja').prop('checked', false);
-            $('#noTrabaja').prop('checked', true);
+            var estado = $("#siTrabaja").prop('checked');
+            var valor = $("#tipo").val();
+            if(estado == true && (valor == "" || valor == null)){
+                $('#siTrabaja').prop('checked', false);
+                $('#noTrabaja').prop('checked', true);
+            }
         });
     }
 

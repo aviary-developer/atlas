@@ -22,3 +22,4 @@
         </ul>
     </div>
 </nav>
+<input type="hidden" id="funcion" value="{{$create}}">

@@ -43,7 +43,11 @@ class Estudiante extends Model
       'bonoEscolar',
       'transporte',
       'prioridadComedor',
-      'otro_tipo_ayuda'
+      'otro_tipo_ayuda',
+      'trabaja',
+      'tipo',
+      'lugar',
+      'jornadaLaboral'
     ];
 
     protected $dates = ['fechaNacimiento'];

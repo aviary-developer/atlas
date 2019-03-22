@@ -128,25 +128,58 @@
         </div>
     </div>
 
+    @php
+        if(!$create){
+            $lugar = $estudiante->lugar;
+            $tipo = $estudiante->tipo;
+            $jornadaLaboral = $estudiante->jornadaLaboral;
+        }else{
+            $lugar = $tipo = $jornadaLaboral = null;
+        }
+    @endphp
+
     <div class="form-group col-3">
         <label> ¿Trabaja?</label><br>
         <div class="form-group">
             <div id="divTrabaja" class="btn-group">
-                <label class="radio radio-info">
-                    <input type="radio" name="trabaja" id="siTrabaja" value="1"> <span class="check-mark"></span>Si
-                </label> &nbsp
-                <label class="radio radio-danger">
-                    <input type="radio" name="trabaja" id="noTrabaja" value="0" checked> <span class="check-mark"></span>No
-                </label>
+                @if ($create)
+                    <label class="radio radio-info">
+                        <input type="radio" name="trabaja" id="siTrabaja" value="1"> <span class="check-mark"></span>Si
+                    </label> &nbsp
+                    <label class="radio radio-danger">
+                        <input type="radio" name="trabaja" id="noTrabaja" value="0" checked> <span class="check-mark"></span>No
+                    </label>
+                @else
+                    @if ($estudiante->trabaja)
+                        <label class="radio radio-info">
+                            <input type="radio" name="trabaja" id="siTrabaja" value="1" checked> <span class="check-mark"></span>Si
+                        </label> &nbsp
+                        <label class="radio radio-danger">
+                            <input type="radio" name="trabaja" id="noTrabaja" value="0"> <span class="check-mark"></span>No
+                        </label>
+                        <script>
+                            $(document).ready(function(){
+                                $("#detallesTrabajo").show();
+                            });
+                        </script>
+                    @else
+                        <label class="radio radio-info">
+                            <input type="radio" name="trabaja" id="siTrabaja" value="1"> <span class="check-mark"></span>Si
+                        </label> &nbsp
+                        <label class="radio radio-danger">
+                            <input type="radio" name="trabaja" id="noTrabaja" value="0" checked> <span class="check-mark"></span>No
+                        </label>
+                    @endif
+                @endif
             </div>
             &nbsp
             <button id="detallesTrabajo" type = "button" name="button" class="btn btn-outline-success btn-sm" onclick="trabajo();" data-toggle="tooltip" data-placement="left" title="Detalles" style="display:none;">
                 <i class="fa fa-bars"></i>
             </button>
         </div>
-        <input id="tipo" name="tipo" type="hidden"/>
-        <input id="lugar" name="lugar" type="hidden"/>
-        <input id="jornadaLaboral" name="jornadaLaboral" type="hidden"/>
+        <input id="tipo" name="tipo" type="hidden" value="{{$tipo}}"/>
+        <input id="lugar" name="lugar" type="hidden" value="{{$lugar}}"/>
+        <input id="jornadaLaboral" name="jornadaLaboral" type="hidden" value="{!!$jornadaLaboral!!}"/>
     </div>
 
     @php

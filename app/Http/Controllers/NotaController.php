@@ -27,12 +27,19 @@ class NotaController extends Controller
         //Obtener todos los grados en los que el docente es asesor
         $grados_asesorados = Grado::where('f_profesor', $docente->id)->where('f_lectivo',$lectivo->id)->orderBy('numero')->get();
         $asignaturas_asignadas = $lectivo->asignaturas_asignadas;
+        $auxiliar = [];
         foreach($asignaturas_asignadas as $k => $asignaturas){
             $auxiliar[$k] = $asignaturas->grado;
         }
         $unico = array_unique($auxiliar);
         $unico = collect($unico);
-        $grados = $grados_asesorados->concat($unico);
+        $grados_prev = $grados_asesorados->concat($unico);
+        $aux2 = [];
+        foreach($grados_prev as $k => $grados){
+            $aux2[$k] = $grados;
+        }
+        $grados = array_unique($aux2);
+        $grados = collect($grados);
         $grados = $grados->sortBy('numero');
 
         return view('Notas.index',compact(
