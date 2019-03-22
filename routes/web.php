@@ -74,3 +74,4 @@ Route::post('salidas/guardarSalida','SalidaController@guardarSalida');
 
 Route::resource('menus', 'MenuController');
 Route::post('cambioDiaMenu', 'MenuController@cambioDiaMenu')->name('menu.cambio');
+//Route::get('menus/show/{menu}','MenuController@show')->name('menu.show');

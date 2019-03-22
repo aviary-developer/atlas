@@ -12,10 +12,6 @@ class DiasSeeder extends Seeder
      */
     public function run()
     {
-          for($i=1;$i<=5;$i++) {
-              $calendarioMenu= new CalendarioMenu();
-              $calendarioMenu->dia=$i;
-              $calendarioMenu->save();
-          }
+          
     }
 }
