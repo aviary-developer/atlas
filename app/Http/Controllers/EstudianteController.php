@@ -36,8 +36,8 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-      $lectivo=Lectivo::where('estado',0)->first();
-      $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->orderBy('numero','asc')->get();
+        $lectivo=Lectivo::where('estado',0)->first();
+        $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->orderBy('numero','asc')->get();
       return view('Estudiantes.create2',compact('lectivo','grados'));
     }
 
@@ -66,20 +66,6 @@ class EstudianteController extends Controller
             $partida->libro=$request->libro;
             $partida->f_estudiante=$estudiante->id;
             $partida->save();
-          }
-          if($request->nombreEncargadoM){
-            foreach ($request->nombreEncargadoM as $key => $encargados) {
-              $encargado= new Encargado;
-              $encargado->nombre=$request->nombreEncargadoM[$key];
-              $encargado->apellido=$request->apellidoEncargadoM[$key];
-              $encargado->dui=$request->duiEncargadoM[$key];
-              $encargado->correo=$request->correoEncargadoM[$key];
-              $encargado->direccion=$request->direccionEncargadoM[$key];
-              $encargado->telefono=$request->telefonoEncargadoM[$key];
-              $encargado->celular=$request->celularEncargadoM[$key];
-              $encargado->f_estudiante=$estudiante->id;
-              $encargado->save();
-            }
           }
           if($request->grado!="Negativo"){
             $matricula=new Matricula;
@@ -142,9 +128,32 @@ class EstudianteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        if($request->anio == null){
+            $lectivo_a = Lectivo::where('estado',0)->first();
+        }else{
+            $lectivo_a = Lectivo::find($request->anio);
+        }
+        $estudiante = Estudiante::find($id);
+        $partida = PartidaNacimiento::where('f_estudiante',$id)->first();
+
+        $lectivos = Lectivo::orderBy('anio','desc')->get();
+        //Obtener la matricula del año activo
+        $grado = Grado::
+        join('matriculas','grados.id','matriculas.f_grado')
+        ->join('estudiantes','matriculas.f_estudiante','estudiantes.id')
+        ->where('grados.f_lectivo',$lectivo_a->id)
+        ->where('estudiantes.id',$id)
+        ->select('grados.*')
+        ->first();
+        return view('Estudiantes.show',compact(
+            'estudiante',
+            'partida',
+            'lectivos',
+            'lectivo_a',
+            'grado'
+        ));
     }
 
     /**
@@ -159,11 +168,15 @@ class EstudianteController extends Controller
       $partida = PartidaNacimiento::where('f_estudiante',$id)->first();
       $lectivo=Lectivo::where('estado',0)->first();
       $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->orderBy('numero','asc')->get();
+      $parientes = EstudiantePariente::where('f_estudiante',$id)->get();
+      $enfermedad_parientes = EnfermedadFamilia::where('f_estudiante',$id)->orderBy('pariente')->get();
       return view('Estudiantes.edit2',compact(
           'estudiante',
           'partida',
           'lectivo',
-          'grados'
+          'grados',
+          'parientes',
+          'enfermedad_parientes'
         ));
     }
 
@@ -176,7 +189,23 @@ class EstudianteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        $v_certificado = ($request->certificado == "on")?true:false;
+        $v_libretaNotas = ($request->libretaNotas == "on")?true:false;
+
+        try {
+            $estudiante = Estudiante::find($id);
+            $estudiante->fill($request->all());
+            $estudiante->certificado = $v_certificado;
+            $estudiante->libretaNotas = $v_libretaNotas;
+            $estudiante->save();
+            DB::commit();
+            return redirect('/estudiantes')->with('mensaje', '¡Guardado!');
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect('/estudiantes')->with('mensaje', '¡Algo salio mal!');
+        }
+
     }
 
     /**
@@ -201,5 +230,18 @@ class EstudianteController extends Controller
           }
         )->where('estado',true)->orderBy('apellido')->take(4)->get();
         return $parientes;
+    }
+
+    public function delete_parentesco(Request $request){
+        DB::beginTransaction();
+        try {
+            $relacion = EstudiantePariente::findOrFail($request->id);
+            $relacion->delete();
+            DB::commit();
+            return 1;
+        } catch (Exception $e) {
+            DB::rollback();
+            return 0;
+        }
     }
 }

@@ -289,7 +289,7 @@ $(document).ready(function () {
 
 			if (parentesco_pariente == null || parentesco_pariente == "") {
 				new PNotify({
-					title: 'Error',
+					title: '¡Error!',
 					text: 'Indicar el parentesco de la persona con el estudiante',
 					type: 'error'
 				});
@@ -303,7 +303,60 @@ $(document).ready(function () {
 
     $("#campo_familia").on("click", "#btn-dpariente", function (e) {
         e.preventDefault();
-        $(this).parents('#tag').remove();
+        var tipo = $(this).parent('div').parent('div').find('input:eq(3)').val();
+        var relacion = $(this).parent('div').parent('div').find('input:eq(4)').val();
+        console.log(tipo);
+        var objeto = $(this);
+        if (tipo == "old") {
+            (new PNotify({
+                title: 'Eliminar pariente',
+                text: '¿Está seguro?',
+                icon: 'fas fa-question-circle',
+                hide: false,
+                confirm: {
+                    buttons: [{
+                        text: "Aceptar"
+                    }, {
+                        text: "Cancelar"
+                    }],
+                    confirm: true
+                },
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                history: {
+                    history: true
+                }
+            })).get().on('pnotify.confirm', function () {
+                $.ajax({
+                    type: 'post',
+                    url: '/atlas/public/pariente/delete',
+                    data: {
+                        id: relacion
+                    },
+                    success: function (r) {
+                        if (r) {
+                            new PNotify({
+                                type: 'success',
+                                title: '¡Hecho!',
+                                text: 'Acción exitosa'
+                            });
+                            objeto.parents('#tag').remove();
+                        } else {
+                            new PNotify({
+                                title: '¡Error!',
+                                text: 'Algo salio mal',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+            });
+
+        } else {
+            objeto.parents('#tag').remove();
+        }
     });
 
 	$("#campo_familia").on("click", "#btn-epariente", function (e) {
@@ -547,7 +600,8 @@ $(document).ready(function () {
             '<input type="hidden" name="par_parentesco[]" value="' + datos.parentesco + '">' +
             '<input type="hidden" name="par_responsable[]" value="' + datos.encargado + '">' +
             '<input type="hidden" name="par_id[]" value="' + datos.id + '">' +
-            '<input type="hidden" name="par_tipo[]" value="old">'
+            '<input type="hidden" name="par_tipo[]" value="new">' +
+            '<input type="hidden" name="rel_id[]" value="0">'+
             '</div>' +//Div8
             '</div>';//Div 1
 

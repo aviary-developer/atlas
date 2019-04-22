@@ -6,7 +6,7 @@
     @endphp
     @include('Estudiantes.Barra.create')
     <div class="container-fluid mt-3">
-        {!!Form::model($estudiante,['class' =>'tab-content','route' =>['estudiantes.update',$estudiante->id],'method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formEstudiante'])!!}
+        {!!Form::model($estudiante,['class' =>'tab-content','route' =>['estudiantes.update',$estudiante->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formEstudiante'])!!}
 
             <div class="row">
                 <div class="col-9">

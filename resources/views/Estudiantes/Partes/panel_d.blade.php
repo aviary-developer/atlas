@@ -32,12 +32,12 @@
 
 <hr>
 <div class="flex-row mt-4">
+    <div class="d-block d-md-flex">
+        <button type="submit" class="btn btn-success btn-block btn-sm col-12 mb-3">
+            Guardar
+        </button>
+    </div>
     @if ($create)
-        <div class="d-block d-md-flex">
-            <button type="submit" class="btn btn-success btn-block btn-sm col-12 mb-3">
-                Guardar
-            </button>
-        </div>
         {!!Form::button('Guardar y matricular',['data-toggle'=>'modal','data-target'=>'#exampleModal','class'=>'btn btn-success btn-block btn-sm col-12'])!!}
     @endif
 </div>

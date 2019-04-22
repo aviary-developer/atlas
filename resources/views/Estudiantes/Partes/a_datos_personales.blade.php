@@ -118,12 +118,31 @@
         <label>Zona de residencia *</label><br>
         <div class="form-group">
             <div class="btn-group">
-                <label class="radio radio-info">
-                    <input type="radio" name="zonaResidencia" value="0" checked> <span class="check-mark"></span>Urbana
-                </label> &nbsp
-                <label class="radio radio-danger">
-                    <input type="radio" name="zonaResidencia" value="1"> <span class="check-mark"></span>Rural
-                </label>
+                @if ($create)
+                    <label class="radio radio-info">
+                        <input type="radio" name="zonaResidencia" value="0" checked> <span class="check-mark"></span>Urbana
+                    </label> &nbsp
+                    <label class="radio radio-danger">
+                        <input type="radio" name="zonaResidencia" value="1"> <span class="check-mark"></span>Rural
+                    </label>
+                @else
+                    @if (!$estudiante->zonaResidencia)
+                        <label class="radio radio-info">
+                            <input type="radio" name="zonaResidencia" value="0" checked> <span class="check-mark"></span>Urbana
+                        </label> &nbsp
+                        <label class="radio radio-danger">
+                            <input type="radio" name="zonaResidencia" value="1"> <span class="check-mark"></span>Rural
+                        </label>
+                    @else
+                        <label class="radio radio-info">
+                            <input type="radio" name="zonaResidencia" value="0"> <span class="check-mark"></span>Urbana
+                        </label> &nbsp
+                        <label class="radio radio-danger">
+                            <input type="radio" name="zonaResidencia" value="1" checked> <span class="check-mark"></span>Rural
+                        </label>
+                    @endif
+                @endif
+
             </div>
         </div>
     </div>
@@ -203,9 +222,27 @@
     <div class="form-group col-4">
         <label>Estado Civil *</label>
         <select class="form-control form-control-sm" name="estadoCivil">
-            <option value="Soltero">Soltero(a)</option>
-            <option value="Casado">Casado(a)</option>
-            <option value="Viudo">Viudo(a)</option>
+            @if ($create)
+                <option value="Soltero">Soltero(a)</option>
+                <option value="Casado">Casado(a)</option>
+                <option value="Viudo">Viudo(a)</option>
+            @else
+                @if ($estudiante->estadoCivil == "Soltero")
+                    <option value="Soltero" selected>Soltero(a)</option>
+                @else
+                    <option value="Soltero">Soltero(a)</option>
+                @endif
+                @if ($estudiante->estadoCivil == "Casado")
+                    <option value="Casado" selected>Casado(a)</option>
+                @else
+                    <option value="Casado">Casado(a)</option>
+                @endif
+                @if ($estudiante->estadoCivil == "Viudo")
+                    <option value="Viudo" selected>Viudo(a)</option>
+                @else
+                    <option value="Viudo">Viudo(a)</option>
+                @endif
+            @endif
         </select>
     </div>
 

@@ -1,49 +1,49 @@
 @extends('welcome')
 @section('layout')
-    @php
-        $create = true;
-        $fecha = Carbon\Carbon::now();
-    @endphp
-    @include('Estudiantes.Barra.create')
-    <div class="container-fluid mt-3">
-        {!!Form::open(['class' =>'tab-content','route' =>'estudiantes.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formEstudiante'])!!}
+@php
+$create = true;
+$fecha = Carbon\Carbon::now();
+@endphp
+@include('Estudiantes.Barra.create')
+<div class="container-fluid mt-3">
+    {!!Form::open(['class' =>'tab-content','route' =>'estudiantes.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formEstudiante'])!!}
 
-            <div class="row">
-                <div class="col-9">
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
-                            @include('Estudiantes.Partes.a_datos_personales')
-                        </div>
-
-                        <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
-                            @include('Estudiantes.Partes.a_estudio')
-                        </div>
-
-                        <div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
-                            @include('Estudiantes.Partes.a_familia')
-                        </div>
-
-                        <div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
-                            @include('Estudiantes.Partes.a_talla')
-                        </div>
-
-                        <div class="tab-pane fade" id="five" role="tabpanel" aria-labelledby="five-tab">
-                            @include('Estudiantes.Partes.a_salud')
-                        </div>
-
-                        <div class="tab-pane fade" id="six" role="tabpanel" aria-labelledby="six-tab">
-                            @include('Estudiantes.Partes.a_socioeconomica')
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
+                    @include('Estudiantes.Partes.a_datos_personales')
                 </div>
-                <div class="col-3">
-                    @include('Estudiantes.Partes.panel_d')
+
+                <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
+                    @include('Estudiantes.Partes.a_estudio')
+                </div>
+
+                <div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
+                    @include('Estudiantes.Partes.a_familia')
+                </div>
+
+                <div class="tab-pane fade" id="four" role="tabpanel" aria-labelledby="four-tab">
+                    @include('Estudiantes.Partes.a_talla')
+                </div>
+
+                <div class="tab-pane fade" id="five" role="tabpanel" aria-labelledby="five-tab">
+                    @include('Estudiantes.Partes.a_salud')
+                </div>
+
+                <div class="tab-pane fade" id="six" role="tabpanel" aria-labelledby="six-tab">
+                    @include('Estudiantes.Partes.a_socioeconomica')
                 </div>
             </div>
-
-            @include('Estudiantes.Partes.modal_matricula')
-        {!! Form::close() !!}
+        </div>
+        <div class="col-3">
+            @include('Estudiantes.Partes.panel_d')
+        </div>
     </div>
+
+    @include('Estudiantes.Partes.modal_matricula')
+    {!! Form::close() !!}
+</div>
 
 <script>
     function partidaNacimiento(c){
@@ -101,7 +101,7 @@
                 "<input type='text' value='"+$("#tipo").val()+"' id='tipoModal' name='tipoModal' class='form-control'/>"+
                 "</div>"+
                 "<div class='form-group'>"+
-                "<label>Lugar</label>"+
+                    "<label>Lugar</label>"+
                 "<input type='text' value='"+$("#lugar").val()+"' id='lugarModal' name='lugarModal' class='form-control'/>"+
                 "</div>"+
                 "<div class='form-group'>"+
@@ -109,20 +109,20 @@
                 "<input type='text' value='"+$("#jornadaLaboral").val()+"' id='jornadaLaboralModal' name='jornadaLaboralModal' class='form-control'/>"+
                 "</div>"+
                 "</div>",
-            icon: false,
-            width: 'auto',
-            type:'info',
-            hide: false,
-            buttons: {
-                closer: true,
-                sticker: false
-            },
-            confirm: {
-                buttons: [{
-                    text: "Hecho"
-                }, {
-                text: "Cancelar"
-                }],
+                icon: false,
+                width: 'auto',
+                type:'info',
+                hide: false,
+                buttons: {
+                    closer: true,
+                    sticker: false
+                },
+                confirm: {
+                    buttons: [{
+                        text: "Hecho"
+                    }, {
+                        text: "Cancelar"
+                    }],
                 confirm:true,
             },
             insert_brs: false,
@@ -249,22 +249,22 @@
 
             var tabla=$('#tablaEncargados');
             var html="<tr><td><input type='hidden' name='nombreEncargadoM[]' value = '"+nombre+"'/><input type='hidden' name='apellidoEncargadoM[]' value = '"+apellido+"'/>"+
-            "<input type='hidden' name='duiEncargadoM[]' value = '"+dui+"'/><input type='hidden' name='direccionEncargadoM[]' value = '"+direccion+"'/>"+
-            "<input type='hidden' name='telefonoEncargadoM[]' value = '"+telefono+"'/><input type='hidden' name='celularEncargadoM[]' value = '"+celular+"'/>"+
-            "<input type='hidden' name='correoEncargadoM[]' value = '"+correo+"'/>"+
-            "</td><td>"+nombre+" "+apellido+"</td><td>"+dui+"</td><td>"+direccion+"</td><td>"+telefono+"</td><td>"+celular+"</td><td>"+correo+"</td>"+
-            "<td><button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarEncargado(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></button></td></tr>";
-            tabla.append(html);
-        }).on('pnotify.cancel', function() {
-        });
-    }
+                "<input type='hidden' name='duiEncargadoM[]' value = '"+dui+"'/><input type='hidden' name='direccionEncargadoM[]' value = '"+direccion+"'/>"+
+                "<input type='hidden' name='telefonoEncargadoM[]' value = '"+telefono+"'/><input type='hidden' name='celularEncargadoM[]' value = '"+celular+"'/>"+
+                "<input type='hidden' name='correoEncargadoM[]' value = '"+correo+"'/>"+
+                "</td><td>"+nombre+" "+apellido+"</td><td>"+dui+"</td><td>"+direccion+"</td><td>"+telefono+"</td><td>"+celular+"</td><td>"+correo+"</td>"+
+                "<td><button type = 'button' name='button' class='btn btn-outline-danger btn-sm' onclick='eliminarEncargado(this);' data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-trash'></i></button></td></tr>";
+                tabla.append(html);
+            }).on('pnotify.cancel', function() {
+            });
+        }
 
-    function eliminarEncargado(telefono){
-        $(telefono).parent('td').parent('tr').remove();
-        new PNotify({
-            type: 'error',
-            text: 'Eliminado'
-        })
-    }
+        function eliminarEncargado(telefono){
+            $(telefono).parent('td').parent('tr').remove();
+            new PNotify({
+                type: 'error',
+                text: 'Eliminado'
+            })
+        }
 </script>
 @endsection
