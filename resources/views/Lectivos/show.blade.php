@@ -17,18 +17,13 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href={{asset('#')}}>
-                    Otro
+                <a class="nav-link" href={{asset('/grado/lista_estudiante?grado='.$grado->id)}} target="_blank">
+                    Listado
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href={{asset('#')}}>
-                    Otro
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href={{asset('#')}}>
-                    Otro
+                <a class="nav-link" href={{asset('/grado/notas?grado='.$grado->id)}} target="_blank">
+                    Notas
                 </a>
             </li>
         </ul>

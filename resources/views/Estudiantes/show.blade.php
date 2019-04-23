@@ -38,6 +38,9 @@
                         </select>
                     </div>
                 </div>
+                @if ($grado != null)
+                    @include('Estudiantes.Partes.s_notas')
+                @endif
             </div>
             <div class="col-4">
                 @include('Estudiantes.Partes.s_acordeon')

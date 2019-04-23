@@ -145,7 +145,7 @@ class EstudianteController extends Controller
         ->join('estudiantes','matriculas.f_estudiante','estudiantes.id')
         ->where('grados.f_lectivo',$lectivo_a->id)
         ->where('estudiantes.id',$id)
-        ->select('grados.*')
+        ->select('grados.*','matriculas.id as f_matricula')
         ->first();
         return view('Estudiantes.show',compact(
             'estudiante',

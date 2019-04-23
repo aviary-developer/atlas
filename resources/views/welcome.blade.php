@@ -19,7 +19,7 @@
     <div class="app-body">
       <div class="app-sidebar sidebar-slide-left">
         <div class="sidebar-header">
-          <img src={{asset("img/john-doe.png")}} class="user-photo">
+          <img src={{asset("img/ENA.svg")}} class="user-photo">
           <p class="username">
             <br>
             {{Auth::user()->nombre}} {{Auth::user()->apellido}}

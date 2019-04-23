@@ -53,6 +53,9 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
 
   Route::get('/estudiante/buscar_estudiante', 'NotaController@buscar_estudiante')->name('estudiante.buscar_estudiante');
 
+  Route::get('/grado/lista_estudiante','GradoController@lista')->name('grado.lista_estudiante');
+  Route::get('/grado/notas','GradoController@notas')->name('grado.notas');
+
 
   //Rutas parientes
   Route::resource('parientes', 'ParienteController');

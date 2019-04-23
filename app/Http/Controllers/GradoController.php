@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Grado;
 use App\User;
 use App\AsignaturaGrado;
+use App\Estudiante;
+use App\Asignatura;
 use DB;
 use Illuminate\Http\Request;
 
@@ -143,5 +145,39 @@ class GradoController extends Controller
             DB::rollback();
             return 0;
         }
+    }
+
+    public function lista(Request $request){
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$request->grado)->orderBy('estudiantes.apellido')->get();
+        $header = view('PDF.header');
+        $footer = view('PDF.footer');
+        $main = view('Lectivos.pdf.lista_estudiantes',compact('estudiantes'));
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream();
+    }
+
+    public function notas(Request $request){
+        $grado = $request->grado;
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
+            ->where('matriculas.f_grado',$grado)
+            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie')
+            ->orderBy('estudiantes.apellido')
+            ->get();
+
+        $asignaturas = Asignatura::
+            join('asignatura_grados','asignaturas.id','asignatura_grados.f_asignatura')
+            ->where('asignatura_grados.f_grado',$grado)
+            ->select('asignaturas.*')
+            ->orderBy('asignaturas.indice')->get();
+
+        $header = view('PDF.header');
+        $main = view('Lectivos.pdf.notas',compact(
+            'estudiantes',
+            'grado',
+            'asignaturas'
+        ));
+
+         $pdf = \PDF::loadHtml($main)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream();
     }
 }

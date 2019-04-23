@@ -14,4 +14,8 @@ class Grado extends Model
     public function lectivo(){
       return $this->belongsTo('App\Lectivo','f_lectivo');
     }
+
+    public function asignaturas(){
+      return $this->hasMany('App\AsignaturaGrado','f_grado');
+    }
 }
