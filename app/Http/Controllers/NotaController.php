@@ -60,10 +60,12 @@ class NotaController extends Controller
         $asignatura = AsignaturaGrado::find($id_asignatura);
         $lectivo = Lectivo::where('estado',0)->first();
         $estudiantes = DB::table('estudiantes')->join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$asignatura->f_grado)->orderBy('estudiantes.apellido')->get();
+        $grado = $asignatura->grado;
         return view('Notas.create',compact(
             'lectivo',
             'asignatura',
-            'estudiantes'
+            'estudiantes',
+            'grado'
         ));
     }
 

@@ -20,6 +20,7 @@
                             <span class="badge badge-dark font-lg">
                                 {{$grado->seccion}}
                             </span>
+                            <input type="hidden" id="id_m" value="{{$grado->f_matricula}}">
                         @else
                             <span class="badge badge-light text-danger font-lg">
                                 ¡Estudiante sin matricula!
@@ -65,7 +66,13 @@
                         </div>
                         <div id="tb2" class="tab-pane">
                             <div id="tb2-collapse" class="collapse" data-parent="#tab-contents">
-                                @include('Estudiantes.Partes.s_asistencia')
+                                @if ($grado != null)
+                                    @include('Estudiantes.Partes.s_asistencia')
+                                @else
+                                    <center>
+                                        El estudiante no posee registro de asistencia en este año.
+                                    </center>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -76,7 +83,6 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="id_m" value="{{$grado->f_matricula}}">
 @endsection
 <script>
     function reload_year(o){

@@ -41,7 +41,7 @@
                                     <td>{{$correlativo}}</td>
                                     <td>{{$asignatura->asignatura->nombre}}</td>
                                     <td>
-                                        <a href={{asset('/notas/create?&asignatura='.$asignatura->id)}} class="btn btn-sm btn-primary">
+                                        <a href={{asset('/notas/create?asignatura='.$asignatura->id)}} class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
@@ -50,6 +50,16 @@
                                     $correlativo++;
                                 @endphp
                             @endforeach
+                            @if ($docente->id == $grado->f_profesor)
+                                <tr>
+                                    <td>{{$correlativo}}</td>
+                                    <td>Conducta</td>
+                                    <td>
+                                        <a href="{{asset('/conductas/create?grado='.$asignatura->f_grado)}}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

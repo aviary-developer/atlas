@@ -2,7 +2,7 @@
     <a class="navbar-brand" href={{asset('/notas')}}>
         Notas
         <span class="badge badge-light text-primary">
-            {{$asignatura->grado->grado.' '.$asignatura->grado->seccion}}
+            {{$grado->grado.' '.$grado->seccion}}
         </span>
         <span class=" badge badge-success">
             {{$lectivo->anio}}
