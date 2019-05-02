@@ -64,4 +64,30 @@ class AsistenciaController extends Controller
             }
     return response()->json($estudiantes);
   }
+
+    public function grafica_estudiante(Request $request){
+        $id = $request->id;
+        $anio = $request->anio;
+
+        if($id != null){
+            //Asistio
+            $asistencia[0] = Asistencia::where('f_matricula',$id)->where('estado',1)->whereYear('fecha',$anio)->count();
+            //No asistio sin permiso
+            $asistencia[1] = Asistencia::where('f_matricula',$id)->where('estado',0)->whereYear('fecha',$anio)->count();
+            //No asistio con permiso
+            $asistencia[2] = Asistencia::where('f_matricula',$id)->where('estado',2)->whereYear('fecha',$anio)->count();
+        }else{
+            $asistencia[0] = $asistencia[1] = $asistencia[2] = 0;
+        }
+
+        $label[0] = "Asitío";
+        $label[1] = "Falta sin permiso";
+        $label[2] = "Falta con permiso";
+
+        $color[0] = "#E74C3C";
+        $color[1] = "#8E44AD";
+        $color[2] = "#3498DB";
+
+        return (compact('asistencia','label','color'));
+    }
 }

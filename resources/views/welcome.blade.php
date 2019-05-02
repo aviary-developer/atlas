@@ -97,7 +97,8 @@
   <!-- InputMask -->
   {!!Html::script('js/Inputmask/dist/min/jquery.inputmask.bundle.min.js')!!}
   {!!Html::script('js/moment.min.js')!!}
-
+  <!-- Chart.js -->
+  {!!Html::script('Chart.js/chart.js/dist/Chart.min.js')!!}
   <script src= {{asset("js/pnotify.custom.min.js")}}></script>
   <script src= {{asset("js/datatables.js")}}></script>
   <script src= {{asset("js/generalidades.js")}}></script>

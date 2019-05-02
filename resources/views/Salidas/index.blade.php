@@ -71,7 +71,7 @@ setlocale(LC_ALL,'es');
                             @php
                               $dt = new \Carbon\Carbon();
                             @endphp
-                            <td>{{$dt->formatLocalized('%d de %B de %Y')}}</td>
+                            <td>{{$salida->created_at->formatLocalized('%d de %B de %Y')}}</td>
                             <td>
                                 <div class="btn-group">
                                   <a href={{asset('salidas/'.$salida->id)}} class="btn btn-sm btn-info"  data-tooltip="tooltip" title="Ver detalles"><i class="fas fa-info-circle"></i></a>

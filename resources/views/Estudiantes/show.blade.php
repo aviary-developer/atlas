@@ -38,15 +38,45 @@
                         </select>
                     </div>
                 </div>
-                @if ($grado != null)
-                    @include('Estudiantes.Partes.s_notas')
-                @endif
+                <div class="nav-tabs-responsive">
+                    <ul class="nav nav-tabs my-2">
+                        <li class="nav-item">
+                            <a href="#tb1" class="nav-link active" data-toggle="tab">
+                            <i class="icon-calculator"></i> Notas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tb2" class="nav-link" data-toggle="tab">
+                                <i class="icon-check"></i> Asistencia
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tab-contents">
+                        <div id="tb1" class="tab-pane show active">
+                            <div id="tb1-collapse" class="collapse" data-parent="#tab-contents">
+                                @if ($grado != null)
+                                    @include('Estudiantes.Partes.s_notas')
+                                @else
+                                    <center>
+                                        El estudiante no posee notas en este año.
+                                    </center>
+                                @endif
+                            </div>
+                        </div>
+                        <div id="tb2" class="tab-pane">
+                            <div id="tb2-collapse" class="collapse" data-parent="#tab-contents">
+                                @include('Estudiantes.Partes.s_asistencia')
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-4">
                 @include('Estudiantes.Partes.s_acordeon')
             </div>
         </div>
     </div>
+    <input type="hidden" id="id_m" value="{{$grado->f_matricula}}">
 @endsection
 <script>
     function reload_year(o){
