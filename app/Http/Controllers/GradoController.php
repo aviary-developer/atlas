@@ -148,10 +148,15 @@ class GradoController extends Controller
     }
 
     public function lista(Request $request){
-        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$request->grado)->orderBy('estudiantes.apellido')->get();
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
+            ->where('matriculas.f_grado',$request->grado)
+            ->where('matriculas.estado',true)
+            ->orderBy('estudiantes.apellido')
+            ->get();
+        $grado = Grado::find($request->grado);
         $header = view('PDF.header');
         $footer = view('PDF.footer');
-        $main = view('Lectivos.pdf.lista_estudiantes',compact('estudiantes'));
+        $main = view('Lectivos.pdf.lista_estudiantes',compact('estudiantes','grado'));
         $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
         return $pdf->stream();
     }
@@ -160,6 +165,7 @@ class GradoController extends Controller
         $grado = $request->grado;
         $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
             ->where('matriculas.f_grado',$grado)
+            ->where('matriculas.estado',true)
             ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie')
             ->orderBy('estudiantes.apellido')
             ->get();
@@ -178,6 +184,34 @@ class GradoController extends Controller
         ));
 
          $pdf = \PDF::loadHtml($main)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream();
+    }
+
+    public function cuadro_final(Request $request){
+        $id_grado = $request->grado;
+
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
+            ->where('matriculas.f_grado',$grado)
+            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie')
+            ->orderBy('estudiantes.apellido')
+            ->get();
+
+        $asignaturas = Asignatura::
+            join('asignatura_grados','asignaturas.id','asignatura_grados.f_asignatura')
+            ->where('asignatura_grados.f_grado',$grado)
+            ->select('asignaturas.*')
+            ->orderBy('asignaturas.indice')->get();
+
+        $grado = Grado::find($id_grado);
+
+        $header = view('PDF.header');
+        $main = view('Lectivos.pdf.notas',compact(
+            'estudiantes',
+            'grado',
+            'asignaturas'
+        ));
+
+         $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter')->setOrientation('landscape');
         return $pdf->stream();
     }
 }

@@ -546,3 +546,60 @@ function seccion_ajax(grado, anio) {
         }
     });
 }
+
+function estado(id, estado) {
+    if (estado == true) {
+        var texto = "¿Desea dar de baja la matricula del estudiante?";
+    } else {
+        var texto = "¿Desea reactivar la matricula del estudiante?";
+    }
+    (new PNotify({
+        title: 'Cambiar estado de matricula',
+        text: texto,
+        icon: false,
+        type: 'info',
+        hide: false,
+        confirm: {
+            buttons: [{
+                text: "Aceptar"
+            }, {
+                text: "Cancelar"
+            }],
+            confirm: true
+        },
+        buttons: {
+            closer: false,
+            sticker: false
+        },
+        history: {
+            history: false
+        },
+        addclass: 'stack-modal',
+        stack: {
+            'dir1': 'down',
+            'dir2': 'right',
+            'modal': true
+        }
+    })).get().on('pnotify.confirm', function () {
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/grado/estado',
+            data: {
+                id: id
+            },
+            success: function (r) {
+                if (r == 1) {
+                    sessionStorage.setItem('msg', 'msg');
+                    location.reload(true);
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
+            }
+        });
+    });
+
+}

@@ -18,12 +18,17 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href={{asset('/grado/lista_estudiante?grado='.$grado->id)}} target="_blank">
-                    Listado
+                    Nomina
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href={{asset('/grado/notas?grado='.$grado->id)}} target="_blank">
                     Notas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href={{asset('/grado/cuadro_final?grado='.$grado->id)}} target="_blank">
+                    Cuadro final
                 </a>
             </li>
         </ul>

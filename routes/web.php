@@ -38,6 +38,7 @@ Route::post('grado/agregar_asignatura','GradoController@add_asignatura')->name('
 Route::post('grado/agregar_docente', 'GradoController@add_docente')->name('grado.agregar_docente');
 Route::get('grado/turno','LectivoController@turno')->name('grado.turno');
 Route::post('grado/matricula', 'LectivoController@matricula')->name('grado.matricula');
+Route::post('grado/estado', 'LectivoController@estado_estudiante')->name('grado.estado');
 
 //Routas de asignatura
 
@@ -55,6 +56,7 @@ Route::post('asignatura/{id}', 'AsignaturaController@disabled')->name('asignatur
 
   Route::get('/grado/lista_estudiante','GradoController@lista')->name('grado.lista_estudiante');
   Route::get('/grado/notas','GradoController@notas')->name('grado.notas');
+  Route::get('/grado/cuadro_final','GradoController@cuadro_final')->name('grado.cuadro_final');
 
 
   //Rutas parientes

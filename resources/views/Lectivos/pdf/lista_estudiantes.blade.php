@@ -3,7 +3,7 @@
     <div class="flex-row">
         <center>
             <h3>
-                Lista de estudiantes
+                {{$grado->grado.' sección "'.$grado->seccion.'"'}}
             </h3>
         </center>
     </div>

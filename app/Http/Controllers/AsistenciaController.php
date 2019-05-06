@@ -51,6 +51,7 @@ class AsistenciaController extends Controller
             ->join('asistencias', 'matriculas.id', '=', 'asistencias.f_matricula')
             ->where('matriculas.f_grado',$request->grado)
             ->where('asistencias.fecha',$request->fecha)
+            ->where('matriculas.estado',true)
             ->select('matriculas.id','estudiantes.nombre','estudiantes.apellido','asistencias.estado')
             ->orderBy('estudiantes.apellido', 'ASC')
             ->get();
@@ -58,6 +59,7 @@ class AsistenciaController extends Controller
               $estudiantes= DB::table('estudiantes')
                       ->join('matriculas', 'estudiantes.id', '=', 'matriculas.f_estudiante')
                       ->where('matriculas.f_grado',$request->grado)
+                      ->where('matriculas.estado',true)
                       ->select('matriculas.id','estudiantes.nombre','estudiantes.apellido')
                       ->orderBy('estudiantes.apellido', 'ASC')
                       ->get();

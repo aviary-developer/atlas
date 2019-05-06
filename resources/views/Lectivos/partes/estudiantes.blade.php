@@ -27,7 +27,7 @@
                     $correlativo = 1;
                 @endphp
                 @foreach ($estudiantes as $estudiante)
-                    <tr>
+                    <tr class="{{($estudiante->m_estado == 0)?'table-danger':''}}">
                         <td>{{$correlativo}}</td>
                         <td>{{$estudiante->apellido}}</td>
                         <td>{{$estudiante->nombre}}</td>
@@ -52,6 +52,17 @@
                                 @endif
                             </td>
                         <td>
+                            <center>
+                                @if ($estudiante->m_estado == true)
+                                    <button type="button" class="btn btn-sm btn-danger" title="Dar de baja" data-tooltip="tooltip" onclick={{"estado(".$estudiante->id_matricula.",".$estudiante->m_estado.")"}}>
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-sm btn-success" title="Activar" data-tooltip="tooltip" onclick={{"estado(".$estudiante->id_matricula.",".$estudiante->m_estado.")"}}>
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                @endif
+                            </center>
                         </td>
                     </tr>
                     @php

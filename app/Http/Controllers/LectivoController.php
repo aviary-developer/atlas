@@ -101,7 +101,11 @@ class LectivoController extends Controller
     {
         $grado = Grado::find($id);
         $asignaturas = Asignatura::where('estado',true)->orderBy('nombre')->get();
-        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$id)->orderBy('estudiantes.apellido')->get();
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
+            ->where('matriculas.f_grado',$id)
+            ->orderBy('estudiantes.apellido')
+            ->select('estudiantes.*','matriculas.id as id_matricula','matriculas.estado as m_estado')
+            ->get();
         $docentes = User::where('estado',true)->orderBy('apellido')->get();
 
         return view('Lectivos.show',compact(
@@ -271,6 +275,23 @@ class LectivoController extends Controller
             $matricula = new Matricula;
             $matricula->f_estudiante = $request->estudiante;
             $matricula->f_grado = $request->grado;
+            $matricula->save();
+            DB::commit();
+            return 1;
+        } catch (Exception $e) {
+            DB::rollback();
+            return 0;
+        }
+    }
+
+    public function estado_estudiante(Request $request){
+        $id = $request->id;
+
+        DB::beginTransaction();
+
+        try {
+            $matricula = Matricula::find($id);
+            $matricula->estado = !$matricula->estado;
             $matricula->save();
             DB::commit();
             return 1;
