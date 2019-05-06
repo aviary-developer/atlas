@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DetalleTransaccion;
 use App\Insumo;
 use App\Transaccion;
+use App\Stock;
 use DB;
 use DateTime;
 use Carbon\Carbon;
@@ -32,6 +33,19 @@ class TransaccionController extends Controller
         $detalleTransaccion->f_transaccion=$transaccion->id;
         $detalleTransaccion->cantidad=$request->cantidades[$key];
         $detalleTransaccion->f_insumo=$request->insumos[$key];
+        $movimientosEnStock= Stock::where('f_insumo',$request->insumos[$key])->get();
+        if(!$movimientosEnStock->last()){
+          $saldoAGuardar=$request->cantidades[$key];
+        }else{
+          $saldoAGuardar=$movimientosEnStock->last()->saldo+$request->cantidades[$key];
+        }
+        $movimientoStock=new Stock;
+        $movimientoStock->tipoMovimiento=0;
+        $movimientoStock->f_insumo=$request->insumos[$key];
+        $movimientoStock->cantidad=$request->cantidades[$key];
+        $movimientoStock->saldo=$saldoAGuardar;
+        $movimientoStock->fecha=new Carbon($request->fechaIngreso);
+        $movimientoStock->save();
         $detalleTransaccion->save();
       }
         DB::commit();

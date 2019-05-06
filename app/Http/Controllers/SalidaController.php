@@ -7,6 +7,7 @@ use DB;
 use DateTime;
 use Carbon\Carbon;
 use App\DetalleSalida;
+use App\Stock;
 use App\Insumo;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,19 @@ class SalidaController extends Controller
           $detalleSalida->f_salida=$salida->id;
           $detalleSalida->cantidad=$request->cantidades[$key];
           $detalleSalida->f_insumo=$request->insumos[$key];
+          $movimientosEnStock= Stock::where('f_insumo',$request->insumos[$key])->get();
+          if(!$movimientosEnStock->last()){
+            return redirect('/salidas')->with('error', '¡No guardado!');
+          }else{
+            $saldoAGuardar=$movimientosEnStock->last()->saldo-$request->cantidades[$key];
+          }
+          $movimientoStock=new Stock;
+          $movimientoStock->tipoMovimiento=1;
+          $movimientoStock->f_insumo=$request->insumos[$key];
+          $movimientoStock->cantidad=$request->cantidades[$key];
+          $movimientoStock->saldo=$saldoAGuardar;
+          $movimientoStock->fecha=new Carbon($request->fechaIngreso);
+          $movimientoStock->save();
           $detalleSalida->save();
         }
           DB::commit();

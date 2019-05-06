@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Insumo;
+use App\Stock;
 use DB;
 use Illuminate\Http\Request;
 
@@ -137,5 +138,18 @@ class InsumoController extends Controller
             DB::rollback();
             return 0;
         }
+    }
+    public function stock(Request $request){
+      if($request->estado == null){
+          $request->estado = 1;
+      }
+      $estado = $request->estado;
+      $insumos=Insumo::where('estado',$estado)->orderBy('nombre')->get();
+      return view('Stock.index',compact('insumos','estado'));
+    }
+    public function movimientos(Request $request){
+      $insumo = Insumo::find($request->id);
+      $movimientos=Stock::where('f_insumo',$request->id)->get();
+      return view('Stock.movimientos',compact('insumo','movimientos'));
     }
 }
