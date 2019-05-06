@@ -36,13 +36,21 @@
         <tbody>
             @php
                 $no = 1;
+                $pnf = [];
+                $e_e = []; // Vector para la estadistica de los estudiantes
+                $count_mi_m = 0;
+                $count_mi_f = 0;
+                $count_re_m = 0;
+                $count_re_f = 0;
+                $count_pr_m = 0;
+                $count_pr_f = 0;
             @endphp
-            @foreach ($estudiantes as $estudiante)
+            @foreach ($estudiantes as $e => $estudiante)
                 <tr>
                     <td>{{$no}}</td>
                     <td>{{$estudiante->nie}}</td>
                     <td>{{$estudiante->apellido.', '.$estudiante->nombre}}</td>
-                    @foreach ($asignaturas as $asignatura)
+                    @foreach ($asignaturas as $a => $asignatura)
                         @php
                             $notas = App\Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
                                 ->join('notas','matriculas.id','notas.f_estudiante')
@@ -62,6 +70,20 @@
                             }else{
                                 $p1 = $p2 = $p3 = $pf = 0;
                             }
+
+                            if($e == 0){
+                                $pnf[$a] = 0;
+                            }
+
+                            if($a == 0){
+                                $e_e[$e]["notas"] = 0;
+                            }
+
+                            $pnf[$a] += round($pf);
+
+                            $e_e[$e]["sexo"] = $estudiante->sexo;
+                            $e_e[$e]["notas"] += round($pf);
+                            $e_e[$e]["estado"] = $estudiante->estado;
                         @endphp
                         <td style="width: 5%">{{round($pf)}}</td>
                     @endforeach
@@ -147,8 +169,135 @@
                 @php
                     $no++;
                 @endphp
-            @endforeach
+						@endforeach
+						<tr>
+							<td colspan="3" class="text-center">Total de puntos</td>
+							@foreach ($asignaturas as $a => $asignatura)
+									<td>{{$pnf[$a]}}</td>
+							@endforeach
+							<td colspan="5"></td>
+						</tr>
+						<tr>
+							<td colspan="3" class="text-center">Promedio</td>
+							@foreach ($asignaturas as $a => $asignatura)
+									<td>{{round(($pnf[$a]/count($estudiantes)))}}</td>
+							@endforeach
+							<td colspan="5"></td>
+						</tr>
         </tbody>
-    </table>
+		</table>
+		<br>
+		<div class="row">
+			<div class="col-6">
+                @php
+                    //Inicio del calculo de la estadistica
+                    foreach($e_e as $est){
+                        if($est["sexo"] == 1){
+                            $count_mi_f++;
+                            if($est["estado"] == 0){
+                                $count_re_f++;
+                            }
+                            if((($est["notas"])/count($asignaturas)) > 5){
+                                $count_pr_f++;
+                            }
+                        }else{
+                            $count_mi_m++;
+                            if($est["estado"] == 0){
+                                $count_re_m++;
+                            }
+                            if((($est["notas"])/count($asignaturas)) > 5){
+                                $count_pr_m++;
+                            }
+                        }
+                    }
+                @endphp
+				<h4>Estadística</h4>
+				<table class="table table-sm table-striped">
+					<thead>
+						<th>Sexo</th>
+						<th>Matrícula inicial</th>
+						<th>Retirados</th>
+						<th>Matrícula final</th>
+						<th>Promovidos</th>
+						<th>Retenidos</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Masculino</td>
+							<td class="text-center">{{$count_mi_m}}</td>
+							<td class="text-center">{{$count_re_m}}</td>
+							<td class="text-center">{{($count_mi_m - $count_re_m)}}</td>
+							<td class="text-center">{{$count_pr_m}}</td>
+							<td class="text-center">{{($count_mi_m - $count_re_m - $count_pr_m)}}</td>
+						</tr>
+						<tr>
+							<td>Femenino</td>
+							<td class="text-center">{{$count_mi_f}}</td>
+							<td class="text-center">{{$count_re_f}}</td>
+							<td class="text-center">{{($count_mi_f - $count_re_f)}}</td>
+							<td class="text-center">{{$count_pr_f}}</td>
+							<td class="text-center">{{($count_mi_f - $count_re_f - $count_pr_f)}}</td>
+						</tr>
+						<tr>
+							<td>Total</td>
+							<td class="text-center">{{($count_mi_f + $count_mi_m)}}</td>
+							<td class="text-center">{{($count_re_f + $count_re_m)}}</td>
+							<td class="text-center">{{($count_mi_f + $count_mi_m - $count_re_f - $count_re_m)}}</td>
+							<td class="text-center">{{($count_pr_f + $count_pr_m)}}</td>
+							<td class="text-center">{{($count_mi_f + $count_mi_m - $count_re_f - $count_re_m - $count_pr_f - $count_pr_m)}}</td>
+						</tr>
+					</tbody>
+				</table>
+            </div>
+            <div class="col-6 px-4" style="font-size: 80%">
+                <h4>Leyenda</h4>
+                <div class="row">
+                    @for ($i = 0; $i < count($asignaturas) + 5 ; $i++)
+                        @if ($i == 0 || ($i == (round((count($asignaturas) + 5) / 2))))
+                            <div class="col-6">
+                        @endif
+                        @if ($i < count($asignaturas))
+                            <div class="row">
+                                <b>{{App\Asignatura::abrev($asignaturas[$i]->indice).': '}}</b>
+                                <span>{{App\Asignatura::i_abrev($asignaturas[$i]->indice)}}</span>
+                            </div>
+                        @endif
+                        @if ($i == count($asignaturas))
+                            <div class="row">
+                                <b>ASP1 :</b>
+                                <span>Respeto a sí mismo y a los demás</span>
+                            </div>
+                        @endif
+                        @if ($i == count($asignaturas) + 1)
+                            <div class="row">
+                                <b>ASP2 :</b>
+                                <span>Convivencia armónica y solidaria</span>
+                            </div>
+                        @endif
+                        @if ($i == count($asignaturas) + 2)
+                            <div class="row">
+                                <b>ASP3 :</b>
+                                <span>Toma de decisiones responsablemente</span>
+                            </div>
+                        @endif
+                        @if ($i == count($asignaturas) + 3)
+                            <div class="row">
+                                <b>ASP4 :</b>
+                                <span>Cumplimiento de deberes y correcto ejercicio de derechos</span>
+                            </div>
+                        @endif
+                        @if ($i == count($asignaturas) + 4)
+                            <div class="row">
+                                <b>ASP5 :</b>
+                                <span>Práctica de valores morales y cívicos</span>
+                            </div>
+                        @endif
+                        @if ($i == count($asignaturas) + 4 || ($i == round((count($asignaturas) + 5) / 2) - 1))
+                            </div>
+                        @endif
+                    @endfor
+                </div>
+            </div>
+		</div>
 @endif
 @endsection

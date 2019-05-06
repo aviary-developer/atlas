@@ -68,4 +68,9 @@ class Asignatura extends Model
             }
         }
     }
+
+    public static function i_abrev($i){
+        $asignatura = Asignatura::where('indice',$i)->first();
+        return $asignatura->nombre;
+    }
 }
