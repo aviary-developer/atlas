@@ -5,10 +5,7 @@ setlocale(LC_ALL,'es');
   @endphp
 <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
     <a class="navbar-brand" href="#">
-      @php
-        $fecha = new \Carbon\Carbon($salida->fecha);
-      @endphp
-        Detalles de Salida<span class="badge badge-success">{{$fecha->formatLocalized('%d de %B de %Y')}}</span>
+        Movimientos de {{$insumo->nombre}}
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -29,22 +26,27 @@ setlocale(LC_ALL,'es');
             <table class="table table-sm a-table">
                 <thead>
                     <th>#</th>
-                    <th>Insumo</th>
+                    <th>Fecha</th>
+                    <th>Tipo de movimiento</th>
                     <th>Cantidad</th>
+                    <th>Saldo</th>
                 </thead>
                 <tbody>
                     @php
                         $correlativo = 1;
+                        $saldo=0.00;
                     @endphp
-                    @foreach ($detalles as $key => $detalle)
-                      <tr>
-                      <td>{{$correlativo}}</td>
-                      <td>{{$detalle->insumo->nombre}}</td>
-                      <td>{{$detalle->cantidad}} kg</td>
-                      @php
-                        $correlativo++;
-                      @endphp
-                    </tr>
+                  @foreach ($movimientos as $movimiento)
+                        <tr>
+                          <td>{{$correlativo}}</td>
+                          <td>{{$movimiento->fecha}}</td>
+                          <td>{{($movimiento->tipoMovimiento)?'Salida':'Entrada'}}</td>
+                          <td>{{$movimiento->cantidad}}</td>
+                          <td>{{$movimiento->saldo}}</td>
+                        </tr>
+                        @php
+                            $correlativo++;
+                        @endphp
                     @endforeach
                 </tbody>
             </table>

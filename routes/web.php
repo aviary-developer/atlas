@@ -71,6 +71,8 @@ Route::resource('conductas', 'ConductaController');
 
 Route::resource('insumos', 'InsumoController');
 Route::post('insumo/{id}', 'InsumoController@disabled')->name('insumo.disabled');
+Route::get('insumo/stock','InsumoController@stock')->name('insumo.stock');
+Route::get('insumo/movimientos/{id}','InsumoController@movimientos')->name('insumo.movimientos');
 Route::resource('asistencia', 'AsistenciaController');
 Route::get('asistencia/verEstudiantes/{grado}/{fecha}','AsistenciaController@verEstudiantes')->name('asistencia.verEstudiantes');
 Route::post('asistencia/guardarAsistencia','AsistenciaController@guardarAsistencia')->name('asistencia.guardarAsistencia');

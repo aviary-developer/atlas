@@ -69,6 +69,9 @@
                 <a href={{asset("salidas")}} class="sidebar-nav-link">Salida de Insumos</a>
               </li>
               <li>
+                <a href={{asset("insumo/stock")}} class="sidebar-nav-link">Stock</a>
+              </li>
+              <li>
                 <a href={{asset("menus")}} class="sidebar-nav-link">Menús</a>
               </li>
             </ul>
