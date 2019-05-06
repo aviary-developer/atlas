@@ -46,4 +46,26 @@ class Asignatura extends Model
             DB::rollback();
         }
     }
+
+    public static function abrev($i){
+        switch($i){
+            case 0: return "LENG"; break;
+            case 1: return "MATE"; break;
+            case 2: return "CSMA"; break;
+            case 3: return "EESS"; break;
+            case 4: return "INGL"; break;
+            case 5: return "EFIS"; break;
+            case 6: return "MUYC"; break;
+            case 7: return "INFO"; break;
+            case 8: return "EART"; break;
+            case 9: return "ORTG"; break;
+            case 10: return "CALG"; break;
+            case 11: return "MUSI"; break;
+            default:
+            {
+                $asignatura = Asignatura::where($i)->first();
+                return strtoupper(substr($asignatura->nombre,0,4));
+            }
+        }
+    }
 }

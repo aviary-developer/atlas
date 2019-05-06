@@ -191,21 +191,22 @@ class GradoController extends Controller
         $id_grado = $request->grado;
 
         $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
-            ->where('matriculas.f_grado',$grado)
-            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie')
+            ->where('matriculas.f_grado',$id_grado)
+            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie','matriculas.id as matricula')
             ->orderBy('estudiantes.apellido')
             ->get();
 
         $asignaturas = Asignatura::
             join('asignatura_grados','asignaturas.id','asignatura_grados.f_asignatura')
-            ->where('asignatura_grados.f_grado',$grado)
+            ->where('asignatura_grados.f_grado',$id_grado)
             ->select('asignaturas.*')
             ->orderBy('asignaturas.indice')->get();
 
         $grado = Grado::find($id_grado);
 
         $header = view('PDF.header');
-        $main = view('Lectivos.pdf.notas',compact(
+        $footer = view('PDF.footer');
+        $main = view('Lectivos.pdf.cuadro_final',compact(
             'estudiantes',
             'grado',
             'asignaturas'
