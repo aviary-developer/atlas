@@ -14,6 +14,7 @@ use App\EnfermedadEstudiante;
 use App\EnfermedadFamilia;
 use App\PartidaNacimiento;
 use App\TelefonoUsuario;
+use Auth;
 use DB;
 
 class EstudianteController extends Controller
@@ -23,10 +24,36 @@ class EstudianteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $estudiantes = Estudiante::where('estado',true)->orderBy('apellido')->get();
-      return view('Estudiantes.index',compact('estudiantes'));
+        $lectivo = Lectivo::where('estado',0)->first();
+        if($request->grado == null){
+            if(Auth::user()->tipoUsuario != "Docente"){
+                $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->orderBy('numero','asc')->get();
+            }else{
+                $grados=Grado::where('f_lectivo',$lectivo->id)->where('estado',0)->where('f_profesor',Auth::user()->id)->orderBy('numero','asc')->get();
+            }
+            return view('Estudiantes.select_index',compact('grados','lectivo'));
+        }else{
+            if($request->grado != 0){
+                $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
+                ->where('matriculas.f_grado',$request->grado)
+                ->select('estudiantes.*')
+                ->orderBy('estudiantes.apellido')
+                ->get();
+            }else{
+                $estudiantes = Estudiante::whereNotExists(
+                    function ($query) use ($lectivo){
+                        $query->select(DB::raw(1))
+                        ->from('matriculas')
+                        ->join('grados','matriculas.f_grado','grados.id')
+                        ->where('grados.f_lectivo',$lectivo->id)
+                        ->whereRaw('estudiantes.id = matriculas.f_estudiante');
+                    }
+                )->where('estado',1)->orderBy('apellido')->get();
+            }
+            return view('Estudiantes.index',compact('estudiantes','lectivo'));
+        }
     }
 
     /**

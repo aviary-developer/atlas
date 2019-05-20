@@ -47,18 +47,9 @@
             </ul>
           </li>
           <li class="sidebar-nav-group">
-            <a href="#reference" class="sidebar-nav-link" data-toggle="collapse">
-              <i class="icon-settings"></i> Configuración</a>
-            <ul id="reference" class="collapse" data-parent="#sidebar-nav">
-              <li>
-                <a href={{asset("grados")}} class="sidebar-nav-link">Grados</a>
-              </li>
-              <li>
-                <a href={{asset("asignaturas")}} class="sidebar-nav-link">Asignaturas</a>
-              </li>
-              <li>
-                <a href={{asset("usuarios")}} class="sidebar-nav-link">Usuarios</a>
-              </li>
+            <a href="#pase" class="sidebar-nav-link" data-toggle="collapse">
+              <i class="icon-cup"></i> PASE</a>
+            <ul id="pase" class="collapse" data-parent="#sidebar-nav">
               <li>
                 <a href={{asset("insumos")}} class="sidebar-nav-link">Insumos</a>
               </li>
@@ -73,6 +64,21 @@
               </li>
               <li>
                 <a href={{asset("menus")}} class="sidebar-nav-link">Menús</a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-nav-group">
+            <a href="#reference" class="sidebar-nav-link" data-toggle="collapse">
+              <i class="icon-settings"></i> Configuración</a>
+            <ul id="reference" class="collapse" data-parent="#sidebar-nav">
+              <li>
+                <a href={{asset("grados")}} class="sidebar-nav-link">Grados</a>
+              </li>
+              <li>
+                <a href={{asset("asignaturas")}} class="sidebar-nav-link">Asignaturas</a>
+              </li>
+              <li>
+                <a href={{asset("usuarios")}} class="sidebar-nav-link">Usuarios</a>
               </li>
             </ul>
           </li>

@@ -94,7 +94,7 @@
                                         <td class="{{$clase1}}">{{number_format($p[1],2)}}</td>
                                         <td class="{{$clase2}}">{{number_format($p[2],2)}}</td>
                                         <td class="{{$clase3}}">{{number_format($p[3],2)}}</td>
-                                        <td class="text-right font-weight-bold text-success">{{number_format($p[4],2)}}</td>
+                                        <td class="text-right font-weight-bold text-success">{{round($p[4])}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

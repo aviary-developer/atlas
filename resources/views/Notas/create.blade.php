@@ -162,7 +162,7 @@
                                 <td><span class="badge badge-primary font-lg col-12" id="pr1">{{number_format($p[$k][1],2,'.',',')}}</span></td>
                                 <td><span class="badge border border-secondary text-secondary font-lg col-12" id="pr2">{{number_format($p[$k][2],2,'.',',')}}</span></td>
                                 <td><span class="badge border border-secondary text-secondary font-lg col-12" id="pr3">{{number_format($p[$k][3],2,'.',',')}}</span></td>
-                                <td><span class="badge border border-success text-success font-lg col-12" id="prf">{{number_format($final,2,'.',',')}}</span></td>
+                                <td><span class="badge border border-success text-success font-lg col-12" id="prf">{{round($final)}}</span></td>
                             </tr>
                         @endforeach
                     </tbody>
