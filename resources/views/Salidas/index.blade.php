@@ -157,6 +157,7 @@ setlocale(LC_ALL,'es');
 <!-- FINAL MODAL SHOW -->
 <script>
 function calculadoraMenu(){
+  alert("HOLA");
   var url='calculadora/';
   var div=$("#divDatos");
   var saldo=0;
@@ -166,11 +167,12 @@ function calculadoraMenu(){
     $("#spanAsistencia").text(data[1]);
     $("#spanFecha").text(data[4]);
     $('#tablaCalculadora tbody > tr').remove();
+    div.empty();
     var tabla=$("#tablaCalculadora");
-    div.append("<input id='fechaIngreso' name='fechaIngreso' value='"+data[3]+"' hidden/>");
+    div.append("<input id='fechaIngreso' name='fechaIngreso' value='"+data[4]+"' hidden/>");
     $.each(data[2], function(index) {
-      if(data[3][index][0].saldo===null){
-        saldo=0;}else{ saldo=parseFloat(data[3][index][0].saldo).toFixed(1)}
+      if(data[3][index][0]===undefined){
+        saldo=0;}else{ saldo=parseFloat(data[3][index][0].saldo).toFixed(1);}
         if(saldo<=parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
           menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
       tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
@@ -239,11 +241,12 @@ function enviarCalculacion(){
           $("#spanAsistencia").text(data[1]);
           $("#spanFecha").text(data[4]);
           $('#tablaCalculadora tbody > tr').remove();
+          div.empty();
           var tabla=$("#tablaCalculadora");
-          div.append("<input id='fechaIngreso' name='fechaIngreso' value='"+data[3]+"' hidden/>");
+          div.append("<input id='fechaIngreso' name='fechaIngreso' value='"+data[4]+"' hidden/>");
           $.each(data[2], function(index) {
-            if(data[3][index][0].saldo===null){
-              saldo=0;}else{ saldo=parseFloat(data[3][index][0].saldo).toFixed(1)}
+            if(data[3][index][0]===undefined){
+              saldo=0;}else{saldo=parseFloat(data[3][index][0].saldo).toFixed(1);}
               if(saldo<=parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
                 menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
             tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
