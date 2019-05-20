@@ -11,6 +11,6 @@ class InicioController extends Controller
     }
 
   public function inicio() {
-      return view('welcome');
+      return view('main');
     }
 }

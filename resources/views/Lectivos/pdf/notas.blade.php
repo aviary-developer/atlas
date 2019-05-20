@@ -66,7 +66,7 @@
                 </tbody>
 						</table>
 						<br>
-						<h4>Conduncta</h4>
+						<h4>Conducta</h4>
 						@php
 								$conducta = App\Conducta::where('f_estudiante',$estudiante->matricula)->first();
 
