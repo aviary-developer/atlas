@@ -166,7 +166,7 @@ class GradoController extends Controller
         $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
             ->where('matriculas.f_grado',$grado)
             ->where('matriculas.estado',true)
-            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie')
+            ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie','matriculas.id as matricula')
             ->orderBy('estudiantes.apellido')
             ->get();
 
