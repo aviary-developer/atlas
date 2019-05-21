@@ -26,6 +26,11 @@ setlocale(LC_ALL,'es');
                     Nuevo
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="botonCalculadora" data-target="#modalCalculadora" data-toggle="modal" onclick="calculadoraMenu();">
+                    Calculadora
+                </a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Ver
@@ -87,6 +92,174 @@ setlocale(LC_ALL,'es');
         </div>
     </div>
 </div>
+<!-- INICIO MODAL SHOW -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalCalculadora" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="formCalculadora" action="{{action('SalidaController@guardarSalida')}}" method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div id="divDatos" hidden>
+        </div>
+      <div class="modal-header">
+        <h5 class="modal-title">
+            Calculadora de raciones
+            <span class="badge badge-info" id="spanFecha"></span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        <div class="col-6"><center>Menú</center>
+        </div>
+        <div class="col-6"><center>Asistencia</center>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-6"><center><span class=" badge badge-info" id="spanMenu">
+
+        </span></center>
+        </div>
+        <div class="col-6"><center><span class=" badge badge-success" id="spanAsistencia">
+        </span>
+        <button type="button" data-dismiss="modal" class="btn btn-primary btn-sm" onclick="editarAsistencia()" data-tooltip="tooltip" title="Editar">
+            <i class="fas fa-edit"></i>
+        </button>
+      </center>
+        </div>
+        </div>
+        <div class="col-12">
+            <div class="flex-row">
+            </div>
+            <div class="flex-row">
+                <table class="table table-sm" id="tablaCalculadora">
+                    <thead>
+                        <tr>
+                            <th>Insumo</th>
+                            <th>Cantidad total a utilizar</th>
+                            <th>Cantidad en inventario</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="comprobarSaldoInsumos" value="0">
+        <button onclick="enviarCalculacion();" type="button" class="btn btn-primary btn-sm">Guardar salida</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FINAL MODAL SHOW -->
 <script>
+function calculadoraMenu(){
+  var url='calculadora/';
+  var div=$("#divDatos");
+  var saldo=0;
+  var menor=0;
+  $.get(url, function(data){
+    $("#spanMenu").text(data[0]);
+    $("#spanAsistencia").text(data[1]);
+    $("#spanFecha").text(data[4]);
+    $('#tablaCalculadora tbody > tr').remove();
+    var tabla=$("#tablaCalculadora");
+    div.append("<input id='fechaIngreso' name='fechaIngreso' value='"+data[3]+"' hidden/>");
+    $.each(data[2], function(index) {
+      if(data[3][index][0].saldo===null){
+        saldo=0;}else{ saldo=parseFloat(data[3][index][0].saldo).toFixed(1)}
+        if(saldo<=parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
+          menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
+      tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
+      div.append("<input name='insumos[]' value='"+data[2][index].id+"' hidden/><input name='cantidades[]' value='"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"' hidden/>");
+    });
+  });
+}
+function enviarCalculacion(){
+    if($("#comprobarSaldoInsumos").val()===1){
+      new PNotify({
+          type: 'error',
+          title: 'Verifique las cantidades',
+          text: 'Error'
+      });
+    }else{
+    if(parseInt($("#spanAsistencia").text())>0){
+    $("#formCalculadora").submit();
+  }else {
+      new PNotify({
+          type: 'error',
+          title: '¡Asistencia igual a 0!',
+          text: 'Error'
+      });
+    }
+  }
+  }
+  function editarAsistencia(){
+    new PNotify({
+      title: '<span class="badge badge-light">Asistencia</span>',
+      text: 'Ingrese la asistencia a calcular',
+      icon: false,
+      type: 'info',
+      hide: false,
+      nonblock: true,
+      confirm: {
+          buttons: [{
+              text: "Guardar"
+          }, {
+              text: "Cancelar"
+          }],
+          prompt: true
+      },
+      buttons: {
+          closer: false,
+          sticker: false
+      },
+      history: {
+          history: false
+      },
+      addclass: 'stack-modal',
+      stack: {
+          'dir1': 'down',
+          'dir2': 'right',
+          'modal': true
+      }
+    }).get().on('pnotify.confirm', function(e, notice, val) {
+      var valor = Number.parseInt(val);
+      if (Number.isInteger(valor)) {
+        $("#modalCalculadora").modal("show");
+        var url='calculadoraConAsistencia/'+valor;
+        var div=$("#divDatos");
+        var saldo=0;
+        var menor=0;
+        $.get(url, function(data){
+          $("#spanMenu").text(data[0]);
+          $("#spanAsistencia").text(data[1]);
+          $("#spanFecha").text(data[4]);
+          $('#tablaCalculadora tbody > tr').remove();
+          var tabla=$("#tablaCalculadora");
+          div.append("<input id='fechaIngreso' name='fechaIngreso' value='"+data[3]+"' hidden/>");
+          $.each(data[2], function(index) {
+            if(data[3][index][0].saldo===null){
+              saldo=0;}else{ saldo=parseFloat(data[3][index][0].saldo).toFixed(1)}
+              if(saldo<=parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
+                menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
+            tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
+            div.append("<input name='insumos[]' value='"+data[2][index].id+"' hidden/><input name='cantidades[]' value='"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"' hidden/>");
+          });
+        });
+      } else {
+          new PNotify({
+              type: 'error',
+              title: 'Error',
+              text: 'Ingrese un número valido'
+          });
+      }
+}).on('pnotify.cancel', function(e) {
+$("#botonCalculadora").click();
+});
+}
 </script>
 @endsection

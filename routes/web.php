@@ -85,6 +85,8 @@ Route::post('salidas/guardarSalida','SalidaController@guardarSalida');
 
 Route::resource('menus', 'MenuController');
 Route::post('cambioDiaMenu', 'MenuController@cambioDiaMenu')->name('menu.cambio');
+Route::get('calculadora', 'MenuController@calculadora')->name('menu.calculadora');
+Route::get('calculadoraConAsistencia/{asistencia}', 'MenuController@calculadoraConAsistencia')->name('menu.calculadoraConAsistencia');
 //Route::get('menus/show/{menu}','MenuController@show')->name('menu.show');
 
 Route::get('/estudiante/asistencia','AsistenciaController@grafica_estudiante')->name('estudiante.asistencia');

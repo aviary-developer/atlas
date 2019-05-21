@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Menu;
 use App\DetalleMenu;
 use App\Insumo;
+use App\Asistencia;
+use App\Stock;
 use App\CalendarioMenu;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -123,5 +126,36 @@ class MenuController extends Controller
       CalendarioMenu::where('dia',$request->dia)->update(['f_menu'=>null]);
     }
       return $request->menus;
+    }
+    public function calculadora()
+    {
+      $fecha=Carbon::today();
+      $CualMenu=CalendarioMenu::where('dia',$fecha->dayOfWeek)->first();
+      $menu=Menu::where('id',$CualMenu->f_menu)->first();
+      $asistencia=Asistencia::where('fecha',$fecha->format('Y-m-d'))->where('estado',1)->count();
+      $insumos=DB::table('detalle_menus')->join('insumos','detalle_menus.f_insumo','=','insumos.id')
+                                         ->select('insumos.id','insumos.nombre','detalle_menus.cantidad')
+                                         ->where('f_menu','=',$menu->id)
+                                         ->get();
+      foreach ($insumos as $key => $value) {
+        $stock[]=Stock::where('f_insumo','=',$value->id)->select('saldo')->orderBy('created_at', 'desc')->limit(1)->get();
+      }
+      $datos=[$menu->nombre,$asistencia,$insumos,$stock,$fecha->format('Y-m-d')];
+      return $datos;
+    }
+    public function calculadoraConAsistencia($asistenciaDia)
+    {
+      $fecha=Carbon::today();
+      $CualMenu=CalendarioMenu::where('dia',$fecha->dayOfWeek)->first();
+      $menu=Menu::where('id',$CualMenu->f_menu)->first();
+      $insumos=DB::table('detalle_menus')->join('insumos','detalle_menus.f_insumo','=','insumos.id')
+                                         ->select('insumos.id','insumos.nombre','detalle_menus.cantidad')
+                                         ->where('f_menu','=',$menu->id)
+                                         ->get();
+    foreach ($insumos as $key => $value) {
+      $stock[]=Stock::where('f_insumo','=',$value->id)->select('saldo')->orderBy('created_at', 'desc')->limit(1)->get();
+    }
+      $datos=[$menu->nombre,$asistenciaDia,$insumos,$stock,$fecha->format('Y-m-d')];
+      return $datos;
     }
 }
