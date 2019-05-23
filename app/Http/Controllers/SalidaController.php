@@ -36,7 +36,6 @@ class SalidaController extends Controller
       return view('Salidas.create',compact('insumos'));
     }
     public function guardarSalida(Request $request){
-      dd($request);
       DB::beginTransaction();
       try{
         $salida = new Salida;
