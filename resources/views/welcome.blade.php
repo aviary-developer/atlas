@@ -11,6 +11,7 @@
   {!!Html::style('css/all.css')!!}
   {!!Html::style('css/datatables.min.css')!!}
   {!!Html::style('css/pnotify.custom.min.css')!!}
+  {!!Html::style('css/color.css')!!}
   <script src= {{asset("js/app.js")}}></script>
 </head>
 
