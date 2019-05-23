@@ -147,7 +147,7 @@ setlocale(LC_ALL,'es');
         </div>
       </div>
       <div class="modal-footer">
-        <input type="hidden" id="comprobarSaldoInsumos" value="0">
+        <input type="hidden" name="comprobarSaldoInsumos" id="comprobarSaldoInsumos" value="0">
         <button onclick="enviarCalculacion();" type="button" class="btn btn-primary btn-sm">Guardar salida</button>
         </form>
       </div>
@@ -157,7 +157,6 @@ setlocale(LC_ALL,'es');
 <!-- FINAL MODAL SHOW -->
 <script>
 function calculadoraMenu(){
-  alert("HOLA");
   var url='calculadora/';
   var div=$("#divDatos");
   var saldo=0;
@@ -181,10 +180,10 @@ function calculadoraMenu(){
   });
 }
 function enviarCalculacion(){
-    if($("#comprobarSaldoInsumos").val()===1){
+    if($("#comprobarSaldoInsumos").val()=='1'){
       new PNotify({
           type: 'error',
-          title: 'Verifique las cantidades',
+          title: 'Verifique las cantidades en inventario',
           text: 'Error'
       });
     }else{
@@ -247,7 +246,7 @@ function enviarCalculacion(){
           $.each(data[2], function(index) {
             if(data[3][index][0]===undefined){
               saldo=0;}else{saldo=parseFloat(data[3][index][0].saldo).toFixed(1);}
-              if(saldo<=parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
+              if(saldo<parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
                 menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
             tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
             div.append("<input name='insumos[]' value='"+data[2][index].id+"' hidden/><input name='cantidades[]' value='"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"' hidden/>");
