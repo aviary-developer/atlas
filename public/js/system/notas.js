@@ -23,7 +23,7 @@ $(document).ready(function () {
         tresumen.find('tr:eq(' + index_row + ')').find('#pr3').text(tabla3);
 
         var avg_final = (parseFloat(tabla1) + parseFloat(tabla2) + parseFloat(tabla3)) / 3;
-        tresumen.find('tr:eq(' + index_row + ')').find('#prf').text(avg_final.toPrecision(1));
+        tresumen.find('tr:eq(' + index_row + ')').find('#prf').text(Math.round(avg_final));
     });
 
     for (k = 1; k < 4; k++){

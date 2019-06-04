@@ -49,7 +49,7 @@ class InicioController extends Controller
             $count_estudiantes_f_inicial = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$ga->id)->where('estudiantes.sexo',1)->count();
             $count_estudiantes_total_inicial = $count_estudiantes_f_inicial + $count_estudiantes_m_inicial;
 
-            $estudiantes_a = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$ga->id)->orderBy('estudiantes.apellido')->select('estudiantes.nombre','estudiantes.apellido','estudiantes.nie','estudiantes.fechaNacimiento','matriculas.estado','matriculas.id as matricula')->get();
+            $estudiantes_a = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->where('matriculas.f_grado',$ga->id)->orderBy('estudiantes.apellido')->select('estudiantes.nombre','estudiantes.apellido','estudiantes.nie','estudiantes.fechaNacimiento','matriculas.estado','matriculas.id as matricula','estudiantes.sexo')->get();
 
             if($ga->f_profesor == $user->id){
                 $materias = AsignaturaGrado::join('asignaturas','asignatura_grados.f_asignatura','asignaturas.id')->where('asignatura_grados.f_grado',$ga->id)->select('asignaturas.*','asignatura_grados.id as ag_id')->orderBy('indice')->get();

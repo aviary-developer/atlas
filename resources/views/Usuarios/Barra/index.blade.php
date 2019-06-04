@@ -13,11 +13,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href={!! asset('/usuarios/')!!}>
-                    Mi Perfil
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href={!! asset('/usuario/permisos')!!}>
                     Permisos
                 </a>

@@ -81,7 +81,7 @@
     <div class="form-group">
       <label>Teléfono</label>
       <div class="input-group">
-      {!! Form::text('telefono',null,['id'=>'telefonoUsuario','class'=>'form-control form-control-sm','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
+      {!! Form::text('telinput',null,['id'=>'telefonoUsuario','class'=>'form-control form-control-sm','placeholder'=>'Ej. 0000-0000','data-inputmask'=>"'mask' : '9999-9999'"]) !!}
         <div class="input-group-append">
           <button type="button" name="button" class="btn btn-outline-primary btn-sm" onclick="agregarTelefono();" data-toggle="tooltip" data-placement="top" title="Guardar teléfono">
           <i class="fa fa-save"></i>

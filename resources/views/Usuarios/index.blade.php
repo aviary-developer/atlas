@@ -15,6 +15,7 @@
       <th>Apellido</th>
       <th>Rol</th>
       <th>DUI</th>
+      <th>Correo</th>
       <th>Opciones</th>
       </thead>
       <tbody>
@@ -43,6 +44,7 @@
                     @endif
                 </td>
                 <td>{{$usuario->dui}}</td>
+                <td>{{$usuario->email}}</td>
                 <td>
                     <center>
                         @include('Usuarios.Formularios.desactivate')

@@ -79,7 +79,16 @@
                                 </div>
                                 <div id="tb2" class="tab-pane">
                                     <div id="tb2-collapse" class="collapse" data-parent="#tab-contents">
-                                        @include('Home.contenido.notas')
+                                        @if ($ga->numero > 2)
+                                            @include('Home.contenido.notas')
+                                        @else
+                                            <div class="col-12">
+                                                <center>
+                                                    <h4><i class="text-warning fas fa-exclamation-triangle"></i> Advertencia</h4>
+                                                    <span>El sistema no lleva el registro de las calificaciones de parvularia</span>
+                                                </center>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

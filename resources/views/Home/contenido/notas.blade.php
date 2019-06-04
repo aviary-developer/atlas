@@ -75,13 +75,13 @@
                 @endforeach
                 @php
                     if($estudiante->sexo){
-                        if(round($promedio_final[$e]) < 5){
+                        if(round($promedio_final[$e]) < 5 || !$e_e[$e]["bandera"]){
                             $count_r_f++;
                         }else{
                             $count_a_f++;
                         }
                     }else{
-                        if(round($promedio_final[$e]) < 5){
+                        if(round($promedio_final[$e]) < 5 || !$e_e[$e]["bandera"]){
                             $count_r_m++;
                         }else{
                             $count_a_m++;
@@ -275,7 +275,7 @@
         </div>
         <div class="col-1">
             <center>
-                <b class="font-sm">{{($gnf/count($estudiantes_a))}}</b>
+                <b class="font-sm">{{number_format(($gnf/count($estudiantes_a)),1)}}</b>
             </center>
         </div>
     </div>
