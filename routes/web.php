@@ -90,3 +90,4 @@ Route::get('calculadoraConAsistencia/{asistencia}', 'MenuController@calculadoraC
 //Route::get('menus/show/{menu}','MenuController@show')->name('menu.show');
 
 Route::get('/estudiante/asistencia','AsistenciaController@grafica_estudiante')->name('estudiante.asistencia');
+Route::resource('libroBanco', 'LibroBancoController');
