@@ -12,6 +12,11 @@
             $correlativo = 1;
         @endphp
         @foreach ($estudiantes_a as $e => $estudiante)
+            @php
+                $promedio_final[$e] = 0;
+                $e_e[$e]["notas"] = 0;
+                $e_e[$e]["bandera"] = true;
+            @endphp
             <tr>
                 <td>{{$correlativo}}</td>
                 <td>
@@ -36,11 +41,6 @@
                         if($e == 0){
                             $pnf[$a] = 0;
                             $count_a_f = $count_a_m = $count_r_f = $count_r_m = $gnf = 0;
-                        }
-
-                        if($a == 0){
-                            $e_e[$e]["notas"] = 0;
-                            $e_e[$e]["bandera"] = true;
                         }
 
                         $pnf[$a] += round($pf);

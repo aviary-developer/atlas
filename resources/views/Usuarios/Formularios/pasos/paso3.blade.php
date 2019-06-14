@@ -94,7 +94,7 @@
 @if ($create)
   <div class="d-block d-md-flex">
     <div class="d-block d-md-inline ml-auto mb-3">
-      <button type="submit" class="btn btn-success btn-block">
+      <button type="submit" class="btn btn-success btn-block" id="save_me">
         Guardar
       </button>
     </div>
@@ -102,7 +102,7 @@
 @else
   <div class="d-block d-md-flex">
     <div class="d-block d-md-inline ml-auto mb-3">
-      <button type="submit" class="btn btn-success btn-block">
+      <button type="submit" class="btn btn-success btn-block" id="save_me">
         Editar
       </button>
     </div>

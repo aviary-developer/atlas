@@ -73,4 +73,4 @@
         </table>
     @endif
 </div>
-@include('Lectivos.modal.buscar_estudiante')
+@include('Lectivos.modal.inscripcion')

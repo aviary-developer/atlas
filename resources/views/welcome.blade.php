@@ -13,6 +13,7 @@
   {!!Html::style('css/pnotify.custom.min.css')!!}
   {!!Html::style('css/color.css')!!}
   <script src= {{asset("js/app.js")}}></script>
+  <script src= {{asset("js/Validated.js")}}></script>
 </head>
 
 <body>

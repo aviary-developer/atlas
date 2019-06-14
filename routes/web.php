@@ -90,3 +90,15 @@ Route::get('calculadoraConAsistencia/{asistencia}', 'MenuController@calculadoraC
 //Route::get('menus/show/{menu}','MenuController@show')->name('menu.show');
 
 Route::get('/estudiante/asistencia','AsistenciaController@grafica_estudiante')->name('estudiante.asistencia');
+Route::post('/nota/promedios','LectivoController@promedio_notas')->name('nota.promedios');
+
+//Ruta de validación
+Route::get('/validate',function(Illuminate\Http\Request $request){
+  $tabla = $request->tabla;
+  $campo = $request->campo;
+  $valor = $request->valor;
+
+  $cantidad = DB::table($tabla)->where($campo, $valor)->count();
+
+  return (json_encode($cantidad));
+});

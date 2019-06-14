@@ -65,7 +65,7 @@
 
     <div class="form-group col-4">
       <label>Lugar de nacimiento *</label>
-      {!!Form::text('lugarNacimiento',null,['class'=>'form-control form-control-sm','placeholder'=>'Lugar de nacimiento', 'required'])!!}
+      {!!Form::text('lugarNacimiento',null,['class'=>'form-control form-control-sm','placeholder'=>'Lugar de nacimiento','id'=>'lugarNacimiento', 'required'])!!}
     </div>
 
     <div class="form-group col-6">

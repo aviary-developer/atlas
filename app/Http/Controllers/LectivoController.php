@@ -9,6 +9,7 @@ use App\Estudiante;
 use App\AsignaturaGrado;
 use App\User;
 use App\Matricula;
+use App\Nota;
 use Illuminate\Http\Request;
 use DB;
 use Response;
@@ -27,6 +28,9 @@ class LectivoController extends Controller
 
         $lectivos = Lectivo::orderBy('anio','desc')->get();
         $anio_activo = Lectivo::where('estado',false)->first();
+        $anio_now = date('Y');
+        $count_anio = Lectivo::where('anio',$anio_now)->count();
+        $count_anio_next = Lectivo::where('anio',($anio_now+1))->count();
         if($anio_activo == null && $lectivos->count() > 0){
             $anio_activo = $lectivos[0];
         }else if($anio_activo == null){
@@ -38,7 +42,10 @@ class LectivoController extends Controller
         return view('Lectivos.index',compact(
             'lectivos',
             'anio_activo',
-            'docentes'
+            'docentes',
+            'count_anio',
+            'count_anio_next',
+            'anio_now'
         ));
     }
 
@@ -108,11 +115,50 @@ class LectivoController extends Controller
             ->get();
         $docentes = User::where('estado',true)->orderBy('apellido')->get();
 
+        //Proceso para determinar lista de estudiantes que se pueden inscribir en este grado
+        //Verificar año lectivo activo
+        $a_lectivo = $grado->lectivo;
+        $a_lectivo_past = Lectivo::where('anio',($a_lectivo->anio - 1))->first();
+
+        if($a_lectivo_past != null){
+            //Procesos que ocurren si existe el año anterior
+            $no_matricula =Estudiante::orWhereNotExists(
+                    function ($query) use ($a_lectivo_past){
+                        $query->select(DB::raw(1))
+                        ->from('matriculas')
+                        ->join('grados','matriculas.f_grado','grados.id')
+                        ->where('grados.f_lectivo',$a_lectivo_past->id)
+                        ->whereRaw('estudiantes.id = matriculas.f_estudiante');
+                    }
+                )->select('estudiantes.nombre','estudiantes.apellido','estudiantes.nie','estudiantes.id','estudiantes.sexo');
+
+            $p_matricula = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
+                ->join('grados','matriculas.f_grado','grados.id')
+                ->where(
+                    function ($query) use ($grado,$a_lectivo_past){
+                        $query->where('grados.f_lectivo',$a_lectivo_past->id)
+                        ->where('grados.numero',($grado->numero -1))
+                        ->where('matriculas.aprobado',true);
+                    }
+                )->orWhere(
+                    function ($query) use ($grado,$a_lectivo_past){
+                        $query->where('grados.f_lectivo',$a_lectivo_past->id)
+                        ->where('grados.numero',($grado->numero))
+                        ->where('matriculas.aprobado',false);
+                    }
+                )->union($no_matricula)->select('estudiantes.nombre','estudiantes.apellido','estudiantes.nie','estudiantes.id','estudiantes.sexo')
+                ->orderBy('apellido')
+                ->get();
+        }else{
+            $p_matricula = Estudiante::orderBy('apellido')->get(['nombre','apellido','nie','id','sexo']);
+        }
+
         return view('Lectivos.show',compact(
             'grado',
             'asignaturas',
             'docentes',
-            'estudiantes'
+            'estudiantes',
+            'p_matricula'
         ));
     }
 
@@ -299,5 +345,61 @@ class LectivoController extends Controller
             DB::rollback();
             return 0;
         }
+    }
+
+    public function promedio_notas (Request $request){
+        //Buscar todas la matriculas del año
+        $matriculas = Matricula::join('grados','grados.id','matriculas.f_grado')->where('grados.f_lectivo',$request->anio)->select('matriculas.*','grados.numero')->get();
+        //Calcular las notas de cada una de las matriculas
+        foreach($matriculas as $e => $matricula){
+            //Determinar las asignaturas cursadas por el estudiante
+            $asignaturas = AsignaturaGrado::where('f_grado',$matricula->f_grado)->get();
+
+            $ins[$e]["notas"] = 0;
+            $ins[$e]["bandera"] = true;
+            $promedio_final[$e] = 0;
+
+            foreach($asignaturas as $a => $materia){
+                $notas = Nota::where('f_asignatura',$materia->id)->where('f_estudiante',$matricula->id)->first();
+
+                if($notas != null){
+                    $p1 = ($notas->n1p1 * 0.35) + ($notas->n2p1 * 0.35) + ($notas->n3p1 * 0.3);
+                    $p2 = ($notas->n1p2 * 0.35) + ($notas->n2p2 * 0.35) + ($notas->n3p2 * 0.3);
+                    $p3 = ($notas->n1p3 * 0.35) + ($notas->n2p3 * 0.35) + ($notas->n3p3 * 0.3);
+                    $pf = ($p1 + $p2 + $p3) / 3;
+                }else{
+                    $p1 = $p2 = $p3 = $pf = 0;
+                }
+
+                if($materia->asignatura->indice < 4 && round($pf) < 5){
+                    $ins[$e]["bandera"] = false;
+                }
+
+                $ins[$e]["notas"] += round($pf);
+                $promedio_final[$e] = round($ins[$e]["notas"]/count($asignaturas));
+            }
+
+            //Crear una transacción de base de datos
+            DB::beginTransaction();
+
+            try {
+                $reg = Matricula::find($matricula->id);
+                //Verificar si el estudiante ha superado los criterios de aprobación
+                if(($promedio_final[$e] >= 5 && $ins[$e]["bandera"]) || $matricula->numero < 3){
+                    //Aprueba
+                    $reg->aprobado = true;
+                }else{
+                    //Reprueba
+                    $reg->aprobado = false;
+                }
+                $reg->save();
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                return 0;
+            }
+
+        }
+        return 1;
     }
 }

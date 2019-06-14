@@ -1,68 +1,28 @@
 $(document).ready(function () {
-    $("#new-lectivo").on("click", function (e) {
+    $("#save_it").click(function (e) {
         e.preventDefault();
-        (new PNotify({
-            title: '<span class="badge badge-light">Nuevo</span> Año Lectivo',
-            text: 'Ingrese el nuevo año lectivo',
-            icon: false,
-            type: 'info',
-            hide: false,
-            confirm: {
-                buttons: [{
-                    text: "Guardar"
-                }, {
-                    text: "Cancelar"
-                }],
-                prompt: true
+        var valor = $("#anio_nuevo_input").val();
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/grados',
+            data: {
+                anio: valor,
             },
-            buttons: {
-                closer: false,
-                sticker: false
-            },
-            history: {
-                history: false
-            },
-            addclass: 'stack-modal',
-            stack: {
-                'dir1': 'down',
-                'dir2': 'right',
-                'modal': true
+            success: function (r) {
+                console.log(r);
+                if (r == 1) {
+                    sessionStorage.setItem('msg', 'msg');
+                    location.reload();
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
             }
-        })).get().on('pnotify.confirm', function (e, notice, val) {
-            var valor = Number.parseInt(val);
-
-            if (Number.isInteger(valor)) {
-                $.ajax({
-                    type: 'post',
-                    url: '/atlas/public/grados',
-                    data: {
-                        anio: val,
-                    },
-                    success: function (r) {
-                        console.log(r);
-                        if (r == 1) {
-                            sessionStorage.setItem('msg', 'msg');
-                            location.reload();
-                        } else {
-                            new PNotify({
-                                type: 'error',
-                                title: '¡Error!',
-                                text: 'Algo salio mal'
-                            });
-                        }
-                    }
-                });
-            } else {
-                new PNotify({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Ingrese un número valido'
-                });
-            }
-        }).on('pnotify.cancel', function () {
-
         });
-    });
+     });
 
     $("#sw-activo").on('change', function () {
         if ($("#sw-activo").is(":checked")) {
@@ -377,10 +337,11 @@ $(document).ready(function () {
         }
     });
 
-    $("#tabla-busqueda_estudiante").on('click', '#add_student', function (e) {
+    $("#contenedor").on('click', '#add_student', function (e) {
         e.preventDefault();
         var estudiante = $(this).data('value');
         var grado = $("#id-g").val();
+        var obj = $(this);
         $.ajax({
             type: 'post',
             url: '/atlas/public/grado/matricula',
@@ -389,8 +350,16 @@ $(document).ready(function () {
                 estudiante: estudiante
             }, success: function (r) {
                 if (r == 1) {
-                    sessionStorage.setItem('msg', 'msg');
-                    location.reload(true);
+                    new PNotify({
+                        type: 'success',
+                        title: '¡Hecho!',
+                        text: 'Acción exitosa'
+                    });
+                    obj.prop('disabled', true);
+                    obj.removeClass('btn-primary');
+                    obj.empty();
+                    obj.addClass('btn-success');
+                    obj.append('<i class="fas fa-check"></i>');
                 } else {
                     new PNotify({
                         type: 'error',
@@ -401,6 +370,32 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#btn-cierre").click(function (e) {
+        e.preventDefault();
+        var anio_id = $(this).data('option');
+        $.ajax({
+            type: 'post',
+            url: '/atlas/public/nota/promedios',
+            data: {
+                anio: anio_id
+            },
+            success: function (r) {
+                if (r == 1) {
+                    //Proceso de cierre de año
+                    setTimeout(function () {
+                        $("#btn-listo").show();
+                    }, 3000);
+                } else {
+                    new PNotify({
+                        type: 'error',
+                        title: '¡Error!',
+                        text: 'Algo salio mal'
+                    });
+                }
+            }
+        });
+    })
 });
 
 function selected_year(year, id, estado, objeto) {
@@ -409,8 +404,10 @@ function selected_year(year, id, estado, objeto) {
     b_year.text(year);
     if (estado == false) {
         $("#sw-activo").prop('checked', true);
+        $("#btn-cierre").prop('disabled',false);
     } else {
-        $("#sw-activo").prop('checked',false);
+        $("#sw-activo").prop('checked', false);
+        $("#btn-cierre").prop('disabled',true);
     }
     $('.btn-d').each(function () {
         $(this).removeClass('btn-info').addClass('btn-secundary');
