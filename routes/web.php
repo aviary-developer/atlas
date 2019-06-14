@@ -102,3 +102,4 @@ Route::get('/validate',function(Illuminate\Http\Request $request){
 
   return (json_encode($cantidad));
 });
+Route::resource('libroBanco', 'LibroBancoController');

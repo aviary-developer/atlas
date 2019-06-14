@@ -46,6 +46,9 @@
               <li>
                 <a href={{asset('/asistencia')}} class="sidebar-nav-link">Asistencia</a>
               </li>
+              <li>
+                <a href={{asset('/libroBanco')}} class="sidebar-nav-link">Libro de banco</a>
+              </li>
             </ul>
           </li>
           <li class="sidebar-nav-group">
