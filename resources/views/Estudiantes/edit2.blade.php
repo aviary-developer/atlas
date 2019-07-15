@@ -44,7 +44,7 @@
             @include('Estudiantes.Partes.modal_matricula')
         {!! Form::close() !!}
     </div>
-
+<input type="hidden" id="method" value="edit">
 <script>
     function partidaNacimiento(c){
         $('#divPartida').toggle();

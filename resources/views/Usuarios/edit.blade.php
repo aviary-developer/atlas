@@ -33,6 +33,7 @@
         </a>
       </li>
     </ul>
+    <input type="hidden" id="method" value="edit">
     {!!Form::model($usuario,['class' =>'tab-content','route' =>['usuarios.update',$usuario->id],'method' =>'PUT','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
    @include('Usuarios.Formularios.form')
     {!!Form::close()!!}

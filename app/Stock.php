@@ -9,4 +9,6 @@ class Stock extends Model
   protected $fillable = [
       'tipoMovimiento','saldo','cantidad','f_insumo','fecha'
   ];
+
+  protected $dates = ['fecha'];
 }

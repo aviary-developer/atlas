@@ -99,6 +99,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="nombre">
+<input type="hidden" id="method" value="create">
 <script src= {{asset("js/system/asignaturas.js")}}></script>
 @endsection

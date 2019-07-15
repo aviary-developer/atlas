@@ -34,6 +34,7 @@
         </a>
       </li>
     </ul>
+    <input type="hidden" id="method" value="create">
     {!!Form::open(['class' =>'tab-content','route' =>'usuarios.store','method' =>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data','id'=>'formUsuario'])!!}
    @include('Usuarios.Formularios.form')
     {!!Form::close()!!}

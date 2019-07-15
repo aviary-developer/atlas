@@ -52,7 +52,7 @@
                         <th>Grado</th>
                         <th>Sección</th>
                         <th>Turno</th>
-                        <th>Docente</th>
+                        <th>Asesor</th>
                         <th style="width: 100px;">Opciones</th>
                     </thead>
                     <tbody>

@@ -17,6 +17,11 @@
                     Permisos
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href={{asset('/usuario/asignatura')}} target="_blank">
+                    Reporte de Asignaturas
+                </a>
+            </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">

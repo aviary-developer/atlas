@@ -17,8 +17,26 @@
                 Estudiante: <b>{{$estudiante->nombre.' '.$estudiante->apellido}}</b>
             </div>
             <div class="col-2">
-                NIE: <b>{{$estudiante->nie}}</b>
+                <span class="float-right">
+                    NIE: <b>{{$estudiante->nie}}</b>
+                </span>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            Docente Asesor:
+            <b>
+                {{$grado->docente->nombre.' '.$grado->docente->apellido}}
+            </b>
+        </div>
+        <div class="col-3">
+            <span class="float-right">
+                Año Lectivo:
+                <b>
+                    {{$grado->lectivo->anio}}
+                </b>
+            </span>
         </div>
     </div>
     <br>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Lectivo;
 use App\TelefonoUsuario;
 use DB;
 use Hash;
@@ -157,5 +158,20 @@ class UserController extends Controller
     public function permisos(Request $request){
         $usuarios = User::where('estado',true)->orderBy('apellido','asc')->get();
         return view('Usuarios.permisos_index',compact('usuarios'));
+    }
+
+    public function ver_asignaturas (){
+        $lectivo = Lectivo::where('estado',0)->first();
+        $docentes = User::where('estado',true)->orderBy('apellido')->get();
+
+        $header = view('PDF.header');
+        $footer = view('PDF.footer');
+        $main = view('Usuarios.pdf.asignaturas',compact(
+            'lectivo',
+            'docentes'
+        ));
+
+         $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter');
+        return $pdf->stream();
     }
 }

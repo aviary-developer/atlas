@@ -13,7 +13,8 @@ $(document).ready(function () {
                 }, {
                     text: "Cancelar"
                 }],
-                prompt: true
+                prompt: true,
+                promptId: 'hill'
             },
             buttons: {
                 closer: false,
@@ -28,27 +29,45 @@ $(document).ready(function () {
                 'dir2': 'right',
                 'modal': true
             }
-        })).get().on('pnotify.confirm', function (e, notice, val) {
-            $.ajax({
-                type: 'post',
-                url: '/atlas/public/asignaturas',
-                data: {
-                    nombre: val,
-                },
-                success: function (r) {
-                    console.log(r);
-                    if (r == 1) {
-                        sessionStorage.setItem('msg', 'msg');
-                        location.reload();
-                    } else {
-                        new PNotify({
-                            type: 'error',
-                            title: '¡Error!',
-                            text: 'Algo salio mal'
-                        });
+        })).get().on('pnotify.confirm', async function (e, notice, val) {
+            $("#nombre").val(val);
+            var valido = new Validated('nombre');
+            valido.required();
+            valido.min(2);
+            valido.max(30);
+            await valido.unique('asignaturas', 'nombre');
+            is_valid = valido.value(true);
+
+            if (is_valid) {
+                $.ajax({
+                    type: 'post',
+                    url: '/atlas/public/asignaturas',
+                    data: {
+                        nombre: val,
+                    },
+                    success: function (r) {
+                        console.log(r);
+                        if (r == 1) {
+                            sessionStorage.setItem('msg', 'msg');
+                            location.reload();
+                        } else {
+                            new PNotify({
+                                type: 'error',
+                                title: '¡Error!',
+                                text: 'Algo salio mal'
+                            });
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                new PNotify({
+                    type: 'error',
+                    title: '¡Error!',
+                    text: 'La información ingresada no es correcta o ya existe'
+                });
+            }
+
+
         }).on('pnotify.cancel', function () {
 
         });

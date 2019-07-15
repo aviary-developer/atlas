@@ -162,9 +162,9 @@ class GradoController extends Controller
     }
 
     public function notas(Request $request){
-        $grado = $request->grado;
+        $grado = Grado::find($request->grado);
         $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')
-            ->where('matriculas.f_grado',$grado)
+            ->where('matriculas.f_grado',$grado->id)
             ->where('matriculas.estado',true)
             ->select('estudiantes.id','estudiantes.nombre','estudiantes.apellido','estudiantes.nie','matriculas.id as matricula')
             ->orderBy('estudiantes.apellido')
@@ -172,7 +172,7 @@ class GradoController extends Controller
 
         $asignaturas = Asignatura::
             join('asignatura_grados','asignaturas.id','asignatura_grados.f_asignatura')
-            ->where('asignatura_grados.f_grado',$grado)
+            ->where('asignatura_grados.f_grado',$grado->id)
             ->select('asignaturas.*')
             ->orderBy('asignaturas.indice')->get();
 
@@ -214,5 +214,12 @@ class GradoController extends Controller
 
          $pdf = \PDF::loadHtml($main)->setOption('footer-html',$footer)->setOption('header-html',$header)->setPaper('Letter')->setOrientation('landscape');
         return $pdf->stream();
+    }
+
+    public function reprobados(Request $request){
+        $anio = $request->anio;
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->join('grados','matriculas.f_grado','grados.id')->where('grados.f_lectivo',$anio)->where('matriculas.aprobado',true)->groupBy('grados.numero')->orderBy('estudiantes.apellido')->get();
+
+        return $estudiantes;
     }
 }

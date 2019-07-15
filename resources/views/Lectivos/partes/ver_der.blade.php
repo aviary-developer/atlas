@@ -50,7 +50,7 @@
 </div>
 <div class="flex-row mt-3">
     <center>
-        Docente:
+        Asesor:
     </center>
 </div>
 <div class="flex-row">

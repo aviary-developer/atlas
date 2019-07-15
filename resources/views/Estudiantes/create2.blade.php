@@ -44,7 +44,7 @@ $fecha = Carbon\Carbon::now();
     @include('Estudiantes.Partes.modal_matricula')
     {!! Form::close() !!}
 </div>
-
+<input type="hidden" id="method" value="create">
 <script>
     function partidaNacimiento(c){
         $('#divPartida').toggle();

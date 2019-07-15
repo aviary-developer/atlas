@@ -62,7 +62,7 @@
                                         @endphp
                                         @if ($estado == 0)
                                             <button type="button" class="btn btn-sm btn-primary" id="add_student" data-value="{{$mat->id}}">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-plus"></i>
                                             </button>
                                         @elseif($estado == 1)
                                             <button type="button" class="btn btn-sm btn-success" disabled>

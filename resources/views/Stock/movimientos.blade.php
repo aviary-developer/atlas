@@ -39,7 +39,7 @@ setlocale(LC_ALL,'es');
                   @foreach ($movimientos as $movimiento)
                         <tr>
                           <td>{{$correlativo}}</td>
-                          <td>{{$movimiento->fecha}}</td>
+                          <td>{{$movimiento->fecha->format('d / m / Y')}}</td>
                           <td>{{($movimiento->tipoMovimiento)?'Salida':'Entrada'}}</td>
                           <td>{{$movimiento->cantidad}}</td>
                           <td>{{$movimiento->saldo}}</td>

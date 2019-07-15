@@ -174,7 +174,7 @@ function calculadoraMenu(){
         saldo=0;}else{ saldo=parseFloat(data[3][index][0].saldo).toFixed(1);}
         if(saldo<=parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
           menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
-      tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
+      tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+" Kg</td><td><span class='badge badge-"+menor+"'>"+saldo+" Kg</span></td></tr>");
       div.append("<input name='insumos[]' value='"+data[2][index].id+"' hidden/><input name='cantidades[]' value='"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"' hidden/>");
     });
   });
@@ -248,7 +248,7 @@ function enviarCalculacion(){
               saldo=0;}else{saldo=parseFloat(data[3][index][0].saldo).toFixed(1);}
               if(saldo<parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)){
                 menor="danger"; $("#comprobarSaldoInsumos").val(1);}else{menor="success";}
-            tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"</td><td><span class='badge badge-"+menor+"'>"+saldo+"</span></td></tr>");
+            tabla.append("<tr><td>"+data[2][index].nombre+"</td><td>"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+" Kg</td><td><span class='badge badge-"+menor+"'>"+saldo+" Kg</span></td></tr>");
             div.append("<input name='insumos[]' value='"+data[2][index].id+"' hidden/><input name='cantidades[]' value='"+parseFloat((data[2][index].cantidad)*data[1]).toFixed(1)+"' hidden/>");
           });
         });
