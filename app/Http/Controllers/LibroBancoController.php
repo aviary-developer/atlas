@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LibroBanco;
 use App\DetalleMenu;
 use App\Insumo;
+use App\Banco;
 use App\Asistencia;
 use App\Stock;
 use App\CalendarioMenu;
@@ -21,8 +22,15 @@ class LibroBancoController extends Controller
    */
   public function index()
   {
+    $bancos=Banco::where('estado',1)->orderBy('nombre')->get();
+    if(count($bancos)>0){
+    $primerBanco=$bancos->first();
+    $movimientos=LibroBanco::where('f_banco',$primerBanco->id)->get();
+  }else{
     $movimientos=LibroBanco::all();
-    return view('LibroBanco.libroBanco',compact('movimientos'));
+    $bancos=null;
+  }
+    return view('LibroBanco.libroBanco',compact('movimientos','bancos'));
   }
 
   /**
@@ -50,6 +58,7 @@ class LibroBancoController extends Controller
       $libroBanco->fecha=$request->fechaRegistroLibro;
       $libroBanco->concepto=$request->conceptoRegistroLibro;
       $libroBanco->cheque=$request->chequeRegistroLibro;
+      $libroBanco->f_banco=$request->bancoHidden;
       $saldoAnterior=LibroBanco::orderBy('id', 'desc')->first();
       if ($request->tipoMovimientoRegistroLibro==0) {//Egreso
         if(!$saldoAnterior){

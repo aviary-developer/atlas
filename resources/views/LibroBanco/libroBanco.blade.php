@@ -13,6 +13,7 @@ $fecha = Carbon\Carbon::now();
     </button>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
+          @if ($bancos)
           <li class="nav-item">
               <a class="nav-link" id="botonLibro" data-target="#modalRegistroLibroBanco" data-toggle="modal">
                   Nuevo
@@ -23,11 +24,29 @@ $fecha = Carbon\Carbon::now();
                     Ayuda
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="fa fa-money-check-alt form-control" aria-hidden="true"></span>
+                    </div>
+                    <select class="form-control" name="insumo" id="banco">
+                      @foreach ($bancos as $banco)
+                        <option value={{$banco->id}}>
+                          {{$banco->nombre}}
+                        </option>
+                      @endforeach
+                    </select>
+                  </div>
+                </a>
+            </li>
+            @endif
         </ul>
     </div>
 </nav>
 <div class="container-fluid mt-3">
     <div class="col-10">
+      @if ($bancos)
         <div class="table-responsive">
             <table class="table table-sm a-table">
                 <thead>
@@ -61,6 +80,9 @@ $fecha = Carbon\Carbon::now();
                 </tbody>
             </table>
         </div>
+        @else
+          <center><h2>Agregue un banco.</h2></center>
+      @endif
     </div>
 </div>
 <!-- INICIO MODAL SHOW -->
@@ -127,6 +149,7 @@ $fecha = Carbon\Carbon::now();
         </div>
         </div>
       <div class="modal-footer">
+        <input type="hidden" name="bancoHidden" id="bancoHidden"/>
         <button onclick="enviarRegistro();" type="button" class="btn btn-primary btn-sm">Guardar</button>
         </form>
       </div>
@@ -167,6 +190,7 @@ function enviarRegistro(){
     });
   }
   else {
+    $("#bancoHidden").val($("#banco").val());
     $("#formLibroBanco").submit();
   }
 }
