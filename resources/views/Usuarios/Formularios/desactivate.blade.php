@@ -6,9 +6,15 @@
     <a href={!! asset('/usuarios/'.$usuario->id.'/edit')!!} class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
       <i class="fa fa-edit"></i>
     </a>
-    <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
-        <i class="fa fa-trash"></i>
-      </button>
+    @if ($usuario->id != Auth::user()->id)
+        <button type="button" class="btn btn-danger btn-sm" onclick={!! "'eliminar(".$usuario->id.");'" !!} data-toggle="tooltip" data-placement="top" title="Eliminar"/>
+            <i class="fa fa-trash"></i>
+        </button>
+    @else
+        <button type="button" class="btn btn-danger btn-sm" disabled>
+            <i class="fas fa-ban"></i>
+        </button>
+    @endif
 </div>
 <script>
 function eliminar(id){

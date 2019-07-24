@@ -19,6 +19,17 @@
                         Nuevo
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{asset('/lectivo/reprobados?anio='.$anio_activo->id)}}" id="link_reprobado" target="_blank">
+                        Reprobados
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{asset('/lectivo/retirados?anio='.$anio_activo->id)}}" id="link_retirado" target="_blank">
+                        Retirados
+                    </a>
+                </li>
+
             </ul>
             <div class="mr-5">
                 @if ($anio_activo != null)

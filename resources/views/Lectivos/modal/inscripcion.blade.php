@@ -47,6 +47,14 @@
                                         @else
                                             <span class="text-primary text-monospace">{{$mat->nie}}</span>
                                         @endif
+                                        &nbsp;
+                                        @if (App\Lectivo::procedencia($a_lectivo_past->id,$mat->id) == 0)
+                                            <span class="badge badge-danger float-right">Reprobado</span>
+                                        @elseif (App\Lectivo::procedencia($a_lectivo_past->id,$mat->id) == 1)
+                                            <span class="badge badge-success float-right">Aprobado</span>
+                                        @else
+                                            <span class="badge badge-warning float-right">No inscrito</span>
+                                        @endif
                                     </div>
                                     <div class="col-2">
                                         @php

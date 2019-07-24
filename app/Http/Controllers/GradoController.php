@@ -7,6 +7,7 @@ use App\User;
 use App\AsignaturaGrado;
 use App\Estudiante;
 use App\Asignatura;
+use App\Lectivo;
 use DB;
 use Illuminate\Http\Request;
 
@@ -218,8 +219,34 @@ class GradoController extends Controller
 
     public function reprobados(Request $request){
         $anio = $request->anio;
-        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->join('grados','matriculas.f_grado','grados.id')->where('grados.f_lectivo',$anio)->where('matriculas.aprobado',true)->groupBy('grados.numero')->orderBy('estudiantes.apellido')->get();
+        $estudiantes = Estudiante::join('matriculas','estudiantes.id','matriculas.f_estudiante')->join('grados','matriculas.f_grado','grados.id')->where('grados.f_lectivo',$anio)->where('matriculas.aprobado',false)->orderBy('grados.numero')->orderBy('estudiantes.apellido')->select('estudiantes.*','grados.*')->get();
+        $lectivo = Lectivo::find($anio);
 
-        return $estudiantes;
+        $header = view('PDF.header');
+        $footer = view('PDF.footer');
+        $main = view('Lectivos.pdf.reprobados', compact(
+            'estudiantes',
+            'lectivo'
+        ));
+
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html', $footer)->setOption('header-html', $header)->setPaper('Letter');
+        return $pdf->stream();
+    }
+
+    public function retirados(Request $request)
+    {
+        $anio = $request->anio;
+        $estudiantes = Estudiante::join('matriculas', 'estudiantes.id', 'matriculas.f_estudiante')->join('grados', 'matriculas.f_grado', 'grados.id')->where('grados.f_lectivo', $anio)->where('matriculas.estado', false)->orderBy('grados.numero')->orderBy('estudiantes.apellido')->select('estudiantes.*', 'grados.*')->get();
+        $lectivo = Lectivo::find($anio);
+
+        $header = view('PDF.header');
+        $footer = view('PDF.footer');
+        $main = view('Lectivos.pdf.retirados', compact(
+            'estudiantes',
+            'lectivo'
+        ));
+
+        $pdf = \PDF::loadHtml($main)->setOption('footer-html', $footer)->setOption('header-html', $header)->setPaper('Letter');
+        return $pdf->stream();
     }
 }

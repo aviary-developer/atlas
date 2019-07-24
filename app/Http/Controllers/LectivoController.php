@@ -158,7 +158,8 @@ class LectivoController extends Controller
             'asignaturas',
             'docentes',
             'estudiantes',
-            'p_matricula'
+            'p_matricula',
+            'a_lectivo_past'
         ));
     }
 

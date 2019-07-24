@@ -412,6 +412,8 @@ function selected_year(year, id, estado, objeto) {
     $('.btn-d').each(function () {
         $(this).removeClass('btn-info').addClass('btn-secundary');
     });
+    $("#link_reprobado").prop('href', '/atlas/public/lectivo/reprobados?anio='+id);
+    $("#link_retirado").prop('href', '/atlas/public/lectivo/retirados?anio='+id);
     $(objeto).removeClass('btn-secundary').addClass('btn-info');
     /**Impresion de grados */
     $.ajax({

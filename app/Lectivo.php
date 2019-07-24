@@ -44,4 +44,19 @@ class Lectivo extends Model
     public function asignaturas_asignadas_grados(){
         return $this->hasManyThrough('App\AsignaturaGrado', 'App\Grado','f_lectivo','f_grado')->where('asignatura_grados.f_profesor',Auth::user()->id);
     }
+
+    public static function procedencia($anio, $estudiante){
+        //Revisar si fue inscrito
+        $registro = Matricula::join('grados','grados.id','matriculas.f_grado')->where('matriculas.f_estudiante',$estudiante)->where('grados.f_lectivo',$anio)->count();
+        if($registro == 0){
+            return 2;
+        }else{
+            $estado = Matricula::join('grados', 'grados.id', 'matriculas.f_grado')->where('matriculas.f_estudiante', $estudiante)->where('matriculas.aprobado',1)->where('grados.f_lectivo', $anio)->count();
+            if($estado == 1){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+    }
 }

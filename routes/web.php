@@ -93,6 +93,7 @@ Route::get('/estudiante/asistencia','AsistenciaController@grafica_estudiante')->
 Route::post('/nota/promedios','LectivoController@promedio_notas')->name('nota.promedios');
 Route::get('/usuario/asignatura','UserController@ver_asignaturas')->name('usuario.asignatura');
 Route::get('lectivo/reprobados','GradoController@reprobados')->name('lectivo.reprobados');
+Route::get('lectivo/retirados', 'GradoController@retirados')->name('lectivo.retirados');
 
 //Ruta de validación
 Route::get('/validate',function(Illuminate\Http\Request $request){
