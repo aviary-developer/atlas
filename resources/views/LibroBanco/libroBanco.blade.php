@@ -33,6 +33,7 @@ $fecha = Carbon\Carbon::now();
                 <thead>
                     <th>#</th>
                     <th>Fecha</th>
+                    <th>Número de cheque</th>
                     <th>Concepto</th>
                     <th>Egresos</th>
                     <th>Ingresos</th>
@@ -47,6 +48,7 @@ $fecha = Carbon\Carbon::now();
                         <tr>
                           <td>{{$correlativo}}</td>
                           <td>{{Carbon\Carbon::parse($movimiento->fecha)->format('d/m/Y')}}</td>
+                          <td>N° {{$movimiento->cheque}}</td>
                           <td>{{$movimiento->concepto}}</td>
                           <td>{{($movimiento->egreso)?number_format($movimiento->egreso, 2):' '}}</td>
                           <td>{{($movimiento->ingreso)?number_format($movimiento->ingreso, 2):' '}}</td>
@@ -77,6 +79,18 @@ $fecha = Carbon\Carbon::now();
       </div>
       <div class="modal-body">
         <div class="container">
+          <div class="row">
+            <div class="col-3"><center>Movimiento</center>
+            </div>
+            <div class="col-4"><center>
+              <select class="form-control" name="tipoMovimientoRegistroLibro" id="tipoMovimientoRegistroLibro">
+                <option value="1">Ingreso</option>
+                <option value="0">Egreso</option>
+              </select>
+            </center>
+          </div>
+        </div>
+        <br>
         <div class="row">
         <div class="col-3"><center>Fecha</center>
         </div>
@@ -87,17 +101,13 @@ $fecha = Carbon\Carbon::now();
         </div>
         <br>
         <div class="row">
-          <div class="col-3"><center>Movimiento</center>
-          </div>
-          <div class="col-4"><center>
-            <select class="form-control" name="tipoMovimientoRegistroLibro" id="tipoMovimientoRegistroLibro">
-                <option value="1">Ingreso</option>
-                <option value="0">Egreso</option>
-            </select>
-          </center>
-          </div>
+        <div class="col-3"><center>N° de Cheque</center>
         </div>
-        <br>
+        <div class="col-6"><center>
+          {!!Form::text('chequeRegistroLibro',null,['id'=>'chequeRegistroLibro','class'=>'form-control','placeholder'=>'Número de cheque','required'])!!}
+        </center>
+        </div>
+        </div><br>
         <div class="row">
         <div class="col-3"><center>Concepto</center>
         </div>
@@ -128,6 +138,8 @@ $fecha = Carbon\Carbon::now();
 function enviarRegistro(){
   var concepto=$("#conceptoRegistroLibro").val();
   var cantidad=$("#cantidadRegistroLibro").val();
+  var fecha=$("#idFechaRegistroLibro").val();
+  var cheque=$("#chequeRegistroLibro").val();
   if (!concepto) {
     new PNotify({
         type: 'error',
@@ -139,6 +151,18 @@ function enviarRegistro(){
     new PNotify({
       type: 'error',
       title: '¡Cantidad igual a 0!',
+      text: 'Error'
+    });
+  }else if (!Date.parse(fecha)) {
+    new PNotify({
+      type: 'error',
+      title: '¡Ingrese una fecha válida!',
+      text: 'Error'
+    });
+  }else if (!cheque) {
+    new PNotify({
+      type: 'error',
+      title: '¡Ingrese número de cheque!',
       text: 'Error'
     });
   }

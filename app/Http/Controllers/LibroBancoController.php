@@ -49,8 +49,15 @@ class LibroBancoController extends Controller
       $libroBanco = new LibroBanco;
       $libroBanco->fecha=$request->fechaRegistroLibro;
       $libroBanco->concepto=$request->conceptoRegistroLibro;
+      $libroBanco->cheque=$request->chequeRegistroLibro;
       $saldoAnterior=LibroBanco::orderBy('id', 'desc')->first();
       if ($request->tipoMovimientoRegistroLibro==0) {//Egreso
+        if(!$saldoAnterior){
+          return redirect('/libroBanco')->with('error', 'No hay ingresos aún');
+        }else if($saldoAnterior->saldo<$request->cantidadRegistroLibro){
+          return redirect('/libroBanco')->with('error', 'Saldo no disponible para el egreso');
+        }
+        dd($saldoAnterior);
         $libroBanco->egreso=$request->cantidadRegistroLibro;
         if(!$saldoAnterior){
           $libroBanco->saldo=0-$request->cantidadRegistroLibro;

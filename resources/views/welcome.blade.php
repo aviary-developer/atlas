@@ -132,7 +132,7 @@
   echo "<script>
   new PNotify({
       type: 'error',
-      title: '¡Ocurrio algo inesperado!',
+      title: '".Session::get('error')."',
       text: 'Error'
   });
   </script>";
