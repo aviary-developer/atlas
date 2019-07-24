@@ -73,7 +73,6 @@ class LibroBancoController extends Controller
         }else if($saldoAnterior->saldo<$request->cantidadRegistroLibro){
           return redirect('/libroBanco')->with('error', 'Saldo no disponible para el egreso');
         }
-        dd($saldoAnterior);
         $libroBanco->egreso=$request->cantidadRegistroLibro;
         if(!$saldoAnterior){
           $libroBanco->saldo=0-$request->cantidadRegistroLibro;
