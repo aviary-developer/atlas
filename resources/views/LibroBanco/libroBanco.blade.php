@@ -30,12 +30,26 @@ $fecha = Carbon\Carbon::now();
                     <div class="input-group-prepend">
                       <span class="fa fa-money-check-alt form-control" aria-hidden="true"></span>
                     </div>
-                    <select class="form-control" name="insumo" id="banco">
+                    <select class="form-control" name="insumo" id="banco" onchange="cambioBanco(this);">
+                      @if ($bancoSeleccionado!=-1)
+                      @foreach ($bancos as $banco)
+                          @if ($bancoSeleccionado==$banco->id)
+                            <option value={{$banco->id}} selected>
+                              {{$banco->nombre}}
+                            </option>
+                          @else
+                        <option value={{$banco->id}}>
+                          {{$banco->nombre}}
+                        </option>
+                      @endif
+                      @endforeach
+                    @else
                       @foreach ($bancos as $banco)
                         <option value={{$banco->id}}>
                           {{$banco->nombre}}
                         </option>
                       @endforeach
+                    @endif
                     </select>
                   </div>
                 </a>
@@ -158,6 +172,9 @@ $fecha = Carbon\Carbon::now();
 </div>
 <!-- FINAL MODAL SHOW -->
 <script>
+function cambioBanco(e){
+  window.location.href = "/atlas/public/libroBanco?banco="+e.value;
+}
 function enviarRegistro(){
   var concepto=$("#conceptoRegistroLibro").val();
   var cantidad=$("#cantidadRegistroLibro").val();

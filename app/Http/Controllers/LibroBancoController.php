@@ -20,9 +20,10 @@ class LibroBancoController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
     $bancos=Banco::where('estado',1)->orderBy('nombre')->get();
+    if(!$request->banco){
     if(count($bancos)>0){
     $primerBanco=$bancos->first();
     $movimientos=LibroBanco::where('f_banco',$primerBanco->id)->get();
@@ -30,7 +31,13 @@ class LibroBancoController extends Controller
     $movimientos=LibroBanco::all();
     $bancos=null;
   }
-    return view('LibroBanco.libroBanco',compact('movimientos','bancos'));
+    $bancoSeleccionado=-1;
+    return view('LibroBanco.libroBanco',compact('movimientos','bancos','bancoSeleccionado'));
+  }else{
+    $bancoSeleccionado=$request->banco;
+    $movimientos=LibroBanco::where('f_banco',$request->banco)->get();
+    return view('LibroBanco.libroBanco',compact('movimientos','bancos','bancoSeleccionado'));
+  }
   }
 
   /**
@@ -86,7 +93,7 @@ class LibroBancoController extends Controller
     }catch(Exception $e){
         DB::rollback();
     }
-    return redirect('/libroBanco')->with('msg', '¡Guardado!');
+    return redirect('/libroBanco?banco='.$request->bancoHidden)->with('msg', '¡Guardado!');
   }
 
   /**
