@@ -85,6 +85,9 @@
               <li>
                 <a href={{asset("usuarios")}} class="sidebar-nav-link">Usuarios</a>
               </li>
+              <li>
+                <a href={{asset("bancos")}} class="sidebar-nav-link">Bancos</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -132,7 +135,7 @@
   echo "<script>
   new PNotify({
       type: 'error',
-      title: '¡Ocurrio algo inesperado!',
+      title: '".Session::get('error')."',
       text: 'Error'
   });
   </script>";

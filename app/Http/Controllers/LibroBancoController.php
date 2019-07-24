@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LibroBanco;
 use App\DetalleMenu;
 use App\Insumo;
+use App\Banco;
 use App\Asistencia;
 use App\Stock;
 use App\CalendarioMenu;
@@ -19,10 +20,24 @@ class LibroBancoController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
+    $bancos=Banco::where('estado',1)->orderBy('nombre')->get();
+    if(!$request->banco){
+    if(count($bancos)>0){
+    $primerBanco=$bancos->first();
+    $movimientos=LibroBanco::where('f_banco',$primerBanco->id)->get();
+  }else{
     $movimientos=LibroBanco::all();
-    return view('LibroBanco.libroBanco',compact('movimientos'));
+    $bancos=null;
+  }
+    $bancoSeleccionado=-1;
+    return view('LibroBanco.libroBanco',compact('movimientos','bancos','bancoSeleccionado'));
+  }else{
+    $bancoSeleccionado=$request->banco;
+    $movimientos=LibroBanco::where('f_banco',$request->banco)->get();
+    return view('LibroBanco.libroBanco',compact('movimientos','bancos','bancoSeleccionado'));
+  }
   }
 
   /**
@@ -49,8 +64,16 @@ class LibroBancoController extends Controller
       $libroBanco = new LibroBanco;
       $libroBanco->fecha=$request->fechaRegistroLibro;
       $libroBanco->concepto=$request->conceptoRegistroLibro;
+      $libroBanco->cheque=$request->chequeRegistroLibro;
+      $libroBanco->f_banco=$request->bancoHidden;
       $saldoAnterior=LibroBanco::orderBy('id', 'desc')->first();
       if ($request->tipoMovimientoRegistroLibro==0) {//Egreso
+        if(!$saldoAnterior){
+          return redirect('/libroBanco')->with('error', 'No hay ingresos aún');
+        }else if($saldoAnterior->saldo<$request->cantidadRegistroLibro){
+          return redirect('/libroBanco')->with('error', 'Saldo no disponible para el egreso');
+        }
+        dd($saldoAnterior);
         $libroBanco->egreso=$request->cantidadRegistroLibro;
         if(!$saldoAnterior){
           $libroBanco->saldo=0-$request->cantidadRegistroLibro;
@@ -70,7 +93,7 @@ class LibroBancoController extends Controller
     }catch(Exception $e){
         DB::rollback();
     }
-    return redirect('/libroBanco')->with('msg', '¡Guardado!');
+    return redirect('/libroBanco?banco='.$request->bancoHidden)->with('msg', '¡Guardado!');
   }
 
   /**

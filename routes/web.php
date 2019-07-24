@@ -106,3 +106,5 @@ Route::get('/validate',function(Illuminate\Http\Request $request){
   return (json_encode($cantidad));
 });
 Route::resource('libroBanco', 'LibroBancoController');
+Route::resource('bancos', 'BancosController');
+Route::post('bancos/{id}', 'BancosController@disabled')->name('banco.disabled');

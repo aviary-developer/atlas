@@ -28,8 +28,34 @@ class AsistenciaController extends Controller
   }
   public function guardarAsistencia(Request $request)
   {
+    $bandera=0;
     DB::beginTransaction();
     try{
+      /////////////////////////////////
+      $estudiantes= DB::table('estudiantes')
+              ->join('matriculas', 'estudiantes.id', '=', 'matriculas.f_estudiante')
+              ->join('asistencias', 'matriculas.id', '=', 'asistencias.f_matricula')
+              ->where('matriculas.f_grado',$request->grado)
+              ->where('asistencias.fecha',$request->fechaAsistencia)
+              ->where('matriculas.estado',true)
+              ->select('matriculas.id','estudiantes.nombre','estudiantes.apellido','asistencias.estado','asistencias.id as idAsistencia')
+              ->orderBy('estudiantes.apellido', 'ASC')
+              ->get();
+              if(count($estudiantes)==0){
+                $bandera=1;
+                $estudiantes= DB::table('estudiantes')
+                        ->join('matriculas', 'estudiantes.id', '=', 'matriculas.f_estudiante')
+                        ->where('matriculas.f_grado',$request->grado)
+                        ->where('matriculas.estado',true)
+                        ->select('matriculas.id','estudiantes.nombre','estudiantes.apellido')
+                        ->orderBy('estudiantes.apellido', 'ASC')
+                        ->get();
+              }
+              if($bandera==0){
+      foreach ($estudiantes as $key) {
+        $eliminarAsistencia=Asistencia::where('id',$key->idAsistencia)->delete();
+      }
+    }
       foreach ($request->idMatricula as $key => $matricula) {
         $asistencia= new Asistencia;
         $asistencia->f_matricula=$request->idMatricula[$key];
