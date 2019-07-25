@@ -24,7 +24,14 @@
           <img src={{asset("img/ENA.svg")}} class="user-photo">
           <p class="username">
             <br>
-            {{Auth::user()->nombre}} {{Auth::user()->apellido}}
+            @php
+                $cantidad = App\User::count();
+            @endphp
+            @if ($cantidad > 0)
+                {{Auth::user()->nombre}} {{Auth::user()->apellido}}
+            @else
+                Invitado
+            @endif
             <br>
             <small>Bienvenido</small>
           </p>
